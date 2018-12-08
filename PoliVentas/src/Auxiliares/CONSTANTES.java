@@ -10,5 +10,5 @@ package Auxiliares;
  * @author Rosa
  */
 public class CONSTANTES {
-     public static String path_image = "/recursos";
+     public final static String LOGO_PATH = "/Recursos";
 }

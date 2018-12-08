@@ -10,60 +10,89 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author ROSA
  */
-public class Conexion {
-    private Connection conexion ;
+public class DBConnection {
+    private static DBConnection dbConnection;
+    private Connection connection;
     private final String url = "jdbc:mysql://localhost:3306/db_poliventas?useSSL=false&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
     private final String user = "root";
     private final String pass = "rmpincay";
-
-    /**
-     * Getter para la conexion
-     * @return conexion a BD
-     */
-    public Connection getConexion() {
-        return conexion;
+    private static final Logger LOGGER = Logger.getLogger("DBConnection Logger");
+    
+    private DBConnection(){
+        
     }
 
     /**
-     * Setter para conexion 
+     * Getter para la connection
+     * @return connection a BD
+     */
+    
+    public static DBConnection getInstance(){
+        
+        if(dbConnection == null){
+            
+            dbConnection = new DBConnection();
+            
+        }
+        
+        return dbConnection;
+    }
+    
+    public Connection getConnection() {
+        
+        return connection;
+        
+    }
+
+    /**
+     * Setter para connection 
      * @param connexion
      */
-    public void setConexion(Connection connexion) {
-        this.conexion = connexion;
+    public void setConnection(Connection connexion) {
+        this.connection = connexion;
     }
     
     /**
-     * Método de tipo void para establecer conexion con la Base de datos
+     * Método de tipo void para establecer connection con la Base de datos
      */
     public void conectar(){
-        System.out.println("Conectando...");
+        
+        LOGGER.log(Level.INFO, "Establishing the database connection...");
+        
         try{
-            this.conexion = DriverManager.getConnection(url, user, pass);
-            System.out.println("Conectado!!");
-        }catch(SQLException e){
-            System.out.println(e.getMessage());
+            this.connection = DriverManager.getConnection(url, user, pass);
+            LOGGER.log(Level.INFO, "¡The database connection was established successfully!");
+            
+        } catch(SQLException e){
+            
+            LOGGER.log(Level.SEVERE, e.getMessage());
         }
     }
     	
     /**
-     * Método para cerrar la conexion a la base de datos, no retorna nada
+     * Método para cerrar la connection a la base de datos, no retorna nada
      */
-    public void cerrarConexion(){
+    public void desconectar(){
+        
 	try {
-            conexion.close();
+            connection.close();
+            
 	} catch (SQLException e) {
-            System.out.println(e.getMessage());
+            
+            LOGGER.log(Level.SEVERE, e.getMessage());
 	}
     }
     
     /**
      * Método de prueba
-     * @param c: recibe conexion de la base de datos
+     * @param c: recibe connection de la base de datos
      */
     public static void llenar(Connection c){
         try {

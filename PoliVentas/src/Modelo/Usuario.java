@@ -5,7 +5,13 @@
  */
 package Modelo;
 
+import Auxiliares.DBConnection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Objects;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -21,6 +27,8 @@ public class Usuario {
     protected String cedula;
     protected String matricula;
     protected Usuario rol; //revisar 
+    protected static final DBConnection CONNECTION = DBConnection.getInstance();
+    private static final Logger LOGGER = Logger.getLogger("Usuario Logger");
 
     public Usuario() {
     }
@@ -122,6 +130,67 @@ public class Usuario {
 
     public void setRol(Usuario rol) {
         this.rol = rol;
+    }
+    
+    public boolean create(){
+        
+        if(nombres != null && apellidos != null && email != null && 
+                direccion != null && cedula != null && matricula != null){
+            
+            CONNECTION.conectar();
+            
+            try{
+                
+                Statement statement = CONNECTION.getConnection().createStatement();
+                statement.executeQuery("INSERT INTO db_poliventas.tb_usuario values("
+                        + cedula + ", " + nombres + ", " + apellidos + ", " + telefono + ", " + 
+                        whatsapp + ", " + matricula + ", " + email + ")");
+                
+                return true;
+                
+            } catch(SQLException e){
+                
+                LOGGER.log(Level.SEVERE, e.getMessage());
+                return false;
+                
+            } finally{
+                
+                CONNECTION.desconectar();
+                
+            }
+        }
+        
+        return false;
+    }
+    
+    public Usuario get(String id){
+        
+        CONNECTION.conectar();
+        
+        try{
+
+            Statement statement = CONNECTION.getConnection().createStatement();
+            ResultSet result = statement.executeQuery("SELECT * FROM db_poliventas.tb_usuario WHERE ci_usuario = " + id);
+            
+            if(result.next()){
+                
+                return new Usuario(result.getString("nombres"), result.getString("apellidos"), result.getString("telefono"),
+                        result.getBoolean("whatsapp"), result.getString("email"), result.getString("direccion"),
+                        result.getString("cedula"), result.getString("matricula"));
+            }
+            
+            return null;
+
+        } catch(SQLException e){
+
+            LOGGER.log(Level.SEVERE, e.getMessage());
+            return null;
+
+        } finally{
+
+            CONNECTION.desconectar();
+
+        }
     }
 
     @Override

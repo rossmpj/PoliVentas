@@ -28,7 +28,7 @@ public class PoliVentas extends Application {
         scene.setRoot(p.getRoot());
         primaryStage.setTitle("PoliVentas");
         primaryStage.setScene(scene);
-        Image image = new Image("/recursos/logoo.jpg");
+        Image image = new Image("/Recursos/logoo.jpg");
         primaryStage.getIcons().add(image);
         primaryStage.resizableProperty().setValue(Boolean.FALSE);
         primaryStage.show();

@@ -6,7 +6,7 @@
 package Vista;
 
 import Auxiliares.CONSTANTES;
-import Auxiliares.Conexion;
+import Auxiliares.DBConnection;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -33,7 +33,7 @@ public class PaneLogin {
     private Button login;
     private TextField user;
     private PasswordField contra;
-    private Conexion c;
+    private DBConnection c;
 
     public BorderPane getRoot() {
         return root;
@@ -41,7 +41,7 @@ public class PaneLogin {
 
     public PaneLogin() {
         root = new BorderPane();
-        c = new Conexion();
+        c = DBConnection.getInstance();
         BackgroundFill myBF = new BackgroundFill(Color.ALICEBLUE, new CornerRadii(1), new Insets(0.0, 0.0, 0.0, 0.0));
         root.setBackground(new Background(myBF));
         inicializarObjetos();
@@ -55,7 +55,7 @@ public class PaneLogin {
         lblWelcome.setStyle("-fx-text-fill: #000278;");
         lblWelcome.setAlignment(Pos.CENTER);
         encabezados.setAlignment(Pos.CENTER);
-        Image image = new Image(CONSTANTES.path_image+"/logoo.jpg") ;
+        Image image = new Image(CONSTANTES.LOGO_PATH+"/logoo.jpg") ;
         ImageView iv2 = new ImageView();
          iv2.setImage(image);
          iv2.setFitWidth(150);

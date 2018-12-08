@@ -5,8 +5,8 @@
  */
 package Main;
 
-import Auxiliares.Conexion;
-import static Auxiliares.Conexion.llenar;
+import Auxiliares.DBConnection;
+import static Auxiliares.DBConnection.llenar;
 
 /**
  *
@@ -15,9 +15,7 @@ import static Auxiliares.Conexion.llenar;
 public class TestConexion {
     
     public static void main(String[] args){
-        Conexion e = new Conexion();
-        e.conectar(); 
-        llenar(e.getConexion());
-        e.cerrarConexion(); 
+        DBConnection e = DBConnection.getInstance();
+        llenar(e.getConnection());
     }
 }
