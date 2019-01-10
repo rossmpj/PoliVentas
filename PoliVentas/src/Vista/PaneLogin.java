@@ -7,8 +7,11 @@ package Vista;
 
 import Auxiliares.CONSTANTES;
 import Auxiliares.DBConnection;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -86,7 +89,8 @@ public class PaneLogin {
         vb.setPadding(new Insets(40, 0, 40, 0));//top,derecha,abajo,izquierda
         vb.setAlignment(Pos.CENTER);
         vb.setSpacing(10);
-        vb.getChildren().addAll(encabezado(), v2, boton());    
+        vb.getChildren().addAll(encabezado(), v2, boton());
+        setLoginListener();
         root.setTop(vb);
     }
 
@@ -109,5 +113,15 @@ public class PaneLogin {
         v.setAlignment(Pos.CENTER);
         login.setDefaultButton(true);
         return v;
+    }
+    
+    private void setLoginListener(){
+        
+        login.setOnAction((ActionEvent e) -> {
+            
+            root.getScene().setRoot(new TemporaryOptionsView().getRoot());
+            
+        });
+        
     }
 }
