@@ -6,12 +6,9 @@
 package Vista;
 
 import Auxiliares.CONSTANTES;
-import Auxiliares.DBConnection;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -36,15 +33,13 @@ public class PaneLogin {
     private Button login;
     private TextField user;
     private PasswordField contra;
-    private DBConnection c;
-
+    
     public BorderPane getRoot() {
         return root;
     }
 
     public PaneLogin() {
         root = new BorderPane();
-        c = DBConnection.getInstance();
         BackgroundFill myBF = new BackgroundFill(Color.ALICEBLUE, new CornerRadii(1), new Insets(0.0, 0.0, 0.0, 0.0));
         root.setBackground(new Background(myBF));
         inicializarObjetos();
@@ -58,7 +53,7 @@ public class PaneLogin {
         lblWelcome.setStyle("-fx-text-fill: #000278;");
         lblWelcome.setAlignment(Pos.CENTER);
         encabezados.setAlignment(Pos.CENTER);
-        Image image = new Image(CONSTANTES.LOGO_PATH+"/logoo.jpg") ;
+        Image image = new Image(CONSTANTES.PATH_IMG+"/logoo.jpg") ;
         ImageView iv2 = new ImageView();
          iv2.setImage(image);
          iv2.setFitWidth(150);
@@ -116,12 +111,8 @@ public class PaneLogin {
     }
     
     private void setLoginListener(){
-        
         login.setOnAction((ActionEvent e) -> {
-            
-            root.getScene().setRoot(new TemporaryOptionsView().getRoot());
-            
+            root.getScene().setRoot(new CompradorOptions().getRoot());
         });
-        
     }
 }

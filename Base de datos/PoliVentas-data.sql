@@ -40,13 +40,13 @@ INSERT INTO `db_poliventas`.`tb_identificacion` (`username`, `contrasena`, `rol`
 INSERT INTO `db_poliventas`.`tb_pago` (`id_metodo_pago`, `tipo`) VALUES ('PHONE1', 'celular');
 INSERT INTO `db_poliventas`.`tb_pago` (`id_metodo_pago`, `tipo`) VALUES ('EFECT1', 'efectivo');
 
-INSERT INTO `db_poliventas`.`tb_producto` (`cod_producto`, `nombre`, `precio`) VALUES ('chai002', 'Silla plastica', 5.00);
-INSERT INTO `db_poliventas`.`tb_producto` (`cod_producto`, `nombre`, `precio`) VALUES ('dress001', 'Vestido pets', 10.00);
-INSERT INTO `db_poliventas`.`tb_producto` (`cod_producto`, `nombre`, `precio`) VALUES ('foo001', 'alimento gato', 8.00);
-INSERT INTO `db_poliventas`.`tb_producto` (`cod_producto`, `nombre`, `precio`) VALUES ('mou001', 'mouse', 3.00);
-INSERT INTO `db_poliventas`.`tb_producto` (`cod_producto`, `nombre`, `precio`) VALUES ('prod003', 'Collar', 20.00);
-INSERT INTO `db_poliventas`.`tb_producto` (`cod_producto`, `nombre`, `precio`) VALUES ('prod008', 'Taza', 10.00);
-INSERT INTO `db_poliventas`.`tb_producto` (`cod_producto`, `nombre`, `precio`) VALUES ('prod007', 'cable usb', 5.00);
+INSERT INTO `db_poliventas`.`tb_producto` (`cod_producto`, `nombre`,`descripcion`, `precio`) VALUES ('chai002', 'Silla plastica', 'Linea ratan', 5.00);
+INSERT INTO `db_poliventas`.`tb_producto` (`cod_producto`, `nombre`,`descripcion`, `precio`) VALUES ('dress001', 'Vestido pets', 'Talla S', 10.00);
+INSERT INTO `db_poliventas`.`tb_producto` (`cod_producto`, `nombre`,`descripcion`, `precio`) VALUES ('foo001', 'alimento gato', 'NutraPro esterilizados 2kg', 8.00);
+INSERT INTO `db_poliventas`.`tb_producto` (`cod_producto`, `nombre`,`descripcion`, `precio`) VALUES ('mou001', 'mouse', 'Inalambrico', 3.00);
+INSERT INTO `db_poliventas`.`tb_producto` (`cod_producto`, `nombre`,`descripcion`, `precio`) VALUES ('prod003', 'Collar', 'Perlas', 20.00);
+INSERT INTO `db_poliventas`.`tb_producto` (`cod_producto`, `nombre`,`descripcion`, `precio`) VALUES ('prod008', 'Taza', 'Mágica', 10.00);
+INSERT INTO `db_poliventas`.`tb_producto` (`cod_producto`, `nombre`,`descripcion`, `precio`) VALUES ('prod007', 'cable usb', 'Samsung', 5.00);
 
 INSERT INTO `db_poliventas`.`tb_categoria` (`id_categoria`, `cod_producto`, `tipo`) VALUES ('home01', 'chai002', 'Hogar');
 INSERT INTO `db_poliventas`.`tb_categoria` (`id_categoria`, `cod_producto`, `tipo`) VALUES ('pets01', 'dress001', 'Mascotas');
@@ -74,10 +74,10 @@ INSERT INTO `db_poliventas`.`tb_producto_vendedor` (`cantidad`, `id_vendedor_pv`
 INSERT INTO `db_poliventas`.`tb_calificacion_producto` (`calificacion_producto`, `cod_producto`, `id_comprador`) VALUES (5, 'prod008', 'comp001');
 INSERT INTO `db_poliventas`.`tb_calificacion_producto` (`calificacion_producto`, `cod_producto`, `id_comprador`) VALUES (3, 'prod003', 'comp002');
 INSERT INTO `db_poliventas`.`tb_calificacion_producto` (`calificacion_producto`, `cod_producto`, `id_comprador`) VALUES (1, 'prod007', 'comp003');
-INSERT INTO `db_poliventas`.`tb_calificacion_producto` (`calificacion_producto`, `cod_producto`, `id_comprador`) VALUES (2, 'prod008', 'comp004');
-INSERT INTO `db_poliventas`.`tb_calificacion_producto` (`calificacion_producto`, `cod_producto`, `id_comprador`) VALUES (3, 'prod007', 'comp005');
-INSERT INTO `db_poliventas`.`tb_calificacion_producto` (`calificacion_producto`, `cod_producto`, `id_comprador`) VALUES (1, 'prod007', 'comp006');
-INSERT INTO `db_poliventas`.`tb_calificacion_producto` (`calificacion_producto`, `cod_producto`, `id_comprador`) VALUES (4, 'prod007', 'comp007');
+INSERT INTO `db_poliventas`.`tb_calificacion_producto` (`calificacion_producto`, `cod_producto`, `id_comprador`) VALUES (2, 'mou001', 'comp004');
+INSERT INTO `db_poliventas`.`tb_calificacion_producto` (`calificacion_producto`, `cod_producto`, `id_comprador`) VALUES (3, 'dress001', 'comp005');
+INSERT INTO `db_poliventas`.`tb_calificacion_producto` (`calificacion_producto`, `cod_producto`, `id_comprador`) VALUES (1, 'chai002', 'comp006');
+INSERT INTO `db_poliventas`.`tb_calificacion_producto` (`calificacion_producto`, `cod_producto`, `id_comprador`) VALUES (4, 'foo001', 'comp007');
 
 INSERT INTO `db_poliventas`.`tb_calificacion_vendedor` (`calificacion_vend`, `id_vendedor`) VALUES (1, 'vend001');
 INSERT INTO `db_poliventas`.`tb_calificacion_vendedor` (`calificacion_vend`, `id_vendedor`) VALUES (2, 'vend002');

@@ -5,6 +5,7 @@
  */
 package Main;
 
+import Auxiliares.CONSTANTES;
 import Vista.PaneLogin;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
@@ -28,7 +29,7 @@ public class PoliVentas extends Application {
         scene.setRoot(p.getRoot());
         primaryStage.setTitle("PoliVentas");
         primaryStage.setScene(scene);
-        Image image = new Image("/Recursos/logoo.jpg");
+        Image image = new Image(CONSTANTES.PATH_IMG+"/logoo.jpg");
         primaryStage.getIcons().add(image);
         primaryStage.resizableProperty().setValue(Boolean.FALSE);
         primaryStage.show();

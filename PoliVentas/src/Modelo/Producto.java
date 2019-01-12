@@ -5,7 +5,12 @@
  */
 package Modelo;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Objects;
+import javafx.collections.ObservableList;
 
 /**
  *
@@ -25,6 +30,13 @@ public class Producto {
         this.idProducto = idProducto;
         this.nombre = nombre;
         this.descripcion = descripcion;
+        this.categoria = categoria;
+        this.precio = precio;
+        this.calificacion = calificacion;
+    }
+    
+    public Producto(String nombre, String categoria, double precio, int calificacion) {
+        this.nombre = nombre;
         this.categoria = categoria;
         this.precio = precio;
         this.calificacion = calificacion;
@@ -128,4 +140,28 @@ public class Producto {
         return "Producto{" + "idProducto=" + idProducto + ", nombre=" + nombre + ", descripcion=" + descripcion + ", categoria=" + categoria + ", precio=" + precio + ", calificacion=" + calificacion + '}';
     }
     
+    /**
+     * Método de prueba para llenar campos
+     * @param c
+     * @param lista
+     */
+    public static void llenarArticulos(Connection c, ObservableList<Producto> lista){
+        try {
+            Statement in = c.createStatement();
+            ResultSet resultado = in.executeQuery(
+           "SELECT p.nombre, p.descripcion, p.precio, c.calificacion_producto FROM db_poliventas.tb_producto p JOIN db_poliventas.tb_calificacion_producto c on p.cod_producto=c.cod_producto");
+            System.out.println("si");
+            while(resultado.next()){
+                lista.add(
+                    new Producto( 
+                    resultado.getString("p.nombre"), 
+                    resultado.getString("p.descripcion"), 
+                    Double.parseDouble(resultado.getString("p.precio")),
+                    Integer.parseInt(resultado.getString("c.calificacion_producto")))
+                );
+            }
+        } catch (SQLException ex) {
+            System.out.println("EXCEPCION: " + ex.getMessage());
+        }
+    }    
 }
