@@ -55,9 +55,9 @@ public class CompradorOptions {
         estiloBotones(BusquedaAvanzada, "A8B6FA","/searchA.png");
         estiloBotones(ComprasPendientes, "FAA8DB","/stopwatch.png");
         estiloBotones(Historial, "FAB1A8","/history.png");
-        estiloBotones(ArticulosMasBuscados, "CEFAA8","/loupe.png");
-        estiloBotones(NuevosArticulos, "E6A8FA","/newProduct.png");
-        estiloBotones(CerrarSesion, "FAEDA8","/logout.png");
+        estiloBotones(ArticulosMasBuscados, "A8FACC","/loupe.png");
+        estiloBotones(NuevosArticulos, "DFA8FA","/newProduct.png");
+        estiloBotones(CerrarSesion, "FAFAA8","/logout.png");
     }
     
     private GridPane GridPaneSeccion1(){
@@ -71,7 +71,8 @@ public class CompradorOptions {
     }
     
     private GridPane GridPaneSeccion2(){
-        GridPane gp1 = new GridPane();gp1.add(ArticulosMasBuscados, 0, 2);
+        GridPane gp1 = new GridPane();
+        gp1.add(ArticulosMasBuscados, 0, 2);
         gp1.add(NuevosArticulos, 1, 2);
         gp1.add(CerrarSesion, 2, 2); 
         gp1.setHgap(79);
@@ -92,7 +93,7 @@ public class CompradorOptions {
         VBox busqueda = new VBox();
         HBox busqueda1 = new HBox();
         Label lblTitle = new Label("Búsqueda");
-        estiloLabels(lblTitle, "000FA7");
+        estiloLabels(lblTitle, "4C00A7");
         busqueda1.getChildren().addAll(BusquedaSencilla,BusquedaAvanzada);
         busqueda.getChildren().addAll(lblTitle, busqueda1);
         return busqueda;
@@ -102,7 +103,7 @@ public class CompradorOptions {
         VBox pedido = new VBox();
         HBox pedido1 = new HBox();
         Label lblPedidos = new Label("Mis Pedidos");
-        estiloLabels(lblPedidos,"A73300");
+        estiloLabels(lblPedidos,"A70089");
         pedido1.getChildren().addAll(ComprasPendientes,Historial);
         pedido.getChildren().addAll(lblPedidos, pedido1);
         return pedido;
@@ -111,7 +112,11 @@ public class CompradorOptions {
     private void setListeners(){
         BusquedaSencilla.setOnAction((ActionEvent e) -> {
             root.getScene().setRoot(new PaneBusquedaSencilla().getRoot());
-        });          
+        });    
+        
+        ComprasPendientes.setOnAction((ActionEvent e) -> {
+            root.getScene().setRoot(new PaneComprasPendientes().getRoot());
+        });
     }
     
     public void estiloBotones(Button btn, String base, String path){

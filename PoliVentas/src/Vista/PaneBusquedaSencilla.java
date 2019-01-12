@@ -1,7 +1,6 @@
 package Vista;
 
-import Auxiliares.CONSTANTES;
-import Auxiliares.DBConnection;
+import Auxiliares.*;
 import Modelo.Producto;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -78,7 +77,7 @@ public class PaneBusquedaSencilla {
         contenedorTitulos.getChildren().addAll(seccionEncabezado(), seccionIngresarBusqueda());
         ScrollPane tv = new ScrollPane();
         setCompradorListener();
-        cargarContenido();
+        //cargarContenido();
         v3.getChildren().add(tv);
         buscarBtn.setOnAction(e->{
             tv.setContent(vbox);
@@ -95,7 +94,7 @@ public class PaneBusquedaSencilla {
     }
     
     private void cargarContenido() {
-        cargarLista();
+        //cargarLista();
         for (Producto p : l_articulos){            
             HBox hb = new HBox();
             Label categoryNameLbl = new Label();
