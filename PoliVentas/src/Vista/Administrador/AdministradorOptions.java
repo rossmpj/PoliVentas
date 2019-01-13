@@ -6,6 +6,7 @@
 package Vista.Administrador;
 
 import Auxiliares.CONSTANTES;
+import Vista.Principal.PaneLogin;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -78,13 +79,13 @@ public class AdministradorOptions {
     private void llamarBotones() {
         estiloBotones(busquedaSencilla, "A8EFFA", "/busqueda.png");
         estiloBotones(busquedaAvanzada, "A8B6FA", "/ajustes.png");
-        estiloBotones(nuevoUser, "FAA8DB", "/add-user.png");
-        estiloBotones(buscarUser, "FAB1A8", "/searchu.png");
+        estiloBotones(nuevoUser, "C7E7E0", "/add-user.png");
+        estiloBotones(buscarUser, "A8ECDD", "/searchu.png");//C3F58E
         estiloBotones(nuevoProducto, "81F7D8", "/valor.png");
-        estiloBotones(buscarProducto, "9FF781", "/bolsa.png");
-        estiloBotones(comprasPendientes, "58FA82", "/cartp.png");
-        estiloBotones(comprasAnuladas, "58FAAC", "/cartc.png");
-        estiloBotones(comprasExitosas, "58FA58", "/carta.png");
+        estiloBotones(buscarProducto, "51A7C1", "/bolsa.png");
+        estiloBotones(comprasPendientes, "78EDF4", "/cartp.png");
+        estiloBotones(comprasAnuladas, "5DC2E1", "/cartc.png");
+        estiloBotones(comprasExitosas, "BCFBFF", "/carta.png");
         estiloBotones(cerrarSesion, "FAEDA8", "/logout.png");
     }
 
@@ -92,7 +93,7 @@ public class AdministradorOptions {
         VBox usuarios = new VBox();
         HBox usuarios1 = new HBox();
         Label lblUsuarios = new Label("Administrar Usuarios");
-        estiloLabels(lblUsuarios, "8A0868");
+        estiloLabels(lblUsuarios, "63C5AF");
         usuarios1.getChildren().addAll(nuevoUser, buscarUser);
         usuarios.getChildren().addAll(lblUsuarios, usuarios1);
         return usuarios;
@@ -112,7 +113,7 @@ public class AdministradorOptions {
         VBox busqueda = new VBox();
         HBox busqueda1 = new HBox();
         Label lblTitle = new Label("Búsqueda");
-        estiloLabels(lblTitle, "000FA7");
+        estiloLabels(lblTitle, "515489");
         busqueda1.getChildren().addAll(busquedaSencilla, busquedaAvanzada);
         busqueda.getChildren().addAll(lblTitle, busqueda1);
         return busqueda;
@@ -122,7 +123,7 @@ public class AdministradorOptions {
         VBox compras = new VBox();
         HBox compras1 = new HBox();
         Label lblCompras = new Label("Compras");
-        estiloLabels(lblCompras, "0B6138");
+        estiloLabels(lblCompras, "6E939E");
         lblCompras.setPrefSize(390, 80);
         compras1.getChildren().addAll(comprasExitosas, comprasPendientes, comprasAnuladas);
         compras.getChildren().addAll(lblCompras, compras1);
@@ -164,11 +165,17 @@ public class AdministradorOptions {
         listenUsuario();
         listenCompra();
         listenBusqueda();
+        listenCerrarSesion();     
+    }
+    
+    private void listenCerrarSesion(){
+     cerrarSesion.setOnAction((ActionEvent e) -> {
+            root.getScene().setRoot(new PaneLogin().getRoot());});
     }
 
     private void listenProducto() {
         buscarProducto.setOnAction((ActionEvent e) -> {
-            root.getScene().setRoot(new VistaBuscarProducto("9FF781").getRoot());
+            root.getScene().setRoot(new VistaBuscarProducto("51A7C1").getRoot());
         });
         nuevoProducto.setOnAction((ActionEvent e) -> {
             root.getScene().setRoot(new VistaInfoProducto(true, "81F7D8", "Ingreso nuevo Producto").getRoot());
@@ -177,23 +184,23 @@ public class AdministradorOptions {
 
     private void listenUsuario() {
         buscarUser.setOnAction((ActionEvent e) -> {
-            root.getScene().setRoot(new VistaBuscarUsuario("FAB1A8").getRoot());
+            root.getScene().setRoot(new VistaBuscarUsuario("A8ECDD").getRoot());
         });
 
         nuevoUser.setOnAction((ActionEvent e) -> {
-            root.getScene().setRoot(new VistaInfoUsuario(true, "9FF781", "Ingreso nuevo usuario").getRoot());
+            root.getScene().setRoot(new VistaInfoUsuario(true, "C7E7E0", "Ingreso nuevo usuario").getRoot());
         });
     }
 
     private void listenCompra() {
         comprasPendientes.setOnAction((ActionEvent e) -> {
-            root.getScene().setRoot(new VistaComun("Compras Pendientes", "F7D358").getRoot());
+            root.getScene().setRoot(new VistaComun("Compras Pendientes", "78EDF4").getRoot());
         });
         comprasAnuladas.setOnAction((ActionEvent e) -> {
-            root.getScene().setRoot(new VistaComun("Compras Anuladas", "FA8258").getRoot());
+            root.getScene().setRoot(new VistaComun("Compras Anuladas", "5DC2E1").getRoot());
         });
         comprasExitosas.setOnAction((ActionEvent e) -> {
-            root.getScene().setRoot(new VistaComun("Compras Exitosas", "F5D0A9").getRoot());
+            root.getScene().setRoot(new VistaComun("Compras Exitosas", "BCFBFF").getRoot());
         });
     }
 

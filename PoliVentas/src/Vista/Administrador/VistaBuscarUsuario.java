@@ -99,8 +99,33 @@ public class VistaBuscarUsuario {
         contenedorTitulos.setPadding(new Insets(0, 7, 0, 7));//top,derecha,abajo,izquierda
         contenedorTitulos.setAlignment(Pos.TOP_CENTER);
         contenedorTitulos.setSpacing(7);
-        contenedorTitulos.getChildren().addAll(crearSeccionBusqueda());
+        contenedorTitulos.getChildren().addAll(crearSeccionBusqueda(),producto());
         root.setCenter(contenedorTitulos);
     }
 
+     private VBox producto(){
+    Button modificar = new Button("Modificar");
+    VBox pro= new VBox();
+    pro.getChildren().addAll(seccionAvatar(),modificar);
+    pro.setSpacing(5);
+    pro.setAlignment(Pos.TOP_LEFT);
+    modificar.setOnAction((ActionEvent e) -> {
+            root.getScene().setRoot(new VistaInfoUsuario(false, "A8ECDD", "Ingreso nuevo usuario").getRoot());
+        });
+    return pro;  
+    
+    }
+    
+    
+     
+     
+     private VBox seccionAvatar() {
+        VBox k = new VBox();
+        Image image = new Image(getClass().getResourceAsStream(CONSTANTES.PATH_IMG+"/man.png"));
+        Label myLabel = new Label();
+        myLabel.setGraphic(new ImageView(image));
+        k.setPadding(new Insets(30, 0, 0, 5));
+        k.getChildren().add(myLabel);
+        return k;
+    }
 }

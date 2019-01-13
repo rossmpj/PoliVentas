@@ -1,5 +1,6 @@
 package Vista;
 
+import Vista.Principal.PaneLogin;
 import Auxiliares.CONSTANTES;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
@@ -117,6 +118,8 @@ public class CompradorOptions {
         ComprasPendientes.setOnAction((ActionEvent e) -> {
             root.getScene().setRoot(new PaneComprasPendientes().getRoot());
         });
+        
+        listenCerrarSesion();
     }
     
     public void estiloBotones(Button btn, String base, String path){
@@ -131,4 +134,10 @@ public class CompradorOptions {
         lbl.setStyle("-fx-font: 17 Verdana; -fx-text-fill: #FFFFFF; -fx-background-color: #"+base+"; ");
         lbl.setAlignment(Pos.CENTER);
     }
+    
+    private void listenCerrarSesion(){
+     CerrarSesion.setOnAction((ActionEvent e) -> {
+            root.getScene().setRoot(new PaneLogin().getRoot());});
+    }
+
 }

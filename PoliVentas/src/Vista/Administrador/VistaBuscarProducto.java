@@ -10,6 +10,7 @@ import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
@@ -30,6 +31,7 @@ public class VistaBuscarProducto {
     private Button back, buscar;
     private String color;
     private TextField campo;
+    private CheckBox anulados;
 
     public VistaBuscarProducto(String color) {
         root = new BorderPane();
@@ -54,6 +56,7 @@ public class VistaBuscarProducto {
         campo = new TextField();
         campo.setPrefWidth(300);
         campo.setPrefHeight(40);
+        anulados= new CheckBox("Ver productos anulados");
     }
 
     private void estiloBotones(Button btn, String base, String path) {
@@ -86,6 +89,7 @@ public class VistaBuscarProducto {
         gp.addColumn(0, name);
         gp.addColumn(1, campo);
         gp.addColumn(2, buscar);
+        gp.addColumn(3,anulados);
         gp.setHgap(15);
         gp.setVgap(10);
         gp.setAlignment(Pos.CENTER);
@@ -100,7 +104,35 @@ public class VistaBuscarProducto {
         contenedorTitulos.setPadding(new Insets(0, 7, 0, 7));//top,derecha,abajo,izquierda
         contenedorTitulos.setAlignment(Pos.TOP_CENTER);
         contenedorTitulos.setSpacing(7);
-        contenedorTitulos.getChildren().addAll(crearSeccionBusqueda());
+        contenedorTitulos.getChildren().addAll(crearSeccionBusqueda(),producto());
         root.setCenter(contenedorTitulos);
     }
+    
+    private VBox producto(){
+    Button modificar = new Button("Modificar");
+    VBox pro= new VBox();
+    pro.getChildren().addAll(seccionAvatar(),modificar);
+    pro.setSpacing(5);
+    pro.setAlignment(Pos.TOP_LEFT);
+    modificar.setOnAction((ActionEvent e) -> {
+            root.getScene().setRoot(new VistaInfoProducto(false, "51A7C1", "Ingreso nuevo Producto").getRoot());
+        });
+    return pro;  
+    
+    }
+    
+    
+    
+    
+    private VBox seccionAvatar() {
+        VBox k = new VBox();
+        Image image = new Image(getClass().getResourceAsStream(CONSTANTES.PATH_IMG+"/cesta.png"));
+        Label myLabel = new Label();
+        myLabel.setGraphic(new ImageView(image));
+        k.setPadding(new Insets(30, 0, 0, 5));
+        k.getChildren().add(myLabel);
+        return k;
+    }
+    
+    
 }

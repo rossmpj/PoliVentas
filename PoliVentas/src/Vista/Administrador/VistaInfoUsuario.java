@@ -74,10 +74,13 @@ public class VistaInfoUsuario {
         sa.setAlignment(Pos.CENTER_RIGHT);
         if (this.ingreso) {
             guardar = new Button("Guardar");
+            guardar.setPrefSize(100, 50);
             sa.getChildren().add(guardar);
         } else {
             actualizar = new Button("Actualizar");
-            eliminar = new Button("Eliminar");
+            eliminar = new Button("Eliminar\nUsuario");
+            actualizar.setPrefSize(100, 50);
+            eliminar.setPrefSize(100, 50);
             sa.getChildren().addAll(actualizar, eliminar);
         }
         return sa;
@@ -89,15 +92,19 @@ public class VistaInfoUsuario {
                 root.getScene().setRoot(new AdministradorOptions().getRoot());});
         } else {
             back.setOnAction((ActionEvent e) -> {
-                root.getScene().setRoot(new VistaBuscarUsuario("FAB1A8").getRoot());});
+                root.getScene().setRoot(new VistaBuscarUsuario("A8ECDD").getRoot());});
         }
     }
 
     private void construccion() {
         HBox hb = new HBox();
-        hb.getChildren().addAll(formulario(), gestionBotones());
+        VBox contenedor=new VBox();
+        contenedor.setAlignment(Pos.TOP_RIGHT);
+        contenedor.setSpacing(10);
+        hb.setSpacing(15);
+        contenedor.getChildren().addAll(seccionAvatar(),gestionBotones());
+        hb.getChildren().addAll(formulario(),contenedor);
         root.setCenter(hb);
-
     }
 
     private VBox formulario() {
@@ -150,5 +157,15 @@ public class VistaInfoUsuario {
         Image image = new Image(getClass().getResourceAsStream(CONSTANTES.PATH_IMG + path));
         btn.setGraphic(new ImageView(image));
         btn.setAlignment(Pos.CENTER);
+    }
+    
+    private VBox seccionAvatar() {
+        VBox k = new VBox();
+        Image image = new Image(getClass().getResourceAsStream(CONSTANTES.PATH_IMG+"/man.png"));
+        Label myLabel = new Label();
+        myLabel.setGraphic(new ImageView(image));
+        k.setPadding(new Insets(30, 0, 0, 5));
+        k.getChildren().add(myLabel);
+        return k;
     }
 }

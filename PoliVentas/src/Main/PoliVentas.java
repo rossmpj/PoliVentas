@@ -6,7 +6,7 @@
 package Main;
 
 import Auxiliares.CONSTANTES;
-import Vista.PaneLogin;
+import Vista.Principal.PaneLogin;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
 import javafx.scene.Group;

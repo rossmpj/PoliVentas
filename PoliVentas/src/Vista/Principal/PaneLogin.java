@@ -3,9 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Vista;
+package Vista.Principal;
 
 import Auxiliares.CONSTANTES;
+import Vista.CompradorOptions;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -112,7 +113,7 @@ public class PaneLogin {
     
     private void setLoginListener(){
         login.setOnAction((ActionEvent e) -> {
-            root.getScene().setRoot(new CompradorOptions().getRoot());
+            root.getScene().setRoot(new VistaTemporal().getRoot());
         });
     }
 }
