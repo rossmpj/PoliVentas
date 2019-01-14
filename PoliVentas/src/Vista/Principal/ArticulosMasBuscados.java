@@ -29,10 +29,11 @@ public class ArticulosMasBuscados {
     private final GridPane root;
 
     public ArticulosMasBuscados() {
+        productos=new LinkedList();
         root = new GridPane();
         BackgroundFill myBF = new BackgroundFill(Color.ALICEBLUE, new CornerRadii(1), new Insets(0.0, 0.0, 0.0, 0.0));
         root.setBackground(new Background(myBF));
-        Button b = new Button("Articulos mas buscados");
+        /*Button b = new Button("Articulos mas buscados");
         b.setAlignment(Pos.CENTER);
         b.setPrefSize(250, 50);
         b.setStyle("-fx-font: 15 Verdana; -fx-base: #0B93FE; -fx-text-fill: white;");
@@ -41,14 +42,14 @@ public class ArticulosMasBuscados {
             root.getScene().setRoot(new PaneLogin().getRoot());
         });
         root.setAlignment(Pos.CENTER);
-        b.setDefaultButton(true);
-        /* productos.add(new Producto("01", "Audifonos", "Audifonos para celulares", "Tecnologica",10.00, 3));
+        b.setDefaultButton(true);*/
+        productos.add(new Producto("01", "Audifonos", "Audifonos para celulares", "Tecnologica",10.00, 3));
         productos.add(new Producto("02", "Cargadores", "Cargadores para celulares", "Tecnologica",15.00,4));
         productos.add(new Producto("03", "Tortas", "Tortas de vainilla", "Comida",3.00, 4));
         productos.add(new Producto("04", "Copa Mexicana", "Copa mexicana con guacamole", "Comida",2.50, 4));
         productos.add(new Producto("05", "Micas", "Micas para celulares", "Articulos varios",13.00, 3));
         productos.add(new Producto("06", "Case", "Case para celulares", "Articulos varios",13.00, 2));
-        ProductosMasBuscados();*/
+        ProductosMasBuscados();
     }
 
     private void ProductosMasBuscados() {
@@ -58,10 +59,9 @@ public class ArticulosMasBuscados {
         root.setPadding(new Insets(30, 10, 10, 10));
         root.setGridLinesVisible(false);
 
-        root.add(new Label("Articulos Mas Buscados"), 0, 0, 4, 1);
+        root.add(new Label("ARTICULOS MAS BUSCADOS"), 0, 0, 4, 1);
         int i = 1;
 
-        //Se debe recorrer los contactos y por cada contactos agregar una fila al gridPane con la información del contacto
         for (Producto p : productos) {
             agregarFilaGrid(p, i);
             i++;
