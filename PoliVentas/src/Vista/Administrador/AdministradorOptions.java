@@ -194,22 +194,22 @@ public class AdministradorOptions {
 
     private void listenCompra() {
         comprasPendientes.setOnAction((ActionEvent e) -> {
-            root.getScene().setRoot(new VistaComun("Compras Pendientes", "78EDF4").getRoot());
+            root.getScene().setRoot(new VistaComun("Compras Pendientes", "78EDF4",'A').getRoot());
         });
         comprasAnuladas.setOnAction((ActionEvent e) -> {
-            root.getScene().setRoot(new VistaComun("Compras Anuladas", "5DC2E1").getRoot());
+            root.getScene().setRoot(new VistaComun("Compras Anuladas", "5DC2E1",'A').getRoot());
         });
         comprasExitosas.setOnAction((ActionEvent e) -> {
-            root.getScene().setRoot(new VistaComun("Compras Exitosas", "BCFBFF").getRoot());
+            root.getScene().setRoot(new VistaComun("Compras Exitosas", "BCFBFF",'A').getRoot());
         });
     }
 
     private void listenBusqueda() {
         busquedaSencilla.setOnAction((ActionEvent e) -> {
-            root.getScene().setRoot(new VistaComun("Búsqueda Sencilla", "A8EFFA").getRoot());
+            root.getScene().setRoot(new VistaComun("Búsqueda Sencilla", "A8EFFA",'A').getRoot());
         });
         busquedaAvanzada.setOnAction((ActionEvent e) -> {
-            root.getScene().setRoot(new VistaComun("Búsqueda Avanzada", "A8B6FA").getRoot());
+            root.getScene().setRoot(new VistaComun("Búsqueda Avanzada", "A8B6FA",'A').getRoot());
         });
 
     }

@@ -7,7 +7,7 @@ package Vista.Principal;
 
 import Auxiliares.CONSTANTES;
 import Vista.Administrador.AdministradorOptions;
-import Vista.CompradorOptions;
+import Vista.Comprador.CompradorOptions;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;

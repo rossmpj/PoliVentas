@@ -6,7 +6,6 @@
 package Vista.Principal;
 
 import Auxiliares.CONSTANTES;
-import Vista.CompradorOptions;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;

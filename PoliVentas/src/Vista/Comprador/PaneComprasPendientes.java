@@ -1,4 +1,4 @@
-package Vista;
+package Vista.Comprador;
 
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;

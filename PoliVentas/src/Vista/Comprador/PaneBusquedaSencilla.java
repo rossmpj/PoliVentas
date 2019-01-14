@@ -1,4 +1,4 @@
-package Vista;
+package Vista.Comprador;
 
 import Auxiliares.*;
 import Modelo.Producto;

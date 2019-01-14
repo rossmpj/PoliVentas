@@ -1,7 +1,9 @@
-package Vista;
+package Vista.Comprador;
 
 import Vista.Principal.PaneLogin;
 import Auxiliares.CONSTANTES;
+import Vista.Administrador.VistaComun;
+import Vista.Principal.ArticulosMasBuscados;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -114,11 +116,21 @@ public class CompradorOptions {
         BusquedaSencilla.setOnAction((ActionEvent e) -> {
             root.getScene().setRoot(new PaneBusquedaSencilla().getRoot());
         });    
-        
+        BusquedaAvanzada.setOnAction((ActionEvent e) -> {
+            root.getScene().setRoot(new VistaComun("Búsqueda Avanzada", "A8B6FA",'C').getRoot());
+        });
         ComprasPendientes.setOnAction((ActionEvent e) -> {
             root.getScene().setRoot(new PaneComprasPendientes().getRoot());
         });
-        
+        Historial.setOnAction((ActionEvent e) -> {
+            root.getScene().setRoot(new VistaComun("Historial", "FAB1A8",'C').getRoot());
+        });
+        ArticulosMasBuscados.setOnAction((ActionEvent e) -> {
+            root.getScene().setRoot(new ArticulosMasBuscados().getRoot());
+        });
+        NuevosArticulos.setOnAction((ActionEvent e) -> {
+            root.getScene().setRoot(new VistaComun("Nuevos Artículos", "DFA8FA",'C').getRoot());
+        });
         listenCerrarSesion();
     }
     

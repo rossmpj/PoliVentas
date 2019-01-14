@@ -6,6 +6,7 @@
 package Vista.Administrador;
 
 import Auxiliares.CONSTANTES;
+import Vista.Comprador.CompradorOptions;
 import javafx.event.ActionEvent;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -21,12 +22,14 @@ import javafx.scene.layout.BorderPane;
 public class VistaComun {
      private final BorderPane root;
      private String tipo,color;
+     private char user;
      private Button back;
     
-    public VistaComun(String tipo,String color){
+    public VistaComun(String tipo,String color, char user){
      root = new BorderPane();
      this.tipo=tipo;
      this.color=color;
+     this.user = user;
      crearSeccionTitulo();
      inicializarObjetos();
      setCompradorListener();
@@ -60,7 +63,19 @@ public class VistaComun {
     
     private void setCompradorListener(){
         back.setOnAction((ActionEvent e) -> {
-        root.getScene().setRoot(new AdministradorOptions().getRoot());            
+            switch (this.user) {
+                case 'C':
+                    root.getScene().setRoot(new CompradorOptions().getRoot());
+                    break;
+                case 'V':
+                    //root.getScene().setRoot(new VendedorOptions().getRoot());
+                    break;
+                case 'A':
+                    root.getScene().setRoot(new AdministradorOptions().getRoot());
+                    break;
+                default:
+                    break;
+            }
         });
     }
 }
