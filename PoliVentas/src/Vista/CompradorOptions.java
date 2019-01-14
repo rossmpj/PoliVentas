@@ -139,5 +139,5 @@ public class CompradorOptions {
      CerrarSesion.setOnAction((ActionEvent e) -> {
             root.getScene().setRoot(new PaneLogin().getRoot());});
     }
-
+    
 }

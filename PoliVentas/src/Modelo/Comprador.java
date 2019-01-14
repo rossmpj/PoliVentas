@@ -34,5 +34,6 @@ public class Comprador extends Usuario{
                      String cedula, String matricula, Usuario rol) {
         super(nombres, apellidos, telefono, whatsapp, email, direccion, cedula, matricula, rol);
     }
+  
     
 }

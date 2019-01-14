@@ -6,6 +6,7 @@
 package Main;
 
 import Auxiliares.CONSTANTES;
+import Vista.Principal.ArticulosMasBuscados;
 import Vista.Principal.PaneLogin;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
@@ -24,7 +25,7 @@ public class PoliVentas extends Application {
     @Override
     public void start(Stage primaryStage) {
 
-        PaneLogin p = new PaneLogin();
+        ArticulosMasBuscados p = new ArticulosMasBuscados();
         scene = new Scene(new Group(), 700, 500);
         scene.setRoot(p.getRoot());
         primaryStage.setTitle("PoliVentas");
