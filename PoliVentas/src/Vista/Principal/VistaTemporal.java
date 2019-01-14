@@ -8,6 +8,7 @@ package Vista.Principal;
 import Auxiliares.CONSTANTES;
 import Vista.Administrador.AdministradorOptions;
 import Vista.Comprador.CompradorOptions;
+import Vista.Vendedor.VendedorOptions;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -54,6 +55,10 @@ public class VistaTemporal {
         comprador.setOnAction((ActionEvent e) -> {
             root.getScene().setRoot(new CompradorOptions().getRoot());
         });    
+        
+        vendedor.setOnAction((ActionEvent e) -> {
+            root.getScene().setRoot(new VendedorOptions().getRoot());
+        });
         
         admin.setOnAction((ActionEvent e) -> {
             root.getScene().setRoot(new AdministradorOptions().getRoot());
