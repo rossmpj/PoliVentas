@@ -61,7 +61,6 @@ public class ArticulosMasBuscados {
 
         root.add(new Label("ARTICULOS MAS BUSCADOS"), 0, 0, 4, 1);
         int i = 1;
-
         for (Producto p : productos) {
             agregarFilaGrid(p, i);
             i++;
