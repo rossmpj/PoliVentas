@@ -4,6 +4,7 @@ import Auxiliares.*;
 import static Auxiliares.PatronVistaTitulos.botonRegresarMenu;
 import static Auxiliares.PatronVistaTitulos.crearTituloSubMenu;
 import Modelo.Producto;
+import java.text.Normalizer;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -49,11 +50,8 @@ public class VistaBusquedaSencilla {
     private VBox seccionIngresarBusqueda(){
         VBox contenedorIngresoBusquedas = new VBox();
         GridPane gp = new GridPane();
-        Label ingresoArticulo = new Label("Ingrese artículo: ");
-        ingresoArticulo.setFont(new Font("Verdana", 15));
-        gp.addColumn(0, ingresoArticulo);
-        gp.addColumn(1, busquedaTfld);
-        gp.addColumn(2, buscarBtn);
+        gp.addColumn(0, busquedaTfld);
+        gp.addColumn(1, buscarBtn);
         gp.setHgap(15);
         gp.setVgap(10);
         gp.setAlignment(Pos.CENTER);
@@ -66,16 +64,17 @@ public class VistaBusquedaSencilla {
     private void seccionResultadoBusqueda() {
         VBox contenedorTitulos = new VBox();
         VBox v3 = new VBox();
-        v3.setPadding(new Insets(0, 7, 0, 7));//top,derecha,abajo,izquierda
+        v3.setPadding(new Insets(0, 15, 0, 15));//top,derecha,abajo,izquierda
         contenedorTitulos.setAlignment(Pos.CENTER);
         contenedorTitulos.setSpacing(7);
         contenedorTitulos.getChildren().addAll(seccionEncabezado(), seccionIngresarBusqueda());
         ScrollPane tv = new ScrollPane();
         setCompradorListener();
-        //cargarContenido();
+        cargarContenido();
         v3.getChildren().add(tv);
         buscarBtn.setOnAction(e->{
             tv.setContent(vbox);
+            System.out.println(this.cleanString(this.busquedaTfld.getText()));
         });
         root.setTop(contenedorTitulos);
         root.setCenter(v3);
@@ -88,14 +87,22 @@ public class VistaBusquedaSencilla {
         c.desconectar();
     }
     
+    public String cleanString(String texto) {
+        texto = Normalizer.normalize(texto, Normalizer.Form.NFD);
+        texto = texto.replaceAll("[\\p{InCombiningDiacriticalMarks}]", "");
+        return texto.replaceAll("[^\\w\\s]","").toLowerCase();
+    }
+    
     private void cargarContenido() {
-        //cargarLista();
+        cargarLista();
         for (Producto p : l_articulos){            
             HBox hb = new HBox();
             Label categoryNameLbl = new Label();
             Button buyButton = new Button("Comprar");
-            buyButton.setOnAction(e-> 
-            System.out.println("Comprar: " + p.getNombre()));
+            buyButton.setOnAction((ActionEvent e)-> {
+                System.out.println("Comprar: " + p.getNombre());
+                root.getScene().setRoot(new Comprar(p).getRoot());
+            });
             categoryNameLbl.setText(p.getCategoria());
             hb.setSpacing(100);
             hb.getChildren().addAll(nombreProducto(p.getNombre()), buyButton);
@@ -142,10 +149,11 @@ public class VistaBusquedaSencilla {
     private void inicializarObjetos() {
         buscarBtn = new Button();
         back = botonRegresarMenu();
-        busquedaTfld = new TextField();  
+        busquedaTfld = new TextField(); 
+        busquedaTfld.setPromptText("Ingrese producto..."); 
         vbox = new VBox();
         estiloBotones(buscarBtn, "EAFF16","/search.png");
-        busquedaTfld.setPrefWidth(300);
+        busquedaTfld.setPrefWidth(350);
         busquedaTfld.setPrefHeight(40);
         root.setBottom(back);
     }    
