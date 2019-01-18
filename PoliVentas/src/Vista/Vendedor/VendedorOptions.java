@@ -1,8 +1,8 @@
 package Vista.Vendedor;
 
-import Vista.*;
 import Vista.Principal.PaneLogin;
 import Auxiliares.CONSTANTES;
+import static Auxiliares.PatronVistaTitulos.crearTituloMenuPrincipal;
 import Vista.Administrador.VistaComun;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
@@ -50,10 +50,10 @@ public class VendedorOptions {
     }
     
     private void llamarBotones(){
-        estiloBotones(VentasPendientes, "A8EFFA","/searchS.png");
-        estiloBotones(ResumenVentas, "FAB1A8","/history.png");
-        estiloBotones(MisProductos, "DFA8FA","/newProduct.png");
-        estiloBotones(CerrarSesion, "FAFAA8","/logout.png");
+        estiloBotones(VentasPendientes, "DDC4F7","/searchS.png");
+        estiloBotones(ResumenVentas, "E8C4F7","/history.png");
+        estiloBotones(MisProductos, "F7C4D1","/newProduct.png");
+        estiloBotones(CerrarSesion, "F5C4F7","/logout.png");
     }
     
     private GridPane GridPaneSeccion1(){
@@ -69,25 +69,21 @@ public class VendedorOptions {
         GridPane gp1 = new GridPane();
         gp1.add(MisProductos, 0, 2);
         gp1.add(CerrarSesion, 1, 2); 
-        gp1.setHgap(79);
+        gp1.setHgap(40);
         gp1.setVgap(30);
         gp1.setAlignment(Pos.CENTER);
         return gp1;
     }
     
     private void crearSeccionTituloVendedor(){
-        Label vendedor = new Label("Menú Vendedor");
-        vendedor.setPrefSize(720, 80);
-        vendedor.setStyle("-fx-font: 25 Verdana; -fx-text-fill: #FFFFFF; -fx-background-color: #AEA8FA; ");
-        vendedor.setAlignment(Pos.CENTER);
-        root.setTop(vendedor);
+        root.setTop(crearTituloMenuPrincipal("Menú Vendedor", "DE479C"));
     }
     
     private VBox crearSeccionVentas(){
-        VBox ventas = new VBox();
+        VBox ventas = new VBox();//A4A700
         HBox ventas1 = new HBox();
         Label lblTitle = new Label("Ventas");
-        estiloLabels(lblTitle, "4C00A7");
+        estiloLabels(lblTitle, "5900A7");
         ventas1.getChildren().addAll(VentasPendientes,ResumenVentas);
         ventas.getChildren().addAll(lblTitle, ventas1);
         return ventas;
@@ -110,14 +106,14 @@ public class VendedorOptions {
     }
     
     public void estiloBotones(Button btn, String base, String path){
-        btn.setStyle("-fx-font: 9 Verdana; -fx-base: #"+base+";");
+        btn.setStyle("-fx-font: 12 Verdana; -fx-base: #"+base+";");
         Image image = new Image(getClass().getResourceAsStream(CONSTANTES.PATH_IMG+path));
         btn.setGraphic(new ImageView(image));
-        btn.setPrefSize(130,100);
+        btn.setPrefSize(190, 130);
     }
-    
+     
     public void estiloLabels(Label lbl, String base){
-        lbl.setPrefSize(260, 80);
+        lbl.setPrefSize(380, 80);
         lbl.setStyle("-fx-font: 17 Verdana; -fx-text-fill: #FFFFFF; -fx-background-color: #"+base+"; ");
         lbl.setAlignment(Pos.CENTER);
     }

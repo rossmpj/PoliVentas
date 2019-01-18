@@ -1,18 +1,13 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Vista.Administrador;
 
 import Auxiliares.CONSTANTES;
+import static Auxiliares.PatronVistaTitulos.botonRegresarMenu;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -48,8 +43,7 @@ public class VistaBuscarProducto {
     }
 
     private void inicializarObjetos() {
-        back = new Button();
-        estiloBotones(back, "FFFFFF", "/back.png");
+        back =  botonRegresarMenu();
         root.setBottom(back);
         buscar = new Button();
         estiloBotones(buscar, "9FF781", "/search.png");

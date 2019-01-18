@@ -1,11 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Vista.Administrador;
 
 import Auxiliares.CONSTANTES;
+import static Auxiliares.PatronVistaTitulos.botonRegresarMenu;
+import static Auxiliares.PatronVistaTitulos.crearTituloSubMenu;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -44,8 +41,7 @@ public class VistaInfoProducto {
     }
 
     private void inicializarObjetos() {
-        back = new Button();
-        estiloBotones(back, "FFFFFF", "/back.png");
+        back =  botonRegresarMenu();
         root.setBottom(back);
         nombre = new TextField();
         nombre.setPrefWidth(100);
@@ -119,11 +115,7 @@ public class VistaInfoProducto {
     }
 
     private void crearSeccionTitulo() {
-        Label comprador = new Label(this.titulo);
-        comprador.setPrefSize(720, 80);
-        comprador.setStyle("-fx-font: 25 Verdana; -fx-text-fill: #FFFFFF; -fx-background-color: #" + this.color + "; ");
-        comprador.setAlignment(Pos.CENTER);
-        root.setTop(comprador);
+        root.setTop(crearTituloSubMenu(titulo, color));
     }
 
     public BorderPane getRoot() {

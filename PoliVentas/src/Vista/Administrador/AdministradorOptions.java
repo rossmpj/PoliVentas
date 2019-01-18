@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Vista.Administrador;
 
 import Auxiliares.CONSTANTES;
@@ -18,6 +13,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import static Auxiliares.PatronVistaTitulos.crearTituloMenuPrincipal;
 
 /**
  *
@@ -130,12 +126,8 @@ public class AdministradorOptions {
         return compras;
     }
 
-    private void crearSeccionTituloAdmin() { //comun
-        Label comprador = new Label("Menú Administrador");
-        comprador.setPrefSize(720, 80);
-        comprador.setStyle("-fx-font: 25 Verdana; -fx-text-fill: #FFFFFF; -fx-background-color: #47DEBD; ");
-        comprador.setAlignment(Pos.CENTER);
-        root.setTop(comprador);
+    private void crearSeccionTituloAdmin() {
+        root.setTop(crearTituloMenuPrincipal("Menú Administrador", "47DEBD"));
     }
 
     private GridPane GridPaneSeccion1() {

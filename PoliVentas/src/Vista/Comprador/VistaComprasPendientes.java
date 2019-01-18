@@ -1,5 +1,6 @@
 package Vista.Comprador;
 
+import static Auxiliares.PatronVistaTitulos.crearTituloSubMenu;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
@@ -19,7 +20,7 @@ import javafx.scene.layout.VBox;
  *
  * @author Rosy
  */
-public class PaneComprasPendientes {
+public class VistaComprasPendientes {
     private final BorderPane root;
     private RadioButton  c, n;
     private Label EntregaATiempo;
@@ -29,7 +30,7 @@ public class PaneComprasPendientes {
         return root;
     }
     
-    public PaneComprasPendientes(){
+    public VistaComprasPendientes(){
         root = new BorderPane();
         crearSeccionTituloComprador();
         inicializarBotones();
@@ -88,11 +89,7 @@ public class PaneComprasPendientes {
     }
     
     private void crearSeccionTituloComprador(){
-        Label comprador = new Label("Compras Pendientes");
-        comprador.setPrefSize(720, 80);
-        comprador.setStyle("-fx-font: 25 Verdana; -fx-text-fill: #FFFFFF; -fx-background-color: #A8C5FA; ");
-        comprador.setAlignment(Pos.CENTER);
-        root.setTop(comprador);
+        root.setTop(crearTituloSubMenu("Compras Pendientes", "A8C5FA"));
     }
     
     private void crearSeccionProductos(){

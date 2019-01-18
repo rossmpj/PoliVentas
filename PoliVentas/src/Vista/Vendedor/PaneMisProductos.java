@@ -1,18 +1,13 @@
 package Vista.Vendedor;
 
-import Vista.*;
-import javafx.beans.value.ObservableValue;
+import static Auxiliares.PatronVistaTitulos.crearTituloSubMenu;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableView;
-import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.BorderPane;
-import org.controlsfx.control.Rating;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 
@@ -65,11 +60,7 @@ public class PaneMisProductos {
     } 
     
     private void crearSeccionTituloProductos(){
-        Label comprador = new Label("Mis productos");
-        comprador.setPrefSize(720, 80);
-        comprador.setStyle("-fx-font: 25 Verdana; -fx-text-fill: #FFFFFF; -fx-background-color: #A8C5FA; ");
-        comprador.setAlignment(Pos.CENTER);
-        root.setTop(comprador);
+        root.setTop(crearTituloSubMenu("Mis productos", "A8C5FA"));
     }
     
     private void crearSeccionProductos(){

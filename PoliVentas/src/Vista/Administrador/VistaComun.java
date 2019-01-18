@@ -1,11 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Vista.Administrador;
 
 import Auxiliares.CONSTANTES;
+import static Auxiliares.PatronVistaTitulos.botonRegresarMenu;
 import Vista.Comprador.CompradorOptions;
 import javafx.event.ActionEvent;
 import javafx.geometry.Pos;
@@ -14,6 +10,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
 
 /**
  *
@@ -40,12 +37,11 @@ public class VistaComun {
     }
     
     private void inicializarObjetos(){
-    back= new Button();
-     estiloBotones(back, "FFFFFF", "/back.png");
-     root.setBottom(back);
+        back = botonRegresarMenu();
+        root.setBottom(back);
     }
     
-     public void estiloBotones(Button btn, String base, String path){
+    public void estiloBotones(Button btn, String base, String path){
         btn.setStyle("-fx-background-radius: 15em; -fx-min-width: 50px; -fx-min-height: 50px;"
                 + " -fx-max-width: 50px; -fx-max-height: 50px; -fx-base: #"+base+";");
         Image image = new Image(getClass().getResourceAsStream(CONSTANTES.PATH_IMG+path));
@@ -54,11 +50,14 @@ public class VistaComun {
     }
     
     private void crearSeccionTitulo(){ 
+        VBox contenedorTitulo = new VBox();
         Label comprador = new Label(this.tipo);
-        comprador.setPrefSize(720, 80);
-        comprador.setStyle("-fx-font: 25 Verdana; -fx-text-fill: #FFFFFF; -fx-background-color: #"+this.color+"; ");
-        comprador.setAlignment(Pos.CENTER);
-        root.setTop(comprador);
+        comprador.setStyle("-fx-font: 25 Verdana; -fx-text-fill: #FFFFFF; ");
+        comprador.setPrefHeight(80);
+        contenedorTitulo.setAlignment(Pos.CENTER);
+        contenedorTitulo.setStyle("-fx-background-color: #"+this.color+";");
+        contenedorTitulo.getChildren().add(comprador);
+        root.setTop(contenedorTitulo);
     }
     
     private void setCompradorListener(){

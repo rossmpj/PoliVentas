@@ -6,6 +6,8 @@
 package Vista.Administrador;
 
 import Auxiliares.CONSTANTES;
+import static Auxiliares.PatronVistaTitulos.botonRegresarMenu;
+import static Auxiliares.PatronVistaTitulos.crearTituloSubMenu;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -45,8 +47,7 @@ public class VistaBuscarUsuario {
     }
 
     private void inicializarObjetos() {
-        back = new Button();
-        estiloBotones(back, "FFFFFF", "/back.png");
+        back =  botonRegresarMenu();
         root.setBottom(back);
         buscar = new Button();
          estiloBotones(buscar, "FAB1A8","/search.png");
@@ -70,11 +71,7 @@ public class VistaBuscarUsuario {
     }
 
     private void crearSeccionTitulo() {
-        Label comprador = new Label("Buscar Usuario");
-        comprador.setPrefSize(720, 80);
-        comprador.setStyle("-fx-font: 25 Verdana; -fx-text-fill: #FFFFFF; -fx-background-color: #" + this.color + "; ");
-        comprador.setAlignment(Pos.CENTER);
-        root.setTop(comprador);
+        root.setTop(crearTituloSubMenu("Buscar Usuario", color));
     }
 
     private VBox crearSeccionBusqueda() {

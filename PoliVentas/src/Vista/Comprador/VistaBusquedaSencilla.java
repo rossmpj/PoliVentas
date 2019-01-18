@@ -1,6 +1,8 @@
 package Vista.Comprador;
 
 import Auxiliares.*;
+import static Auxiliares.PatronVistaTitulos.botonRegresarMenu;
+import static Auxiliares.PatronVistaTitulos.crearTituloSubMenu;
 import Modelo.Producto;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -19,7 +21,7 @@ import javafx.scene.text.Font;
  *
  * @author Rosy
  */
-public class PaneBusquedaSencilla {
+public class VistaBusquedaSencilla {
     private final BorderPane root;
     private Button buscarBtn, back;
     private TextField busquedaTfld;
@@ -31,7 +33,7 @@ public class PaneBusquedaSencilla {
         return root;
     }
 
-    public PaneBusquedaSencilla() {
+    public VistaBusquedaSencilla() {
         root = new BorderPane();
         c = DBConnection.getInstance();
         BackgroundFill myBF = new BackgroundFill(Color.rgb(245, 255, 231), new CornerRadii(1), new Insets(0.0, 0.0, 0.0, 0.0));
@@ -41,14 +43,7 @@ public class PaneBusquedaSencilla {
     }
 
     private VBox seccionEncabezado() {
-        VBox encabezados = new VBox();
-        Label lblTitle = new Label("Búsqueda Sencilla");
-        lblTitle.setPrefSize(720, 80);
-        lblTitle.setStyle("-fx-font: 25 Verdana; -fx-text-fill: #274400; -fx-background-color: #E8FDA5; ");
-        lblTitle.setAlignment(Pos.CENTER);
-        encabezados.setAlignment(Pos.CENTER);         
-        encabezados.getChildren().addAll(lblTitle);
-        return encabezados;
+        return crearTituloSubMenu("Búsqueda Sencilla", "E8FDA5");
     }
     
     private VBox seccionIngresarBusqueda(){
@@ -146,10 +141,9 @@ public class PaneBusquedaSencilla {
     
     private void inicializarObjetos() {
         buscarBtn = new Button();
-        back = new Button();
+        back = botonRegresarMenu();
         busquedaTfld = new TextField();  
         vbox = new VBox();
-        estiloBotones(back, "FFFFFF", "/back.png");
         estiloBotones(buscarBtn, "EAFF16","/search.png");
         busquedaTfld.setPrefWidth(300);
         busquedaTfld.setPrefHeight(40);
@@ -158,7 +152,7 @@ public class PaneBusquedaSencilla {
     
     public void estiloBotones(Button btn, String base, String path){
         btn.setStyle("-fx-background-radius: 15em; -fx-min-width: 50px; -fx-min-height: 50px;"
-                + " -fx-max-width: 50px; -fx-max-height: 50px; -fx-base: #"+base+";");
+                + " -fx-max-width: 50px; -fx-max-height: 50px; -fx-base: #"+base+"; ");
         Image image = new Image(getClass().getResourceAsStream(CONSTANTES.PATH_IMG+path));
         btn.setGraphic(new ImageView(image));
         btn.setAlignment(Pos.CENTER);

@@ -25,8 +25,8 @@ public class PoliVentas extends Application {
     @Override
     public void start(Stage primaryStage) {
 
-        PaneLogin p = new PaneLogin();
-        scene = new Scene(new Group(), 700, 500);
+        ArticulosMasBuscados p = new ArticulosMasBuscados();
+        scene = new Scene(new Group(), 850, 650);
         scene.setRoot(p.getRoot());
         primaryStage.setTitle("PoliVentas");
         primaryStage.setScene(scene);

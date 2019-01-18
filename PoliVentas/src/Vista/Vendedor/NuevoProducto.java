@@ -5,8 +5,8 @@
  */
 package Vista.Vendedor;
 
-import Vista.Administrador.*;
 import Auxiliares.CONSTANTES;
+import static Auxiliares.PatronVistaTitulos.crearTituloSubMenu;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -130,11 +130,7 @@ public class NuevoProducto {
     }
 
     private void crearSeccionTitulo() {
-        Label comprador = new Label(this.titulo);
-        comprador.setPrefSize(720, 80);
-        comprador.setStyle("-fx-font: 25 Verdana; -fx-text-fill: #FFFFFF; -fx-background-color: #" + this.color + "; ");
-        comprador.setAlignment(Pos.CENTER);
-        root.setTop(comprador);
+        root.setTop(crearTituloSubMenu(titulo, color));
     }
 
     public BorderPane getRoot() {
