@@ -170,7 +170,7 @@ public class Usuario {
         try{
 
             Statement statement = CONNECTION.getConnection().createStatement();
-            ResultSet result = statement.executeQuery("SELECT * FROM db_poliventas.tb_usuario WHERE ci_usuario = " + id);
+            ResultSet result = statement.executeQuery("SELECT * FROM db_poliventas.tb_usuario WHERE ci_usuario =" + id);
             
             if(result.next()){
                 

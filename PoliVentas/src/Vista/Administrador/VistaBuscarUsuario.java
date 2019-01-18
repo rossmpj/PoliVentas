@@ -8,17 +8,24 @@ package Vista.Administrador;
 import Auxiliares.CONSTANTES;
 import static Auxiliares.PatronVistaTitulos.botonRegresarMenu;
 import static Auxiliares.PatronVistaTitulos.crearTituloSubMenu;
+import Modelo.Usuario;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Line;
 import javafx.scene.text.Font;
 
 /**
@@ -31,15 +38,17 @@ public class VistaBuscarUsuario {
     private Button back, buscar;
     private String color;
     private TextField campo;
+    private ObservableList<Usuario> lusario;
+    private VBox vbox;
 
     public VistaBuscarUsuario(String color) {
         root = new BorderPane();
         this.color = color;
         inicializarObjetos();
         crearSeccionTitulo();
-        setCompradorListener();
+       setBackListener();
         seccionResultadoBusqueda();
-       
+
     }
 
     public BorderPane getRoot() {
@@ -47,13 +56,15 @@ public class VistaBuscarUsuario {
     }
 
     private void inicializarObjetos() {
-        back =  botonRegresarMenu();
+        back = botonRegresarMenu();
         root.setBottom(back);
         buscar = new Button();
-         estiloBotones(buscar, "FAB1A8","/search.png");
+        estiloBotones(buscar, "A8ECDD", "/search.png");
         campo = new TextField();
-        campo.setPrefWidth(300);
+        campo.setPrefWidth(350);
         campo.setPrefHeight(40);
+        campo.setPromptText("Ingrese cédula de Identidad o nombres completos...");
+        vbox= new VBox();
     }
 
     private void estiloBotones(Button btn, String base, String path) {
@@ -64,7 +75,7 @@ public class VistaBuscarUsuario {
         btn.setAlignment(Pos.CENTER);
     }
 
-    private void setCompradorListener() {
+    private void setBackListener() {
         back.setOnAction((ActionEvent e) -> {
             root.getScene().setRoot(new AdministradorOptions().getRoot());
         });
@@ -75,50 +86,90 @@ public class VistaBuscarUsuario {
     }
 
     private VBox crearSeccionBusqueda() {
-        Label name = new Label("Ingrese Usuario");
         VBox contenedorIngresoBusquedas = new VBox();
         GridPane gp = new GridPane();
-        name.setFont(new Font("Verdana", 15));
-        gp.addColumn(0, name);
-        gp.addColumn(1, campo);
-        gp.addColumn(2, buscar);
+        gp.addColumn(0, campo);
+        gp.addColumn(1, buscar);
         gp.setHgap(15);
         gp.setVgap(10);
-        gp.setAlignment(Pos.CENTER);
-        contenedorIngresoBusquedas.setPadding(new Insets(10, 0, 10, 0));
-        contenedorIngresoBusquedas.setAlignment(Pos.CENTER);
+        gp.setAlignment(Pos.TOP_CENTER);
+        contenedorIngresoBusquedas.setPadding(new Insets(5, 0, 0, 0));
+        contenedorIngresoBusquedas.setAlignment(Pos.TOP_CENTER);
         contenedorIngresoBusquedas.getChildren().add(gp);
         return contenedorIngresoBusquedas;
     }
-    
-     private void seccionResultadoBusqueda() {
+
+    private void seccionResultadoBusqueda() {
         VBox contenedorTitulos = new VBox();
+        VBox v3 = new VBox();
+        v3.setPadding(new Insets(0, 7, 0, 7));
         contenedorTitulos.setPadding(new Insets(0, 7, 0, 7));//top,derecha,abajo,izquierda
         contenedorTitulos.setAlignment(Pos.TOP_CENTER);
         contenedorTitulos.setSpacing(7);
-        contenedorTitulos.getChildren().addAll(crearSeccionBusqueda(),producto());
+        ScrollPane tv = new ScrollPane();
+        v3.getChildren().add(tv);
+        contenedorTitulos.getChildren().addAll(crearSeccionBusqueda(),v3);
+        buscar.setOnAction(e -> {
+            tv.setContent(vbox);
+            cargarContenido();
+        });
+        
         root.setCenter(contenedorTitulos);
     }
-
-     private VBox producto(){
-    Button modificar = new Button("Modificar");
-    VBox pro= new VBox();
-    pro.getChildren().addAll(seccionAvatar(),modificar);
-    pro.setSpacing(5);
-    pro.setAlignment(Pos.TOP_LEFT);
-    modificar.setOnAction((ActionEvent e) -> {
-            root.getScene().setRoot(new VistaInfoUsuario(false, "A8ECDD", "Ingreso nuevo usuario").getRoot());
-        });
-    return pro;  
     
+     private Label nombreUsuario(String nombre) {
+        Label productNameLbl = new Label();
+        productNameLbl.setFont(new Font("Verdana", 12));
+        productNameLbl.setText("Nombres: " + nombre);
+        return productNameLbl;
+    }
+
+    private Label ciUsuario(String ci) {
+        Label productNameLbl = new Label();
+        productNameLbl.setFont(new Font("Verdana", 12));
+        productNameLbl.setText("CI: " + ci);
+        return productNameLbl;
     }
     
-    
+     public Line drawLine() {
+        Line linea = new Line(0, 0, 780, 0);
+        linea.setStroke(Color.STEELBLUE);
+        linea.setStrokeWidth(2);
+        return linea;
+    }
      
+     private void cargarLista() {
+        lusario = FXCollections.observableArrayList();
+        lusario.add(
+                new Usuario("Yuzuru", "Hanyu", "0522208", false, "yuzupoh@yahoo.com", "Toronto Cricket", "0908102940", "20197878"
+                ));
+        lusario.add(
+                new Usuario("Jun Hwan", "Cha", "0522208", false, "yuzupoh@yahoo.com", "Toronto Cricket", "0908102940", "20197878"
+                ));
+    }
      
-     private VBox seccionAvatar() {
+      private void cargarContenido() {
+        cargarLista();
+        for (Usuario p : this.lusario) {
+            HBox hb = new HBox();
+            Label categoryNameLbl = new Label();
+            Button viewButton = new Button("Ver");
+            viewButton.setOnAction(e
+                    -> root.getScene().setRoot(new VistaInfoUsuario(false, "A8ECDD", "Ingreso nuevo usuario").getRoot()));
+            categoryNameLbl.setText(p.getTelefono());
+            hb.setSpacing(100);
+            hb.getChildren().addAll(nombreUsuario(p.getNombres()+ " " + p.getApellidos()), viewButton);
+            hb.setSpacing(50);
+            hb.setPadding(new Insets(7, 0, 7, 5));
+            vbox.setPadding(new Insets(7, 25, 0, 5));
+            vbox.getChildren().addAll(hb, categoryNameLbl, ciUsuario(p.getCedula()),
+                    drawLine());
+        }
+    }
+
+    private VBox seccionAvatar() {
         VBox k = new VBox();
-        Image image = new Image(getClass().getResourceAsStream(CONSTANTES.PATH_IMG+"/man.png"));
+        Image image = new Image(getClass().getResourceAsStream(CONSTANTES.PATH_IMG + "/man.png"));
         Label myLabel = new Label();
         myLabel.setGraphic(new ImageView(image));
         k.setPadding(new Insets(30, 0, 0, 5));

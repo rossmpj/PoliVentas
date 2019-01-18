@@ -6,6 +6,7 @@
 package Vista.Administrador;
 
 import Auxiliares.CONSTANTES;
+import static Auxiliares.PatronVistaTitulos.botonRegresarMenu;
 import static Auxiliares.PatronVistaTitulos.crearTituloSubMenu;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -49,8 +50,7 @@ public class VistaInfoUsuario {
     }
 
     private void inicializarBotones() {
-        back = new Button();
-        estiloBotones(back, "FFFFFF", "/back.png");
+        back = botonRegresarMenu();
         root.setBottom(back);
         ci = new TextField();
         ci.setPrefWidth(100);
@@ -140,7 +140,7 @@ public class VistaInfoUsuario {
      * De acuerdo a lo seleccionado en el combo, se aplicarán los filtros
      */
     private void cargarCombo() {
-        String se[] = {"Comprador", "Vendedor"};
+        String se[] = {"Administrador","Comprador", "Vendedor"};
         rol.setItems(FXCollections.observableArrayList(se));
     }
 

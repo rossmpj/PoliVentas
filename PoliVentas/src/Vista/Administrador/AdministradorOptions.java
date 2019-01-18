@@ -22,7 +22,7 @@ import static Auxiliares.PatronVistaTitulos.crearTituloMenuPrincipal;
 public class AdministradorOptions {
 
     private final BorderPane root;
-    private Button busquedaSencilla, busquedaAvanzada, nuevoUser, buscarUser, nuevoProducto, buscarProducto,
+    private Button nuevoUser, buscarUser, nuevoProducto, buscarProducto,
             comprasPendientes, comprasAnuladas, comprasExitosas, cerrarSesion;
 
     public AdministradorOptions() {
@@ -37,8 +37,6 @@ public class AdministradorOptions {
     }
 
     private void inicializarBotones() {
-        busquedaSencilla = new Button("Búsqueda\nSencilla");
-        busquedaAvanzada = new Button("Búsqueda\nAvanzada");
         nuevoUser = new Button("Agregar\nUsuario");
         buscarUser = new Button("Buscar\nUsuario");
         nuevoProducto = new Button("Nuevo\nproducto");
@@ -73,10 +71,8 @@ public class AdministradorOptions {
     }
 
     private void llamarBotones() {
-        estiloBotones(busquedaSencilla, "A8EFFA", "/busqueda.png");
-        estiloBotones(busquedaAvanzada, "A8B6FA", "/ajustes.png");
         estiloBotones(nuevoUser, "C7E7E0", "/add-user.png");
-        estiloBotones(buscarUser, "A8ECDD", "/searchu.png");//C3F58E
+        estiloBotones(buscarUser, "A8ECDD", "/searchu.png");
         estiloBotones(nuevoProducto, "81F7D8", "/valor.png");
         estiloBotones(buscarProducto, "51A7C1", "/bolsa.png");
         estiloBotones(comprasPendientes, "78EDF4", "/cartp.png");
@@ -105,16 +101,6 @@ public class AdministradorOptions {
         return productos;
     }
 
-    private VBox crearSeccionBusquedas() {
-        VBox busqueda = new VBox();
-        HBox busqueda1 = new HBox();
-        Label lblTitle = new Label("Búsqueda");
-        estiloLabels(lblTitle, "515489");
-        busqueda1.getChildren().addAll(busquedaSencilla, busquedaAvanzada);
-        busqueda.getChildren().addAll(lblTitle, busqueda1);
-        return busqueda;
-    }
-
     private VBox crearSeccionCompra() {
         VBox compras = new VBox();
         HBox compras1 = new HBox();
@@ -132,9 +118,8 @@ public class AdministradorOptions {
 
     private GridPane GridPaneSeccion1() {
         GridPane gp = new GridPane();
-        gp.add(crearSeccionBusquedas(), 0, 0);
-        gp.add(crearSeccionProductos(), 1, 0);
-        gp.add(crearSeccionUsuarios(), 2, 0);
+        gp.add(crearSeccionProductos(), 0, 0);
+        gp.add(crearSeccionUsuarios(), 1, 0);
         gp.setHgap(10);
         gp.setVgap(30);
         gp.setAlignment(Pos.CENTER);
@@ -147,7 +132,6 @@ public class AdministradorOptions {
         gp.add(cerrarSesion, 1, 2);
         gp.setHgap(10);
         gp.setVgap(10);
-        gp.setPadding(new Insets(0, 24, 0, 0));
         gp.setAlignment(Pos.CENTER);
         return gp;
     }
@@ -156,7 +140,6 @@ public class AdministradorOptions {
         listenProducto();
         listenUsuario();
         listenCompra();
-        listenBusqueda();
         listenCerrarSesion();     
     }
     
@@ -195,14 +178,5 @@ public class AdministradorOptions {
             root.getScene().setRoot(new VistaComun("Compras Exitosas", "BCFBFF",'A').getRoot());
         });
     }
-
-    private void listenBusqueda() {
-        busquedaSencilla.setOnAction((ActionEvent e) -> {
-            root.getScene().setRoot(new VistaComun("Búsqueda Sencilla", "A8EFFA",'A').getRoot());
-        });
-        busquedaAvanzada.setOnAction((ActionEvent e) -> {
-            root.getScene().setRoot(new VistaComun("Búsqueda Avanzada", "A8B6FA",'A').getRoot());
-        });
-
-    }
+    
 }
