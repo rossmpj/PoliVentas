@@ -1,72 +1,84 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Vista.Vendedor;
 
+import javafx.event.ActionEvent;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TableView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Font;
-import javafx.scene.text.Text;
+
 
 /**
  *
- * @author Galo Xavier Figueroa Villacreses
+ * @author Rosy
  */
 public class VentasPendientes {
-    
     private final BorderPane root;
-    
-    
-    public VentasPendientes(){
-        
-        root = new BorderPane();
-        
-        createContent();
-        
-    }
-    
-    private void createContent(){
-        
-        Text viewTitle = new Text("Mis ventas pendientes");
-        viewTitle.setFont(new Font("PRODUCTOS", 20));
-        
-        root.setTop(viewTitle);
-        
-        VBox center = new VBox();
-        
-        for(int i = 1; i < 11; ++i)
-            center.getChildren().add(getPseudoVenta(i, 11 - i));
-        
-        root.setCenter(center);
-        
-    }
-    
-    private VBox getPseudoVenta(int numero, int quantity){
-        
-        VBox venta = new VBox();
-        
-        Text name = new Text("Pedido " + numero);
-        name.setFont(new Font("Arial", 16));
-        venta.getChildren().add(name);
-        
-        Text product = new Text("Producto " + numero);
-        name.setFont(new Font("Arial", 16));
-        venta.getChildren().add(product);
-        
-        Text quantityText = new Text(Integer.toString(quantity));
-        name.setFont(new Font("Arial", 14));
-        venta.getChildren().add(quantityText);
-        
-        
-        return venta;
-        
-    }
+    private Button AnularVenta, VerMapa, Regresar;
     
     public BorderPane getRoot(){
-        
         return root;
     }
     
+    public VentasPendientes(){
+        root = new BorderPane();
+        crearSeccionTituloVentasPendientes();
+        inicializarBotones();
+        crearSeccionVentasPendientes();
+        seccionCalificaciones();
+        setListeners();
+    }
+    
+    private void inicializarBotones(){   
+        
+        AnularVenta = new Button("Anular venta");
+        AnularVenta.setStyle("-fx-font: 17 Verdana; ");
+        
+        VerMapa = new Button("Ver en el mapa");
+        VerMapa.setStyle("-fx-font: 17 Verdana; ");
+        
+        Regresar = new Button("        Volver        ");
+        Regresar.setStyle("-fx-font: 17 Verdana; ");
+    }
+    
+    private void seccionCalificaciones(){ 
+        VBox vBoxCalif = new VBox();
+        
+        vBoxCalif.setSpacing(24);
+        vBoxCalif.setAlignment(Pos.CENTER);
+        
+        vBoxCalif.setPadding(new Insets(8, 8, 8, 8));
+        
+        vBoxCalif.getChildren().addAll(AnularVenta, VerMapa, Regresar);
+        root.setLeft(vBoxCalif);
+    } 
+    
+    private void crearSeccionTituloVentasPendientes(){
+        Label comprador = new Label("Mis ventas pendientes");
+        comprador.setPrefSize(720, 80);
+        comprador.setStyle("-fx-font: 25 Verdana; -fx-text-fill: #FFFFFF; -fx-background-color: #A8C5FA; ");
+        comprador.setAlignment(Pos.CENTER);
+        root.setTop(comprador);
+    }
+    
+    private void crearSeccionVentasPendientes(){
+        VBox contenedorTablaProductos = new VBox();
+        TableView productos = new TableView();
+        contenedorTablaProductos.setPadding(new Insets(10, 10, 10, 10));
+        contenedorTablaProductos.getChildren().add(productos);
+        root.setCenter(contenedorTablaProductos);
+    }
+    
+    private void setListeners(){
+        
+        Regresar.setOnAction((ActionEvent e) -> {
+            root.getScene().setRoot(new VendedorOptions().getRoot());
+        });          
+    }
+    
+    public void estiloBotones(Button btn){
+        btn.setStyle("-fx-font: 17 Verdana;");
+    }
 }

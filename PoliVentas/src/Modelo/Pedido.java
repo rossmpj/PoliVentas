@@ -7,6 +7,7 @@ package Modelo;
 
 import java.sql.Date;
 import java.sql.Time;
+import java.util.List;
 
 /**
  *
@@ -107,6 +108,18 @@ public class Pedido {
 
     public void setMetodoPago(Pago metodoPago) {
         this.metodoPago = metodoPago;
+    }
+    
+    public static List<Pedido> getPedidos(){
+        
+        throw new UnsupportedOperationException();
+        
+    }
+    
+    public static Pedido getPedido(String id){
+        
+        throw new UnsupportedOperationException();
+        
     }
 
     @Override

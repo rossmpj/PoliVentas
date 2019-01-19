@@ -90,11 +90,11 @@ public class NuevoProducto {
     private void gestionSalida() {
         if (ingreso) {
             back.setOnAction((ActionEvent e) -> {
-                root.getScene().setRoot(new PaneMisProductos().getRoot());
+                root.getScene().setRoot(new MisProductos().getRoot());
             });
         } else {
             back.setOnAction((ActionEvent e) -> {
-                root.getScene().setRoot(new PaneMisProductos().getRoot());
+                root.getScene().setRoot(new MisProductos().getRoot());
             });
         }
     }

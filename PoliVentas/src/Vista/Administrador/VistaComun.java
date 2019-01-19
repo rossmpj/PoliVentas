@@ -7,6 +7,7 @@ package Vista.Administrador;
 
 import Auxiliares.CONSTANTES;
 import Vista.Comprador.CompradorOptions;
+import Vista.Vendedor.VendedorOptions;
 import javafx.event.ActionEvent;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -68,7 +69,7 @@ public class VistaComun {
                     root.getScene().setRoot(new CompradorOptions().getRoot());
                     break;
                 case 'V':
-                    //root.getScene().setRoot(new VendedorOptions().getRoot());
+                    root.getScene().setRoot(new VendedorOptions().getRoot());
                     break;
                 case 'A':
                     root.getScene().setRoot(new AdministradorOptions().getRoot());

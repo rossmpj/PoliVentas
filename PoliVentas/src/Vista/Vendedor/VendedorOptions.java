@@ -103,7 +103,7 @@ public class VendedorOptions {
         });
         
         MisProductos.setOnAction((ActionEvent e) -> {
-            root.getScene().setRoot(new PaneMisProductos().getRoot());
+            root.getScene().setRoot(new MisProductos().getRoot());
         });
         
         listenCerrarSesion();
