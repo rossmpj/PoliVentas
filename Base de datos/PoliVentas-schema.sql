@@ -66,9 +66,11 @@ create table tb_calificacion_producto(
 create table tb_calificacion_vendedor(
 	id_calificacion_vend int auto_increment,
     calificacion_vendedor int default 0,
-    id_vendedor varchar(10),
     primary key (id_calificacion_vend),
-    constraint id_vendedor_calif foreign key (id_vendedor) references tb_vendedor(id_vendedor)
+    id_vendedor varchar(10),
+    constraint id_vendedor_calif foreign key (id_vendedor) references tb_vendedor(id_vendedor),
+    id_comprador varchar(10),
+    constraint id_comprador_calif foreign key (id_comprador) references tb_comprador(id_comprador)
 );
 
 create table tb_forma_pago(

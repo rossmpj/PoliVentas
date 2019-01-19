@@ -24,6 +24,7 @@ public class Comprar {
     private final BorderPane root;
     private Button PagoEfectivo, PagoVirtual, back;
     private final Label nota;
+    private Producto product;
     
     public BorderPane getRoot(){
         return root;
@@ -31,6 +32,7 @@ public class Comprar {
     
     public Comprar(Producto p){
         root = new BorderPane();
+        product = p;
         nota = new Label("Usted está a punto de comprar un@: "+ p.getNombre());//hay que establecer cantidad
         crearSeccionTituloComprador();
         createContent();
@@ -72,12 +74,15 @@ public class Comprar {
     }
   
     private void setListeners(){
+        SendMail m = new SendMail();
         PagoEfectivo.setOnAction((ActionEvent e) -> {
             this.PagoVirtual.setDisable(true);
+            m.SendMail("rosita_mariap@hotmail.es", product.toString());
             //root.getScene().setRoot(new VistaBusquedaSencilla().getRoot());
         });    
         PagoVirtual.setOnAction((ActionEvent e) -> {
             this.PagoEfectivo.setDisable(true);
+             m.SendMail("rosita_mariap@hotmail.es", product.toString());
             //root.getScene().setRoot(new VistaComun("Búsqueda Avanzada", "A8B6FA",'C').getRoot());
         });
         back.setOnAction((ActionEvent e) -> {

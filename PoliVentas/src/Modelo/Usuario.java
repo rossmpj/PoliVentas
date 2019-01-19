@@ -1,15 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Modelo;
 
 import Auxiliares.DBConnection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -50,6 +43,20 @@ public class Usuario {
         this.direccion = direccion;
         this.cedula = cedula;
         this.matricula = matricula;
+    }
+
+    public Usuario(String nombres, String apellidos, String telefono, boolean whatsapp, String email, String direccion, String cedula, String matricula, String usuario, String contrasena, boolean estado) {
+        this.nombres = nombres;
+        this.apellidos = apellidos;
+        this.telefono = telefono;
+        this.whatsapp = whatsapp;
+        this.email = email;
+        this.direccion = direccion;
+        this.cedula = cedula;
+        this.matricula = matricula;
+        this.usuario = usuario;
+        this.contrasena = contrasena;
+        this.estado = estado;
     }
 
     public Usuario( String cedula,String nombres, String apellidos, String telefono,

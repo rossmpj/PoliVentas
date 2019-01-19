@@ -20,9 +20,12 @@ public class Producto {
     private String idProducto;
     private String nombre;
     private String descripcion;
-    private String categoria;
     private double precio;
+    private String categoria;
+    private int stock;
+    private int estado;
     private int calificacion;
+    private Vendedor vendedor;
     
     public Producto(){}
     
@@ -41,7 +44,19 @@ public class Producto {
         this.precio = precio;
         this.calificacion = calificacion;
     }
-    
+
+    public Producto(String idProducto, String nombre, String descripcion, double precio, String categoria, int stock, int estado, int calificacion, Vendedor vendedor) {
+        this.idProducto = idProducto;
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+        this.precio = precio;
+        this.categoria = categoria;
+        this.stock = stock;
+        this.estado = estado;
+        this.calificacion = calificacion;
+        this.vendedor = vendedor;
+    }
+        
     public String getIdProducto() {
         return idProducto;
     }
@@ -137,7 +152,9 @@ public class Producto {
 
     @Override
     public String toString() {
-        return "Producto{" + "idProducto=" + idProducto + ", nombre=" + nombre + ", descripcion=" + descripcion + ", categoria=" + categoria + ", precio=" + precio + ", calificacion=" + calificacion + '}';
+        return "DETALLES DE PRODUCTO: " + "\nID Producto: " + idProducto + "\nNombre: " 
+                + nombre + "\nDescripcion: " + descripcion + "\nCategoria: " + categoria 
+                + "\nPrecio: " + precio + "\nCalificacion: " + calificacion ;
     }
     
     /**
@@ -149,7 +166,7 @@ public class Producto {
         try {
             Statement in = c.createStatement();
             ResultSet resultado = in.executeQuery(
-           "SELECT p.nombre, p.descripcion, p.precio, c.calificacion_producto FROM db_poliventas.tb_producto p JOIN db_poliventas.tb_calificacion_producto c on p.cod_producto=c.cod_producto");
+           "SELECT p.nombre, p.descripcion, p.precio, c.calificacion_producto FROM db_poliventas.tb_producto p JOIN db_poliventas.tb_calificacion_producto c on p.id_producto=c.id_producto");
             System.out.println("si");
             while(resultado.next()){
                 lista.add(

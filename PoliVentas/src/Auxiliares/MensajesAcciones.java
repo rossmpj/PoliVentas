@@ -97,5 +97,20 @@ public class MensajesAcciones {
         alert.setContentText("Lo sentimos,el registro que está buscando no existe");
         alert.showAndWait();
     }
-
+    
+    public static void NotificarVendedor() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Correo enviado exitosamente");
+        alert.setHeaderText(null);
+        alert.setContentText("El vendedor ha sido notificado para realizar la entrega");
+        alert.showAndWait();
+    }
+    
+    public static void NotificarVendedorFailed() {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Envío de correo fallido");
+        alert.setHeaderText(null);
+        alert.setContentText("Lo sentimos, no se ha podido notificar al vendedor");
+        alert.showAndWait();
+    }
 }
