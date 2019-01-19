@@ -1,35 +1,35 @@
-INSERT INTO `db_poliventas`.`tb_usuario` (`ci_usuario`, `nombres`, `apellidos`, `telefono`, `direccion`, `whatsapp`, `matricula`, `email`,`username`,`contrasena`)
- VALUES ('0954124764', 'Rosa', 'Pincay', '0968503660', 'Velez entre Carchi y Tulcan', true, '201601431', 'rmpincay@espol.edu.ec','user001','rmpincay');
-INSERT INTO `db_poliventas`.`tb_usuario` (`ci_usuario`, `nombres`, `apellidos`, `telefono`, `direccion`, `whatsapp`, `matricula`, `email`,`username`,`contrasena`)
- VALUES ('0593050492', 'Stefanny', 'Aguirre', '0956402940', 'Cuenca y la 32', true, '201601430', 'sbaguirr@espol.edu.ec','user002','sbaguirr');
-INSERT INTO `db_poliventas`.`tb_usuario` (`ci_usuario`, `nombres`, `apellidos`, `telefono`, `direccion`, `whatsapp`, `matricula`, `email`,`username`,`contrasena`)
- VALUES ('1230504033', 'Edie', 'Chang', '0594959693', 'Calle 11A entre Av. San Jorge y Av. 11', false, '201034050', 'echang@espol.edu.ec','user003','echang');
-INSERT INTO `db_poliventas`.`tb_usuario` (`ci_usuario`, `nombres`, `apellidos`, `telefono`, `direccion`, `whatsapp`, `matricula`, `email`,`username`,`contrasena`)
- VALUES ('5225756787', 'Jenny', 'Fuentes', '0953204020', 'Av. Franciso de Orellana y José Castillo', true, '201503053', 'jjfuen@espol.edu.ec','user004','jjfuen');
-INSERT INTO `db_poliventas`.`tb_usuario` (`ci_usuario`, `nombres`, `apellidos`, `telefono`, `direccion`, `whatsapp`, `matricula`, `email`,`username`,`contrasena`)
- VALUES ('3522546589', 'Sandra', 'Miranda', '0953502053', 'Sexta entre Cedro y Balsamos', false, '201703053', 'smira@espol.edu.ec','user005','smira');
-INSERT INTO `db_poliventas`.`tb_usuario` (`ci_usuario`, `nombres`, `apellidos`, `telefono`, `direccion`, `whatsapp`, `matricula`, `email`,`username`,`contrasena`)
- VALUES ('0545635352', 'Bryan', 'Tutiven', '0549354024', 'Calle 7 y Manuel Rendón Seminario', true, '201503036', 'btuti@espol.edu.ec','user006','btuti');
-INSERT INTO `db_poliventas`.`tb_usuario` (`ci_usuario`, `nombres`, `apellidos`, `telefono`, `direccion`, `whatsapp`, `matricula`, `email`,`username`,`contrasena`)
- VALUES ('7586978073', 'Carlos', 'Cantos', '0935032135', 'Ficus y Alfredo Pareja', false, '201643046', 'ccantos@espol.edu.ec','user007','ccantos');
-INSERT INTO `db_poliventas`.`tb_usuario` (`ci_usuario`, `nombres`, `apellidos`, `telefono`, `direccion`, `whatsapp`, `matricula`, `email`,`username`,`contrasena`) 
- VALUES ('0591020194', 'Clara', 'Santander', '0953565356', 'Av. Francisco de Orellana y Victor Secouret', true, '201745363', 'cmsanta@espol.edu.ec','user008','cmsanta');
-INSERT INTO `db_poliventas`.`tb_usuario` (`ci_usuario`, `nombres`, `apellidos`, `telefono`, `direccion`, `whatsapp`, `matricula`, `email`,`username`,`contrasena`)
- VALUES ('0356332466', 'Jair', 'Flores', '0964456642', '9 de Octubre y Rumichaca', false, '201566356', 'jflores@espol.edu.ec','user009','jflores');
-INSERT INTO `db_poliventas`.`tb_usuario` (`ci_usuario`, `nombres`, `apellidos`, `telefono`, `direccion`, `whatsapp`, `matricula`, `email`,`username`,`contrasena`)
- VALUES ('1346864456', 'Roger', 'Loor', '0223458639', 'Dr. Miguel Jijon y Av. 2A', true, '201532566', 'rogloo@espol.edu.ec','user010','rogloo');
-INSERT INTO `db_poliventas`.`tb_usuario` (`ci_usuario`, `nombres`, `apellidos`, `telefono`, `direccion`, `whatsapp`, `matricula`, `email`,`username`,`contrasena`)
- VALUES ('0866433454', 'Geanella', 'Pauta', '0964522435', 'Av. Isidro Ayora y Av. 3A', true, '201533244', 'geapau@espol.edu.ec','user011','geapau');
-INSERT INTO `db_poliventas`.`tb_usuario` (`ci_usuario`, `nombres`, `apellidos`, `telefono`, `direccion`, `whatsapp`, `matricula`, `email`,`username`,`contrasena`)
-VALUES ('1267786745', 'Katy', 'Salinas', '0943576894', 'Av. Agustin Icaza entre Av. 2 y 4° Pasaje', true, '201442425', 'katsali@espol.edu.ec','user012','katsali');
-INSERT INTO `db_poliventas`.`tb_usuario` (`ci_usuario`, `nombres`, `apellidos`, `telefono`, `direccion`, `whatsapp`, `matricula`, `email`,`username`,`contrasena`)
- VALUES ('0086765422', 'Nataly', 'Martinez', '0424656340', 'Av. Las Aguas y Calle 15', true, '201492537', 'njmarti@espol.edu.ec','user013','njmarti');
-INSERT INTO `db_poliventas`.`tb_usuario` (`ci_usuario`, `nombres`, `apellidos`, `telefono`, `direccion`, `whatsapp`, `matricula`, `email`,`username`,`contrasena`)
- VALUES ('0954123473', 'Stalin', 'Baquerizo', '4939294949', 'Portete entre la 39 y la 38', false, '201035332', 'stalbauq@espol.edu.ec','user014','stalbauq');
-INSERT INTO `db_poliventas`.`tb_usuario` (`ci_usuario`, `nombres`, `apellidos`, `telefono`, `direccion`, `whatsapp`, `matricula`, `email`,`username`,`contrasena`)
- VALUES ('1204306843', 'Bob', 'Lino', '049395929', 'Decima y Maldonado', false, '201964603', 'blin@espol.edu.ec','user015','blin');
-INSERT INTO `db_poliventas`.`tb_usuario` (`ci_usuario`, `nombres`, `apellidos`, `telefono`, `direccion`, `whatsapp`, `matricula`, `email`,`username`,`contrasena`)
- VALUES ('4930608312', 'Ana', 'Pazmiño', '4060402040', 'Febres Cordero y la 40', true, '304060450', 'apazm@espol.edu.ec','user016','apazm');
+INSERT INTO `db_poliventas`.`tb_usuario` (`ci_usuario`, `nombres`, `apellidos`, `telefono`, `direccion`, `whatsapp`, `matricula`, `email`, `username`, `contrasena`, `estado`)
+ VALUES ('0954124764', 'Rosa', 'Pincay', '0968503660', 'Velez entre Carchi y Tulcan', true, '201601431', 'rmpincay@espol.edu.ec','user001','rmpincay', 'activo');
+INSERT INTO `db_poliventas`.`tb_usuario` (`ci_usuario`, `nombres`, `apellidos`, `telefono`, `direccion`, `whatsapp`, `matricula`, `email`,`username`,`contrasena`, `estado`)
+ VALUES ('0593050492', 'Stefanny', 'Aguirre', '0956402940', 'Cuenca y la 32', true, '201601430', 'sbaguirr@espol.edu.ec','user002','sbaguirr', 'activo');
+INSERT INTO `db_poliventas`.`tb_usuario` (`ci_usuario`, `nombres`, `apellidos`, `telefono`, `direccion`, `whatsapp`, `matricula`, `email`,`username`,`contrasena`, `estado`)
+ VALUES ('1230504033', 'Edie', 'Chang', '0594959693', 'Calle 11A entre Av. San Jorge y Av. 11', false, '201034050', 'echang@espol.edu.ec','user003','echang', 'activo');
+INSERT INTO `db_poliventas`.`tb_usuario` (`ci_usuario`, `nombres`, `apellidos`, `telefono`, `direccion`, `whatsapp`, `matricula`, `email`,`username`,`contrasena`, `estado`)
+ VALUES ('5225756787', 'Jenny', 'Fuentes', '0953204020', 'Av. Franciso de Orellana y José Castillo', true, '201503053', 'jjfuen@espol.edu.ec','user004','jjfuen', 'activo');
+INSERT INTO `db_poliventas`.`tb_usuario` (`ci_usuario`, `nombres`, `apellidos`, `telefono`, `direccion`, `whatsapp`, `matricula`, `email`,`username`,`contrasena`, `estado`)
+ VALUES ('3522546589', 'Sandra', 'Miranda', '0953502053', 'Sexta entre Cedro y Balsamos', false, '201703053', 'smira@espol.edu.ec','user005','smira', 'eliminado');
+INSERT INTO `db_poliventas`.`tb_usuario` (`ci_usuario`, `nombres`, `apellidos`, `telefono`, `direccion`, `whatsapp`, `matricula`, `email`,`username`,`contrasena`, `estado`)
+ VALUES ('0545635352', 'Bryan', 'Tutiven', '0549354024', 'Calle 7 y Manuel Rendón Seminario', true, '201503036', 'btuti@espol.edu.ec','user006','btuti', 'activo');
+INSERT INTO `db_poliventas`.`tb_usuario` (`ci_usuario`, `nombres`, `apellidos`, `telefono`, `direccion`, `whatsapp`, `matricula`, `email`,`username`,`contrasena`, `estado`)
+ VALUES ('7586978073', 'Carlos', 'Cantos', '0935032135', 'Ficus y Alfredo Pareja', false, '201643046', 'ccantos@espol.edu.ec','user007','ccantos', 'activo');
+INSERT INTO `db_poliventas`.`tb_usuario` (`ci_usuario`, `nombres`, `apellidos`, `telefono`, `direccion`, `whatsapp`, `matricula`, `email`,`username`,`contrasena`, `estado`) 
+ VALUES ('0591020194', 'Clara', 'Santander', '0953565356', 'Av. Francisco de Orellana y Victor Secouret', true, '201745363', 'cmsanta@espol.edu.ec','user008','cmsanta', 'eliminado');
+INSERT INTO `db_poliventas`.`tb_usuario` (`ci_usuario`, `nombres`, `apellidos`, `telefono`, `direccion`, `whatsapp`, `matricula`, `email`,`username`,`contrasena`, `estado`)
+ VALUES ('0356332466', 'Jair', 'Flores', '0964456642', '9 de Octubre y Rumichaca', false, '201566356', 'jflores@espol.edu.ec','user009','jflores', 'eliminado');
+INSERT INTO `db_poliventas`.`tb_usuario` (`ci_usuario`, `nombres`, `apellidos`, `telefono`, `direccion`, `whatsapp`, `matricula`, `email`,`username`,`contrasena`, `estado`)
+ VALUES ('1346864456', 'Roger', 'Loor', '0223458639', 'Dr. Miguel Jijon y Av. 2A', true, '201532566', 'rogloo@espol.edu.ec','user010','rogloo', 'eliminado');
+INSERT INTO `db_poliventas`.`tb_usuario` (`ci_usuario`, `nombres`, `apellidos`, `telefono`, `direccion`, `whatsapp`, `matricula`, `email`,`username`,`contrasena`, `estado`)
+ VALUES ('0866433454', 'Geanella', 'Pauta', '0964522435', 'Av. Isidro Ayora y Av. 3A', true, '201533244', 'geapau@espol.edu.ec','user011','geapau', 'activo');
+INSERT INTO `db_poliventas`.`tb_usuario` (`ci_usuario`, `nombres`, `apellidos`, `telefono`, `direccion`, `whatsapp`, `matricula`, `email`,`username`,`contrasena`, `estado`)
+VALUES ('1267786745', 'Katy', 'Salinas', '0943576894', 'Av. Agustin Icaza entre Av. 2 y 4° Pasaje', true, '201442425', 'katsali@espol.edu.ec','user012','katsali', 'activo');
+INSERT INTO `db_poliventas`.`tb_usuario` (`ci_usuario`, `nombres`, `apellidos`, `telefono`, `direccion`, `whatsapp`, `matricula`, `email`,`username`,`contrasena`, `estado`)
+ VALUES ('0086765422', 'Nataly', 'Martinez', '0424656340', 'Av. Las Aguas y Calle 15', true, '201492537', 'njmarti@espol.edu.ec','user013','njmarti', 'activo');
+INSERT INTO `db_poliventas`.`tb_usuario` (`ci_usuario`, `nombres`, `apellidos`, `telefono`, `direccion`, `whatsapp`, `matricula`, `email`,`username`,`contrasena`, `estado`)
+ VALUES ('0954123473', 'Stalin', 'Baquerizo', '4939294949', 'Portete entre la 39 y la 38', false, '201035332', 'stalbauq@espol.edu.ec','user014','stalbauq', 'activo');
+INSERT INTO `db_poliventas`.`tb_usuario` (`ci_usuario`, `nombres`, `apellidos`, `telefono`, `direccion`, `whatsapp`, `matricula`, `email`,`username`,`contrasena`, `estado`)
+ VALUES ('1204306843', 'Bob', 'Lino', '049395929', 'Decima y Maldonado', false, '201964603', 'blin@espol.edu.ec','user015','blin', 'activo');
+INSERT INTO `db_poliventas`.`tb_usuario` (`ci_usuario`, `nombres`, `apellidos`, `telefono`, `direccion`, `whatsapp`, `matricula`, `email`,`username`,`contrasena`, `estado`)
+ VALUES ('4930608312', 'Ana', 'Pazmiño', '4060402040', 'Febres Cordero y la 40', true, '304060450', 'apazm@espol.edu.ec','user016','apazm', 'activo');
 
 INSERT INTO `db_poliventas`.`tb_administrador` (`id_administrador`, `cedula`) VALUES ('adm001', '0954123473');
 INSERT INTO `db_poliventas`.`tb_administrador` (`id_administrador`, `cedula`) VALUES ('adm002', '1204306843');
@@ -43,20 +43,20 @@ INSERT INTO `db_poliventas`.`tb_comprador` (`id_comprador`, `cedula`) VALUES ('c
 INSERT INTO `db_poliventas`.`tb_comprador` (`id_comprador`, `cedula`) VALUES ('comp006', '1267786745');
 INSERT INTO `db_poliventas`.`tb_comprador` (`id_comprador`, `cedula`) VALUES ('comp007', '0086765422');
 
-INSERT INTO `db_poliventas`.`tb_producto` (`id_producto`, `nombre`,`descripcion`, `precio`,`categoria`,`estado`) VALUES ('chai002', 'Silla plastica', 'Linea ratan', 5.00,'Hogar','eliminado');
-INSERT INTO `db_poliventas`.`tb_producto` (`id_producto`, `nombre`,`descripcion`, `precio`,`categoria`,`estado`) VALUES ('dress001', 'Vestido pets', 'Talla S', 10.00, 'Mascotas','activo');
-INSERT INTO `db_poliventas`.`tb_producto` (`id_producto`, `nombre`,`descripcion`, `precio`,`categoria`,`estado`) VALUES ('foo001', 'alimento gato', 'NutraPro esterilizados 2kg', 8.00, 'Mascotas','eliminado');
-INSERT INTO `db_poliventas`.`tb_producto` (`id_producto`, `nombre`,`descripcion`, `precio`,`categoria`,`estado`) VALUES ('mou001', 'mouse', 'Inalambrico', 3.00, 'Tecnologia','activo');
-INSERT INTO `db_poliventas`.`tb_producto` (`id_producto`, `nombre`,`descripcion`, `precio`,`categoria`,`estado`) VALUES ('prod003', 'Collar', 'Perlas', 20.00, 'Joyeria', 'activo');
-INSERT INTO `db_poliventas`.`tb_producto` (`id_producto`, `nombre`,`descripcion`, `precio`,`categoria`,`estado`) VALUES ('prod008', 'Taza', 'Mágica', 10.00, 'Hogar', 'activo');
-INSERT INTO `db_poliventas`.`tb_producto` (`id_producto`, `nombre`,`descripcion`, `precio`,`categoria`,`estado`) VALUES ('prod007', 'cable usb', 'Samsung', 5.00, 'Tecnologia','activo');
+INSERT INTO `db_poliventas`.`tb_vendedor` (`id_vendedor`, `cedula`, `id_comprador`) VALUES ('vend001', '0593050492', 'comp001');
+INSERT INTO `db_poliventas`.`tb_vendedor` (`id_vendedor`, `cedula`, `id_comprador`) VALUES ('vend002', '1230504033', 'comp002');
+INSERT INTO `db_poliventas`.`tb_vendedor` (`id_vendedor`, `cedula`, `id_comprador`) VALUES ('vend003', '5225756787', 'comp003');
+INSERT INTO `db_poliventas`.`tb_vendedor` (`id_vendedor`, `cedula`, `id_comprador`) VALUES ('vend004', '3522546589', 'comp004');
+INSERT INTO `db_poliventas`.`tb_vendedor` (`id_vendedor`, `cedula`, `id_comprador`) VALUES ('vend005', '0545635352', 'comp005');
+INSERT INTO `db_poliventas`.`tb_vendedor` (`id_vendedor`, `cedula`, `id_comprador`) VALUES ('vend006', '7586978073', 'comp006');
 
-INSERT INTO `db_poliventas`.`tb_vendedor` (`id_vendedor`, `cedula`, `id_producto`, `id_comprador`) VALUES ('vend001', '0593050492', 'chai002', 'comp001');
-INSERT INTO `db_poliventas`.`tb_vendedor` (`id_vendedor`, `cedula`, `id_producto`, `id_comprador`) VALUES ('vend002', '1230504033', 'foo001', 'comp002');
-INSERT INTO `db_poliventas`.`tb_vendedor` (`id_vendedor`, `cedula`, `id_producto`, `id_comprador`) VALUES ('vend003', '5225756787', 'dress001', 'comp003');
-INSERT INTO `db_poliventas`.`tb_vendedor` (`id_vendedor`, `cedula`, `id_producto`, `id_comprador`) VALUES ('vend004', '3522546589', 'foo001', 'comp004');
-INSERT INTO `db_poliventas`.`tb_vendedor` (`id_vendedor`, `cedula`, `id_producto`, `id_comprador`) VALUES ('vend005', '0545635352', 'prod003', 'comp005');
-INSERT INTO `db_poliventas`.`tb_vendedor` (`id_vendedor`, `cedula`, `id_producto`, `id_comprador`) VALUES ('vend006', '7586978073', 'prod008', 'comp006');
+INSERT INTO `db_poliventas`.`tb_producto` (`id_producto`, `nombre`,`descripcion`, `precio`,`categoria`, `stock`, `estado`, `id_vendedor`) VALUES ('chai002', 'Silla plastica', 'Linea ratan', 5.00,'Hogar', 7, 'eliminado', 'vend001');
+INSERT INTO `db_poliventas`.`tb_producto` (`id_producto`, `nombre`,`descripcion`, `precio`,`categoria`, `stock`, `estado`, `id_vendedor`) VALUES ('dress001', 'Vestido pets', 'Talla S', 10.00, 'Mascotas', 4, 'activo', 'vend002');
+INSERT INTO `db_poliventas`.`tb_producto` (`id_producto`, `nombre`,`descripcion`, `precio`,`categoria`, `stock`, `estado`, `id_vendedor`) VALUES ('foo001', 'alimento gato', 'NutraPro esterilizados 2kg', 8.00, 'Mascotas', 3, 'eliminado', 'vend003');
+INSERT INTO `db_poliventas`.`tb_producto` (`id_producto`, `nombre`,`descripcion`, `precio`,`categoria`, `stock`, `estado`, `id_vendedor`) VALUES ('mou001', 'mouse', 'Inalambrico', 3.00, 'Tecnologia', 10, 'activo', 'vend004');
+INSERT INTO `db_poliventas`.`tb_producto` (`id_producto`, `nombre`,`descripcion`, `precio`,`categoria`, `stock`, `estado`, `id_vendedor`) VALUES ('prod003', 'Collar', 'Perlas', 20.00, 'Joyeria', 2, 'activo', 'vend005');
+INSERT INTO `db_poliventas`.`tb_producto` (`id_producto`, `nombre`,`descripcion`, `precio`,`categoria`, `stock`, `estado`, `id_vendedor`) VALUES ('prod008', 'Taza', 'Mágica', 10.00, 'Hogar', 14, 'activo', 'vend006');
+INSERT INTO `db_poliventas`.`tb_producto` (`id_producto`, `nombre`,`descripcion`, `precio`,`categoria`, `stock`, `estado`, `id_vendedor`) VALUES ('prod007', 'cable usb', 'Samsung', 5.00, 'Tecnologia', 1,'activo', 'vend001');
 
 INSERT INTO `db_poliventas`.`tb_forma_pago` (`id_forma_pago`, `nombre`) VALUES ('PHONE', 'virtual');
 INSERT INTO `db_poliventas`.`tb_forma_pago` (`id_forma_pago`, `nombre`) VALUES ('MONEY', 'efectivo');

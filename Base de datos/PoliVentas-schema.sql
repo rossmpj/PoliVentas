@@ -13,6 +13,7 @@ create table tb_usuario(
     email varchar(40) not null,
     username varchar(20) not null,
     contrasena varchar(20) not null,
+    estado varchar(15),
     primary key (ci_usuario)
 );
 
@@ -23,25 +24,26 @@ create table tb_comprador(
     constraint ci_comprador foreign key (cedula) references tb_usuario(ci_usuario)
 );
 
+create table tb_vendedor(
+	id_vendedor varchar(10),
+    cedula varchar(10) not null,
+    id_comprador varchar(10),
+    primary key (id_vendedor),
+    constraint ci_vendedor foreign key (cedula) references tb_usuario(ci_usuario),    
+    constraint id_comprador foreign key (id_comprador) references tb_comprador(id_comprador)
+);
+
 create table tb_producto(
 	id_producto varchar(10),
     nombre varchar(70),
     descripcion varchar(400) default null,
     precio double not null,
     categoria varchar(30),
-    estado varchar(15) default null,
-    primary key(id_producto)
-);
-
-create table tb_vendedor(
-	id_vendedor varchar(10),
-    cedula varchar(10) not null,
-    id_producto varchar(10),
-    id_comprador varchar(10),
-    primary key (id_vendedor),
-    constraint ci_vendedor foreign key (cedula) references tb_usuario(ci_usuario),
-    constraint id_producto foreign key (id_producto) references tb_producto(id_producto),
-    constraint id_comprador foreign key (id_comprador) references tb_comprador(id_comprador)
+    stock int,
+    estado varchar(15) default null,    
+    id_vendedor varchar(10),
+    primary key(id_producto),
+    constraint id_vendedor foreign key (id_vendedor) references tb_vendedor(id_vendedor)
 );
 
 create table tb_administrador(
