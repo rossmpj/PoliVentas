@@ -16,8 +16,7 @@ public class Vendedor extends Comprador{
      */
     public Vendedor() {
     }
-
-    /**
+     /*   
      * Constructor con parámetros del vendedor
      * @param nombres
      * @param apellidos
@@ -27,12 +26,9 @@ public class Vendedor extends Comprador{
      * @param direccion
      * @param cedula
      * @param matricula
-     * @param rol
      */
-    public Vendedor(String nombres, String apellidos, String telefono, 
-                    boolean whatsapp, String email, String direccion, String cedula, 
-                    String matricula, Usuario rol) {
-        super(nombres, apellidos, telefono, whatsapp, email, direccion, cedula, matricula, rol);
-    }
-       
+    public Vendedor(String cedula, String nombres, String apellidos, String telefono,
+            String direccion, boolean whatsapp, String matricula, String email) {
+        super(cedula, nombres, apellidos, telefono, direccion, whatsapp, matricula, email);
+    }      
 }

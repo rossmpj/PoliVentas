@@ -89,6 +89,7 @@ create table tb_pedido(
 	id_pedido int auto_increment,
     estado varchar(15),
     costo double,
+    cantidad_pedida int,
     fecha_pedido date,
 	hora_pedido time,
 	fecha_entrega date default null,

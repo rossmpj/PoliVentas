@@ -64,20 +64,20 @@ INSERT INTO `db_poliventas`.`tb_forma_pago` (`id_forma_pago`, `nombre`) VALUES (
 INSERT INTO `db_poliventas`.`tb_pago` (`id_forma_pago`, `detalle`) VALUES ('PHONE', 'pago virtual a traves de aplicacion movil, si el usuario tiene WhatsApp');
 INSERT INTO `db_poliventas`.`tb_pago` (`id_forma_pago`, `detalle`) VALUES ('MONEY', 'pago en efectivo');
 
-INSERT INTO `db_poliventas`.`tb_pedido` (`estado`, `costo`, `fecha_pedido`, `hora_pedido`, `lugar_entrega`, `id_pago`, `id_comprador_ped`, `id_vendedor_ped`, `id_producto_ped`) 
-VALUES ('pendiente', 5.00, '2018-11-28', '15:00', 'FIEC', 'PHONE', 'comp001', 'vend001', 'chai002');
-INSERT INTO `db_poliventas`.`tb_pedido` (`estado`, `costo`, `fecha_pedido`, `hora_pedido`, `lugar_entrega`, `id_pago`, `id_comprador_ped`, `id_vendedor_ped`, `id_producto_ped`) 
-VALUES ('pendiente', 8.00, '2018-11-29', '10:00', 'FCNM', 'PHONE','comp002', 'vend002', 'foo001');
-INSERT INTO `db_poliventas`.`tb_pedido` (`estado`, `costo`, `fecha_pedido`, `hora_pedido`, `lugar_entrega`, `id_pago`, `id_comprador_ped`, `id_vendedor_ped`, `id_producto_ped`) 
-VALUES ('anulado', 10.00, '2018-11-10', '11:00', 'CELEX', 'MONEY', 'comp003', 'vend003', 'dress001');
-INSERT INTO `db_poliventas`.`tb_pedido` (`estado`, `costo`, `fecha_pedido`, `hora_pedido`, `lugar_entrega`, `id_pago`, `id_comprador_ped`, `id_vendedor_ped`, `id_producto_ped`) 
-VALUES ('exitoso', 8.00, '2018-11-8', '13:00', 'FIMCP', 'MONEY', 'comp004', 'vend004', 'foo001');
-INSERT INTO `db_poliventas`.`tb_pedido` (`estado`, `costo`, `fecha_pedido`, `hora_pedido`, `lugar_entrega`, `id_pago`, `id_comprador_ped`, `id_vendedor_ped`, `id_producto_ped`) 
-VALUES ('anulado', 20.00, '2018-10-11', '12:50', 'Basico', 'PHONE', 'comp005', 'vend005', 'prod003');
-INSERT INTO `db_poliventas`.`tb_pedido` (`estado`, `costo`, `fecha_pedido`, `hora_pedido`, `lugar_entrega`, `id_pago`, `id_comprador_ped`, `id_vendedor_ped`, `id_producto_ped`) 
-VALUES ('exitoso', 10.00, '2018-05-11', '11:00', 'FCSH', 'MONEY', 'comp006', 'vend006', 'prod008');
-INSERT INTO `db_poliventas`.`tb_pedido` (`estado`, `costo`, `fecha_pedido`, `hora_pedido`, `lugar_entrega`, `id_pago`, `id_comprador_ped`, `id_vendedor_ped`, `id_producto_ped`) 
-VALUES ('exitoso', 10.00, '2018-02-11', '9:00', 'FIEC','PHONE', 'comp007', 'vend001', 'prod007');
+INSERT INTO `db_poliventas`.`tb_pedido` (`estado`, `costo`,`cantidad_pedida`,`fecha_pedido`, `hora_pedido`, `lugar_entrega`, `id_pago`, `id_comprador_ped`, `id_vendedor_ped`, `id_producto_ped`) 
+VALUES ('pendiente', 8.00, 1,'2018-11-28', '15:00', 'FIEC', 'PHONE', 'comp001', 'vend001', 'foo001');
+INSERT INTO `db_poliventas`.`tb_pedido` (`estado`, `costo`,`cantidad_pedida`, `fecha_pedido`, `hora_pedido`, `lugar_entrega`, `id_pago`, `id_comprador_ped`, `id_vendedor_ped`, `id_producto_ped`) 
+VALUES ('pendiente', 8.00, 1,'2018-11-29', '10:00', 'FCNM', 'PHONE','comp002', 'vend002', 'foo001');
+INSERT INTO `db_poliventas`.`tb_pedido` (`estado`, `costo`,`cantidad_pedida`, `fecha_pedido`, `hora_pedido`, `lugar_entrega`, `id_pago`, `id_comprador_ped`, `id_vendedor_ped`, `id_producto_ped`) 
+VALUES ('anulado', 10.00, 1,'2018-11-10', '11:00', 'CELEX', 'MONEY', 'comp003', 'vend003', 'dress001');
+INSERT INTO `db_poliventas`.`tb_pedido` (`estado`, `costo`,`cantidad_pedida`, `fecha_pedido`, `hora_pedido`, `lugar_entrega`, `id_pago`, `id_comprador_ped`, `id_vendedor_ped`, `id_producto_ped`) 
+VALUES ('exitoso', 8.00, 1,'2018-11-8', '13:00', 'FIMCP', 'MONEY', 'comp004', 'vend004', 'foo001');
+INSERT INTO `db_poliventas`.`tb_pedido` (`estado`, `costo`,`cantidad_pedida`, `fecha_pedido`, `hora_pedido`, `lugar_entrega`, `id_pago`, `id_comprador_ped`, `id_vendedor_ped`, `id_producto_ped`) 
+VALUES ('anulado', 20.00,1 ,'2018-10-11', '12:50', 'Basico', 'PHONE', 'comp005', 'vend005', 'prod003');
+INSERT INTO `db_poliventas`.`tb_pedido` (`estado`, `costo`,`cantidad_pedida`, `fecha_pedido`, `hora_pedido`, `lugar_entrega`, `id_pago`, `id_comprador_ped`, `id_vendedor_ped`, `id_producto_ped`) 
+VALUES ('exitoso', 10.00, 1,'2018-05-11', '11:00', 'FCSH', 'MONEY', 'comp006', 'vend006', 'prod008');
+INSERT INTO `db_poliventas`.`tb_pedido` (`estado`, `costo`, `cantidad_pedida`,`fecha_pedido`, `hora_pedido`, `lugar_entrega`, `id_pago`, `id_comprador_ped`, `id_vendedor_ped`, `id_producto_ped`) 
+VALUES ('exitoso', 10.00,2 ,'2018-02-11', '9:00', 'FIEC','PHONE', 'comp007', 'vend001', 'prod007');
 
 INSERT INTO `db_poliventas`.`tb_calificacion_producto` (`calificacion_producto`, `id_producto`, `id_comprador`) VALUES (5, 'prod008', 'comp001');
 INSERT INTO `db_poliventas`.`tb_calificacion_producto` (`calificacion_producto`, `id_producto`, `id_comprador`) VALUES (3, 'prod003', 'comp002');

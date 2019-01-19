@@ -140,12 +140,6 @@ public class VistaBuscarUsuario {
      
      private void cargarLista() {
         lusario = FXCollections.observableArrayList();
-        lusario.add(
-                new Usuario("Yuzuru", "Hanyu", "0522208", false, "yuzupoh@yahoo.com", "Toronto Cricket", "0908102940", "20197878"
-                ));
-        lusario.add(
-                new Usuario("Jun Hwan", "Cha", "0522208", false, "yuzupoh@yahoo.com", "Toronto Cricket", "0908102940", "20197878"
-                ));
     }
      
       private void cargarContenido() {
