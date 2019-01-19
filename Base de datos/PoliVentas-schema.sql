@@ -13,7 +13,7 @@ create table tb_usuario(
     email varchar(40) not null,
     username varchar(20) not null,
     contrasena varchar(20) not null,
-    estado varchar(15),
+    estado boolean,
     primary key (ci_usuario)
 );
 
@@ -40,7 +40,7 @@ create table tb_producto(
     precio double not null,
     categoria varchar(30),
     stock int,
-    estado varchar(15) default null,    
+    estado boolean,    
     id_vendedor varchar(10),
     primary key(id_producto),
     constraint id_vendedor foreign key (id_vendedor) references tb_vendedor(id_vendedor)
