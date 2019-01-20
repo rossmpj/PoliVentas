@@ -9,19 +9,16 @@ package Vista.Administrador;
 import Auxiliares.CONSTANTES;
 import static Auxiliares.PatronVistaTitulos.botonRegresarMenu;
 import static Auxiliares.PatronVistaTitulos.crearTituloSubMenu;
-import Modelo.Producto;
 import Vista.Principal.Vista;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.RadioMenuItem;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
@@ -38,22 +35,21 @@ import javafx.scene.layout.VBox;
 public class VistaBuscarProducto implements Vista {
 
     private final BorderPane root;
-    private Button back, buscar, herramientas;
+    private Button back, buscar, herramientas, ver,clean;
     private String color;
     private TextField campo;
     private MenuBar menu;
     VBox efectoMenu;
-    private ObservableList<Producto> lproducto;
+    private VBox vbox;
+    private ScrollPane busquedaScrollPane;
 
     public VistaBuscarProducto(String color) {
         root = new BorderPane();
         this.color = color;
         inicializarObjetos();
         crearSeccionTitulo();
-        // setCompradorListener();
         seccionResultadoBusqueda();
-        llamarListeners();
-
+        llamarEfecto();
     }
 
     public BorderPane getRoot() {
@@ -64,7 +60,9 @@ public class VistaBuscarProducto implements Vista {
         back = botonRegresarMenu();
         root.setBottom(back);
         buscar = new Button();
+        clean = new Button();
         herramientas = new Button("Herramientas");
+        estiloBotones(clean, "EAFF26","/eraser.png");
         estiloBotones(buscar, "51A7C1", "/search.png");
         campo = new TextField();
         campo.setPrefWidth(350);
@@ -74,6 +72,7 @@ public class VistaBuscarProducto implements Vista {
         menu.setPrefWidth(200);
         NewMenu();
         efectoMenu = new VBox();
+        vbox = new VBox();
     }
 
     private void NewMenu() {
@@ -98,12 +97,24 @@ public class VistaBuscarProducto implements Vista {
         btn.setAlignment(Pos.CENTER);
     }
 
-    private void llamarListeners() {
+    private void llamarEfecto() {
         efectoMenu();
     }
 
-    public void addBackButtonHandler(EventHandler agregarProductoButtonHandler){
+    public void addBackButtonHandler(EventHandler agregarProductoButtonHandler) {
         back.setOnAction(agregarProductoButtonHandler);
+    }
+
+    public void addBuscarButtonHandler(EventHandler BuscarPButtonHandler) {
+        buscar.setOnAction(BuscarPButtonHandler);
+    }
+
+    public void addVerButtonHandler(EventHandler ventanaPButtonHandler) {
+        ver.setOnAction(ventanaPButtonHandler);
+    }
+    
+    public void addCleanButtonHandler(EventHandler cleanPButtonHandler){
+        this.clean.setOnAction(cleanPButtonHandler);
     }
 
     private void crearSeccionTitulo() {
@@ -115,7 +126,8 @@ public class VistaBuscarProducto implements Vista {
         GridPane gp = new GridPane();
         gp.addColumn(0, campo);
         gp.addColumn(1, buscar);
-        gp.addColumn(2, herramientas);
+        gp.addColumn(2, clean);
+        gp.addColumn(3, herramientas);
         gp.setHgap(15);
         gp.setVgap(10);
         gp.setAlignment(Pos.TOP_CENTER);
@@ -138,21 +150,74 @@ public class VistaBuscarProducto implements Vista {
 
     private void seccionResultadoBusqueda() {
         VBox contenedorTitulos = new VBox();
+        VBox v3 = new VBox();
         contenedorTitulos.setPadding(new Insets(0, 7, 0, 7));//top,derecha,abajo,izquierda
         contenedorTitulos.setAlignment(Pos.TOP_CENTER);
         contenedorTitulos.setSpacing(7);
-        contenedorTitulos.getChildren().addAll(crearSeccionBusqueda());
+        busquedaScrollPane = new ScrollPane();
+        v3.getChildren().add(busquedaScrollPane);
+        contenedorTitulos.getChildren().addAll(crearSeccionBusqueda(), v3);
         root.setCenter(contenedorTitulos);
     }
-    
-    private VBox seccionAvatar() {
-        VBox k = new VBox();
-        Image image = new Image(getClass().getResourceAsStream(CONSTANTES.PATH_IMG + "/cesta.png"));
-        Label myLabel = new Label();
-        myLabel.setGraphic(new ImageView(image));
-        k.setPadding(new Insets(30, 0, 0, 5));
-        k.getChildren().add(myLabel);
-        return k;
+
+    public Button getBack() {
+        return back;
+    }
+
+    public void setBack(Button back) {
+        this.back = back;
+    }
+
+    public Button getBuscar() {
+        return buscar;
+    }
+
+    public void setBuscar(Button buscar) {
+        this.buscar = buscar;
+    }
+
+    public Button getHerramientas() {
+        return herramientas;
+    }
+
+    public void setHerramientas(Button herramientas) {
+        this.herramientas = herramientas;
+    }
+
+    public TextField getCampo() {
+        return campo;
+    }
+
+    public void setCampo(TextField campo) {
+        this.campo = campo;
+    }
+
+    public VBox getVbox() {
+        return vbox;
+    }
+
+    public ScrollPane getBusquedaScrollPane() {
+        return busquedaScrollPane;
+    }
+
+    public void setBusquedaScrollPane(VBox contenedor) {
+        this.busquedaScrollPane.setContent(contenedor);
+    }
+
+    public boolean campoVacio() {
+        return !this.campo.getText().equals("");
+    }
+
+    public Button getVer() {
+        return ver;
+    }
+
+    public void setVer(Button ver) {
+        this.ver = ver;
+    }
+
+    public void iniciarVer() {
+        ver = new Button("ver");
     }
 
 }

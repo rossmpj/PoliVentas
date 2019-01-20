@@ -38,11 +38,12 @@ import javafx.scene.text.Font;
 public class VistaBuscarUsuario implements Vista {
 
     private final BorderPane root;
-    private Button back, buscar;
+    private Button back, buscar, ver, clean;
     private String color;
     private TextField campo;
     private ObservableList<Usuario> lusario;
     private VBox vbox;
+    private ScrollPane busquedaScrollPane;
 
     public VistaBuscarUsuario(String color) {
         root = new BorderPane();
@@ -61,12 +62,14 @@ public class VistaBuscarUsuario implements Vista {
         back = botonRegresarMenu();
         root.setBottom(back);
         buscar = new Button();
+        clean = new Button();
+        estiloBotones(clean, "EAFF26", "/eraser.png");
         estiloBotones(buscar, "A8ECDD", "/search.png");
         campo = new TextField();
         campo.setPrefWidth(350);
         campo.setPrefHeight(40);
         campo.setPromptText("Ingrese cédula de Identidad o nombres completos...");
-        vbox= new VBox();
+        vbox = new VBox();
     }
 
     private void estiloBotones(Button btn, String base, String path) {
@@ -77,8 +80,20 @@ public class VistaBuscarUsuario implements Vista {
         btn.setAlignment(Pos.CENTER);
     }
 
-    public void addBackButtonHandler(EventHandler agregarProductoButtonHandler){
+    public void addBackButtonHandler(EventHandler agregarProductoButtonHandler) {
         back.setOnAction(agregarProductoButtonHandler);
+    }
+
+    public void addBuscarButtonHandler(EventHandler BuscarUButtonHandler) {
+        buscar.setOnAction(BuscarUButtonHandler);
+    }
+
+    public void addVerButtonHandler(EventHandler nuevaVentanaButtonHandler) {
+        ver.setOnAction(nuevaVentanaButtonHandler);
+    }
+
+    public void addCleanButtonHandler(EventHandler cleanUButtonHandler) {
+        this.clean.setOnAction(cleanUButtonHandler);
     }
 
     private void crearSeccionTitulo() {
@@ -90,6 +105,7 @@ public class VistaBuscarUsuario implements Vista {
         GridPane gp = new GridPane();
         gp.addColumn(0, campo);
         gp.addColumn(1, buscar);
+        gp.add(clean, 2, 0);
         gp.setHgap(15);
         gp.setVgap(10);
         gp.setAlignment(Pos.TOP_CENTER);
@@ -106,68 +122,73 @@ public class VistaBuscarUsuario implements Vista {
         contenedorTitulos.setPadding(new Insets(0, 7, 0, 7));//top,derecha,abajo,izquierda
         contenedorTitulos.setAlignment(Pos.TOP_CENTER);
         contenedorTitulos.setSpacing(7);
-        ScrollPane tv = new ScrollPane();
-        v3.getChildren().add(tv);
-        contenedorTitulos.getChildren().addAll(crearSeccionBusqueda(),v3);
-        buscar.setOnAction(e -> {
-            tv.setContent(vbox);
-            cargarContenido();
-        });
-        
+        busquedaScrollPane = new ScrollPane();
+        v3.getChildren().add(busquedaScrollPane);
+        contenedorTitulos.getChildren().addAll(crearSeccionBusqueda(), v3);
         root.setCenter(contenedorTitulos);
     }
-    
-     private Label nombreUsuario(String nombre) {
-        Label productNameLbl = new Label();
-        productNameLbl.setFont(new Font("Verdana", 12));
-        productNameLbl.setText("Nombres: " + nombre);
-        return productNameLbl;
+
+    public Button getBack() {
+        return back;
     }
 
-    private Label ciUsuario(String ci) {
-        Label productNameLbl = new Label();
-        productNameLbl.setFont(new Font("Verdana", 12));
-        productNameLbl.setText("CI: " + ci);
-        return productNameLbl;
-    }
-    
-     public Line drawLine() {
-        Line linea = new Line(0, 0, 780, 0);
-        linea.setStroke(Color.STEELBLUE);
-        linea.setStrokeWidth(2);
-        return linea;
-    }
-     
-     private void cargarLista() {
-        lusario = FXCollections.observableArrayList();
-    }
-     
-      private void cargarContenido() {
-        cargarLista();
-        for (Usuario p : this.lusario) {
-            HBox hb = new HBox();
-            Label categoryNameLbl = new Label();
-            Button viewButton = new Button("Ver");
-            viewButton.setOnAction(e
-                    -> root.getScene().setRoot(new VistaInfoUsuario(false, "A8ECDD", "Ingreso nuevo usuario").getRoot()));
-            categoryNameLbl.setText(p.getTelefono());
-            hb.setSpacing(100);
-            hb.getChildren().addAll(nombreUsuario(p.getNombres()+ " " + p.getApellidos()), viewButton);
-            hb.setSpacing(50);
-            hb.setPadding(new Insets(7, 0, 7, 5));
-            vbox.setPadding(new Insets(7, 25, 0, 5));
-            vbox.getChildren().addAll(hb, categoryNameLbl, ciUsuario(p.getCedula()),
-                    drawLine());
-        }
+    public void setBack(Button back) {
+        this.back = back;
     }
 
-    private VBox seccionAvatar() {
-        VBox k = new VBox();
-        Image image = new Image(getClass().getResourceAsStream(CONSTANTES.PATH_IMG + "/man.png"));
-        Label myLabel = new Label();
-        myLabel.setGraphic(new ImageView(image));
-        k.setPadding(new Insets(30, 0, 0, 5));
-        k.getChildren().add(myLabel);
-        return k;
+    public Button getBuscar() {
+        return buscar;
+    }
+
+    public void setBuscar(Button buscar) {
+        this.buscar = buscar;
+    }
+
+    public TextField getCampo() {
+        return campo;
+    }
+
+    public void setCampo(TextField campo) {
+        this.campo = campo;
+    }
+
+    public ObservableList<Usuario> getLusario() {
+        return lusario;
+    }
+
+    public void setLusario(ObservableList<Usuario> lusario) {
+        this.lusario = lusario;
+    }
+
+    public VBox getVbox() {
+        return vbox;
+    }
+
+    public void setVbox(VBox vbox) {
+        this.vbox = vbox;
+    }
+
+    public ScrollPane getBusquedaScrollPane() {
+        return busquedaScrollPane;
+    }
+
+    public void setBusquedaScrollPane(VBox contenedor) {
+        this.busquedaScrollPane.setContent(contenedor);
+    }
+
+    public boolean campoVacio() {
+        return !this.campo.getText().equals("");
+    }
+
+    public Button getVer() {
+        return ver;
+    }
+
+    public void setVer(Button ver) {
+        this.ver = ver;
+    }
+
+    public void iniciarVer() {
+        ver = new Button("ver");
     }
 }

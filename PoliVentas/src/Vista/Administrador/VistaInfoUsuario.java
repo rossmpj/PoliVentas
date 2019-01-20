@@ -8,6 +8,7 @@ package Vista.Administrador;
 import Auxiliares.CONSTANTES;
 import static Auxiliares.PatronVistaTitulos.botonRegresarMenu;
 import static Auxiliares.PatronVistaTitulos.crearTituloSubMenu;
+import Modelo.Usuario;
 import Vista.Principal.Vista;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -15,6 +16,7 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
@@ -31,15 +33,17 @@ import javafx.scene.layout.VBox;
  * @author Tiffy
  */
 public class VistaInfoUsuario implements Vista {
-
+    
     private final BorderPane root;
     private boolean ingreso;
     private String color, titulo;
     private Button guardar, actualizar, eliminar, back;
-    private TextField ci, nom, ape, tl, wapp, mail, mat, user, contra;
+    private TextField ci, nom, ape, tl, mail, mat, user, contra;
     private TextArea dir;
+    public CheckBox wapp, eliminado;
     private ComboBox<String> rol;
-
+    private Usuario u;
+    
     public VistaInfoUsuario(boolean ingreso, String color, String titulo) {
         root = new BorderPane();
         this.ingreso = ingreso;
@@ -50,7 +54,19 @@ public class VistaInfoUsuario implements Vista {
         construccion();
         
     }
-
+    
+    public VistaInfoUsuario(boolean ingreso, String color, String titulo, Usuario u) {
+        root = new BorderPane();
+        this.ingreso = ingreso;
+        this.color = color;
+        this.titulo = titulo;
+        this.u = u;
+        crearSeccionTitulo();
+        inicializarBotones();
+        construccion();
+        llenarInformacion();
+    }
+    
     private void inicializarBotones() {
         back = botonRegresarMenu();
         root.setBottom(back);
@@ -59,7 +75,7 @@ public class VistaInfoUsuario implements Vista {
         nom = new TextField();
         ape = new TextField();
         tl = new TextField();
-        wapp = new TextField();
+        wapp = new CheckBox();
         mail = new TextField();
         mat = new TextField();
         user = new TextField();
@@ -70,40 +86,60 @@ public class VistaInfoUsuario implements Vista {
         cargarCombo();
         gestionBotones();
     }
-
+    
     private VBox gestionBotones() {
         VBox sa = new VBox();
-        sa.setAlignment(Pos.CENTER_RIGHT);
+        sa.setAlignment(Pos.CENTER);
+        sa.setSpacing(5);
         if (this.ingreso) {
             guardar = new Button("Guardar");
-            guardar.setPrefSize(100, 50);
+            guardar.setPrefSize(180, 50);
             sa.getChildren().add(guardar);
         } else {
+            ci.setDisable(true);
             actualizar = new Button("Actualizar");
             eliminar = new Button("Eliminar\nUsuario");
-            actualizar.setPrefSize(100, 50);
-            eliminar.setPrefSize(100, 50);
-            sa.getChildren().addAll(actualizar, eliminar);
+            HBox g = new HBox();
+            eliminado = new CheckBox();
+            Label l = new Label("Este usuario está eliminado?");
+            g.getChildren().addAll(l, eliminado);
+            g.setSpacing(3);
+            actualizar.setPrefSize(180, 50);
+            eliminar.setPrefSize(180, 50);
+            sa.getChildren().addAll(eliminar, actualizar, g);
         }
         return sa;
     }
-
-    public void addBackButtonHandler(EventHandler agregarProductoButtonHandler){
+    
+    public void addBackButtonHandler(EventHandler agregarProductoButtonHandler) {
         back.setOnAction(agregarProductoButtonHandler);
     }
 
+    public void addEliminarButtonHandler(EventHandler eliminarUButtonHandler) {
+        eliminar.setOnAction(eliminarUButtonHandler);
+    }
+    
+    public void addModificarButtonHandler(EventHandler modificarUButtonHandler) {
+        actualizar.setOnAction(modificarUButtonHandler);
+    }
+    
+    public void addAlmacenarButtonHandler(EventHandler almacenarUButtonHandler) {
+        guardar.setOnAction(almacenarUButtonHandler);
+    }
+    
     private void construccion() {
         HBox hb = new HBox();
         VBox contenedor = new VBox();
+        GridPane gp = new GridPane();
         hb.setAlignment(Pos.CENTER);
-        contenedor.setSpacing(10);
-        hb.setSpacing(15);
-        hb.setPadding(new Insets(0, 20, 0, 20));//top,derecha,abajo,izquierda
-        contenedor.getChildren().addAll(seccionAvatar(),gestionBotones());
-        hb.getChildren().addAll(formulario(),contenedor);
+        hb.setSpacing(25);
+        hb.setPadding(new Insets(0, 20, 0, 20));
+        gp.addColumn(0, seccionAvatar(), gestionBotones());
+        contenedor.getChildren().addAll(gp);
+        hb.getChildren().addAll(formulario(), contenedor);
         root.setCenter(hb);
     }
-
+    
     private VBox formulario() {
         VBox scawflone = new VBox();
         GridPane grandPrix = new GridPane();
@@ -126,38 +162,208 @@ public class VistaInfoUsuario implements Vista {
         scawflone.getChildren().add(grandPrix);
         return scawflone;
     }
-
+    
     private void crearSeccionTitulo() {
         root.setTop(crearTituloSubMenu(titulo, color));
     }
-
-    /**
-     * De acuerdo a lo seleccionado en el combo, se aplicarán los filtros
-     */
+    
     private void cargarCombo() {
-        String se[] = {"Administrador","Comprador", "Vendedor"};
+        String se[] = {"Administrador", "Comprador", "Vendedor"};
         rol.setItems(FXCollections.observableArrayList(se));
     }
-
+    
+    public String seleccion() {
+        return rol.getSelectionModel().getSelectedItem();
+    }
+    
     public BorderPane getRoot() {
         return root;
-    }
-
-    private void estiloBotones(Button btn, String base, String path) {
-        btn.setStyle("-fx-background-radius: 15em; -fx-min-width: 50px; -fx-min-height: 50px;"
-                + " -fx-max-width: 50px; -fx-max-height: 50px; -fx-base: #" + base + ";");
-        Image image = new Image(getClass().getResourceAsStream(CONSTANTES.PATH_IMG + path));
-        btn.setGraphic(new ImageView(image));
-        btn.setAlignment(Pos.CENTER);
     }
     
     private VBox seccionAvatar() {
         VBox k = new VBox();
-        Image image = new Image(getClass().getResourceAsStream(CONSTANTES.PATH_IMG+"/man.png"));
+        Image image = new Image(getClass().getResourceAsStream(CONSTANTES.PATH_IMG + "/man.png"));
         Label myLabel = new Label();
+        k.setAlignment(Pos.CENTER);
         myLabel.setGraphic(new ImageView(image));
-        k.setPadding(new Insets(30, 0, 0, 5));
+        k.setPadding(new Insets(100, 0, 0, 5));
         k.getChildren().add(myLabel);
         return k;
     }
+    
+    public boolean validarCasillas() {
+        return !ci.getText().equals("") && !nom.getText().equals("") && !ape.getText().equals("")
+                && !tl.getText().equals("") && !mail.getText().equals("")
+                && !mat.getText().equals("") && !user.getText().equals("") && !contra.getText().equals("")
+                && !dir.getText().equals("") && !seleccion().equals("");
+    }
+    
+    public void llenarInformacion() {
+        if (!this.ingreso) {
+            ci.setText(u.getCedula());
+            nom.setText(u.getNombres());
+            ape.setText(u.getApellidos());
+            tl.setText(u.getTelefono());
+            wapp.setSelected(u.isWhatsapp());
+            mail.setText(u.getEmail());
+            mat.setText(u.getMatricula());
+            user.setText(u.getUsuario());
+            contra.setText(u.getContrasena());
+            dir.setText(u.getDireccion());
+            eliminado.setSelected(u.isEstado());
+        }
+    }
+    
+    public void limpiarCasillas() {
+        ci.setText(" ");
+        nom.setText(" ");
+        ape.setText(" ");
+        tl.setText(" ");
+        wapp.setSelected(false);
+        mail.setText(" ");
+        mat.setText(" ");
+        user.setText(" ");
+        contra.setText(" ");
+        dir.setText(" ");
+        if (!this.ingreso) {
+            eliminado.setSelected(false);
+        }
+    }
+    
+    public boolean isIngreso() {
+        return ingreso;
+    }
+    
+    public void setIngreso(boolean ingreso) {
+        this.ingreso = ingreso;
+    }
+    
+    public Button getGuardar() {
+        return guardar;
+    }
+    
+    public void setGuardar(Button guardar) {
+        this.guardar = guardar;
+    }
+    
+    public Button getActualizar() {
+        return actualizar;
+    }
+    
+    public void setActualizar(Button actualizar) {
+        this.actualizar = actualizar;
+    }
+    
+    public Button getEliminar() {
+        return eliminar;
+    }
+    
+    public void setEliminar(Button eliminar) {
+        this.eliminar = eliminar;
+    }
+    
+    public Button getBack() {
+        return back;
+    }
+    
+    public void setBack(Button back) {
+        this.back = back;
+    }
+    
+    public TextField getCi() {
+        return ci;
+    }
+    
+    public void setCi(TextField ci) {
+        this.ci = ci;
+    }
+    
+    public TextField getNom() {
+        return nom;
+    }
+    
+    public void setNom(TextField nom) {
+        this.nom = nom;
+    }
+    
+    public TextField getApe() {
+        return ape;
+    }
+    
+    public void setApe(TextField ape) {
+        this.ape = ape;
+    }
+    
+    public TextField getTl() {
+        return tl;
+    }
+    
+    public void setTl(TextField tl) {
+        this.tl = tl;
+    }
+    
+    public TextField getMail() {
+        return mail;
+    }
+    
+    public void setMail(TextField mail) {
+        this.mail = mail;
+    }
+    
+    public TextField getMat() {
+        return mat;
+    }
+    
+    public void setMat(TextField mat) {
+        this.mat = mat;
+    }
+    
+    public TextField getUser() {
+        return user;
+    }
+    
+    public void setUser(TextField user) {
+        this.user = user;
+    }
+    
+    public TextField getContra() {
+        return contra;
+    }
+    
+    public void setContra(TextField contra) {
+        this.contra = contra;
+    }
+    
+    public TextArea getDir() {
+        return dir;
+    }
+    
+    public void setDir(TextArea dir) {
+        this.dir = dir;
+    }
+    
+    public CheckBox getWapp() {
+        return wapp;
+    }
+    
+    public void setWapp(CheckBox wapp) {
+        this.wapp = wapp;
+    }
+    
+    public CheckBox getEliminado() {
+        return eliminado;
+    }
+    
+    public void setEliminado(CheckBox eliminado) {
+        this.eliminado = eliminado;
+    }
+    
+    public Usuario getU() {
+        return u;
+    }
+    
+    public void setU(Usuario u) {
+        this.u = u;
+    }
+    
 }

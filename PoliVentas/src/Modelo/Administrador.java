@@ -67,6 +67,7 @@ public class Administrador extends Usuario {
 
     public boolean eliminarUsuario(Usuario user) {
         try {
+            CONNECTION.conectar();
             PreparedStatement ingreso = CONNECTION.getConnection().prepareStatement(eliminarUser);
             ingreso.setBoolean(1, false);
             ingreso.setString(2, user.getCedula());
@@ -82,6 +83,7 @@ public class Administrador extends Usuario {
 
     public void consultarUsuario(String busqueda, List<Usuario> lista) {
         try {
+            CONNECTION.conectar();
             PreparedStatement ingreso = CONNECTION.getConnection().prepareStatement(consultarUser);
             ingreso.setString(1, "%" + busqueda + "%");
             ingreso.setString(2, busqueda);

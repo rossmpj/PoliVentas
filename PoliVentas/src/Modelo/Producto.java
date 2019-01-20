@@ -32,7 +32,7 @@ public class Producto {
     protected static final DBConnection CONNECTION = DBConnection.getInstance();
     protected String id_vendedor;
     private final String eliminarP = "update db_poliventas.tb_producto set estado=? where id_producto=?";
-    private final String modificarP = "update db_poliventas.tb_producto set nombre=?,descripcion=?,precio=?,categoria=?,stock=?, estado=?,"
+    private final String modificarP = "update db_poliventas.tb_producto set nombre=?,descripcion=?,precio=?,categoria=?,stock=?, estado=?"
             + " where id_producto=?";
     private final String insert = "insert into db_poliventas.tb_producto values(?,?,?,?,?,?,?,?)";
 
