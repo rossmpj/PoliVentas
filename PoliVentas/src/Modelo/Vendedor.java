@@ -5,6 +5,7 @@ package Modelo;
  * @author Rosa
  */
 public class Vendedor extends Comprador{
+    protected String id_vendedor;
     /**
      * Constructor por defecto
      */
@@ -24,5 +25,10 @@ public class Vendedor extends Comprador{
     public Vendedor(String cedula, String nombres, String apellidos, String telefono,
             String direccion, boolean whatsapp, String matricula, String email) {
         super(cedula, nombres, apellidos, telefono, direccion, whatsapp, matricula, email);
-    }      
+        this.id_vendedor = "v"+cedula;
+    }    
+    
+     public String getId_vendedor() {
+        return id_vendedor;
+    }
 }

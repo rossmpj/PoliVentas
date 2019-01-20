@@ -26,9 +26,10 @@ public class Usuario {
     protected boolean estado;
     protected static final DBConnection CONNECTION = DBConnection.getInstance();
     protected static final Logger LOGGER = Logger.getLogger("Usuario Logger");
-    private final String insert = "INSERT INTO db_poliventas.tb_usuario values(?,?,?,?,?,?,?,?,?,?)";
-    private final boolean validar = nombres != null && apellidos != null && email != null
-            && direccion != null && cedula != null && matricula != null;
+    private final String insert = "INSERT INTO db_poliventas.tb_usuario values(?,?,?,?,?,?,?,?,?,?,?)";
+    private final String insertaRolAdmin = "insert into db_poliventas.tb_administrador values (?,?) ";
+    private final String insertaRolVend = "insert into db_poliventas.tb_vendedor values (?,?,?) ";
+    private final String insertaRolCom = "insert into db_poliventas.tb_comprador values (?,?) ";
 
     public Usuario() {
     }
@@ -59,9 +60,9 @@ public class Usuario {
         this.estado = estado;
     }
 
-    public Usuario( String cedula,String nombres, String apellidos, String telefono,
-            String direccion,boolean whatsapp,String matricula, String email, 
-             String usuario, String contrasena) {
+    public Usuario(String cedula, String nombres, String apellidos, String telefono,
+            String direccion, boolean whatsapp, String matricula, String email,
+            String usuario, String contrasena) {
         this.nombres = nombres;
         this.apellidos = apellidos;
         this.telefono = telefono;
@@ -72,6 +73,36 @@ public class Usuario {
         this.matricula = matricula;
         this.usuario = usuario;
         this.contrasena = contrasena;
+    }
+
+    /**
+     *
+     * @param cedula
+     * @param nombres
+     * @param apellidos
+     * @param telefono
+     * @param direccion
+     * @param whatsapp
+     * @param matricula
+     * @param email
+     * @param usuario
+     * @param contrasena
+     * @param estado, true si esta eliminado, false si esta activo
+     */
+    public Usuario(String cedula, String nombres, String apellidos, String telefono,
+            String direccion, boolean whatsapp, String matricula, String email,
+            String usuario, String contrasena, boolean estado) {
+        this.nombres = nombres;
+        this.apellidos = apellidos;
+        this.telefono = telefono;
+        this.whatsapp = whatsapp;
+        this.email = email;
+        this.direccion = direccion;
+        this.cedula = cedula;
+        this.matricula = matricula;
+        this.usuario = usuario;
+        this.contrasena = contrasena;
+        this.estado = estado;
     }
 
     public String getNombres() {
@@ -162,39 +193,94 @@ public class Usuario {
         this.estado = estado;
     }
 
+    /**
+     * Metodo para registrar nuevo usuario
+     *
+     * @return
+     */
     public boolean registrar() {
+        try {
+            CONNECTION.conectar();
+            PreparedStatement ingreso = CONNECTION.getConnection().prepareStatement(insert);
+            ingreso.setString(1, cedula);
+            ingreso.setString(2, nombres.toLowerCase());
+            ingreso.setString(3, apellidos.toLowerCase());
+            ingreso.setString(4, telefono);
+            ingreso.setString(5, direccion.toLowerCase());
+            ingreso.setBoolean(6, whatsapp);
+            ingreso.setString(7, matricula);
+            ingreso.setString(8, email.toLowerCase());
+            ingreso.setString(9, usuario.toLowerCase());
+            ingreso.setString(10, contrasena.toLowerCase());
+            ingreso.setBoolean(11, estado);
+            ingreso.executeUpdate();
+            System.out.println("ingreso exitoso usuario...");
+            return true;
+        } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, e.getMessage());
+            return false;
 
-        if (validar) {
+        } finally {
 
-            CONNECTION.conectar(); //revisar, la conexion debe ser general no llamarla a cada rato...
+            CONNECTION.desconectar();
 
-            try {
-                PreparedStatement ingreso = CONNECTION.getConnection().prepareStatement(insert);
-                ingreso.setString(1, cedula);
-                ingreso.setString(2, nombres.toLowerCase());
-                ingreso.setString(3, apellidos.toLowerCase());
-                ingreso.setString(4, telefono);
-                ingreso.setBoolean(5, whatsapp);
-                ingreso.setString(6, matricula);
-                ingreso.setString(7, email.toLowerCase());
-                ingreso.setString(8, direccion.toLowerCase());
-                ingreso.setString(9, usuario.toLowerCase());
-                ingreso.setString(10, contrasena.toLowerCase());
-                ingreso.executeUpdate();
-                System.out.println("ingreso exitoso usuario...");
-                return true;
-            } catch (SQLException e) {
-                LOGGER.log(Level.SEVERE, e.getMessage());
-                return false;
+        }
+    }
 
-            } finally {
-
-                CONNECTION.desconectar();
-
-            }
+    /**
+     * Almacena las referencias del usuario en la tabla administrador
+     */
+    public void almacenarRolAdministrador() {
+        try {
+            CONNECTION.conectar();
+            PreparedStatement ingreso = CONNECTION.getConnection().prepareStatement(insertaRolAdmin);
+            ingreso.setString(1, "a" + this.cedula);
+            ingreso.setString(2, this.cedula);
+            ingreso.executeUpdate();
+        } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, e.getMessage());
+        } finally {
+            CONNECTION.desconectar();
         }
 
-        return false;
+    }
+
+    /**
+     * Almacena las referencias del usuario en la tabla vendedor Primero se debe
+     * almacenar el comprador, luego esto
+     */
+    public void almacenarRolVendedor() {
+        try {
+            CONNECTION.conectar();
+            PreparedStatement ingreso = CONNECTION.getConnection().prepareStatement(insertaRolVend);
+            ingreso.setString(1, "v" + this.cedula);
+            ingreso.setString(2, this.cedula);
+            ingreso.setString(3, "c" + this.cedula);
+            ingreso.executeUpdate();
+        } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, e.getMessage());
+        } finally {
+            CONNECTION.desconectar();
+        }
+
+    }
+
+    /**
+     * Almacena las referencias del usuario en la tabla Comprador
+     */
+    public void almacenarRolComprador() {
+        try {
+            CONNECTION.conectar();
+            PreparedStatement ingreso = CONNECTION.getConnection().prepareStatement(insertaRolCom);
+            ingreso.setString(1, "c" + this.cedula);
+            ingreso.setString(2, this.cedula);
+            ingreso.executeUpdate();
+        } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, e.getMessage());
+        } finally {
+            CONNECTION.desconectar();
+        }
+
     }
 
     @Override

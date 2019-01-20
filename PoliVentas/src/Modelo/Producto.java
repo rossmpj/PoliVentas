@@ -1,30 +1,45 @@
 package Modelo;
 
+import Auxiliares.DBConnection;
 import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.Objects;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author Rosa
  */
 public class Producto {
-    private String idProducto;
-    private String nombre;
-    private String descripcion;
-    private double precio;
-    private String categoria;
-    private int stock;
-    private boolean estado;
-    private int numBusquedas;
-    private int calificacion;
-    private CalificacionProducto calificacionP;
-    private CalificacionVendedor calificacionV;
-    private Vendedor vendedor;
-    private Date tiempoMaxEntrega;
+
+    protected String idProducto;
+    protected String nombre;
+    protected String descripcion;
+    protected double precio;
+    protected String categoria;
+    protected int stock;
+    protected boolean estado;
+    protected int numBusquedas;
+    protected int calificacion;
+    protected CalificacionProducto calificacionP;
+    protected CalificacionVendedor calificacionV;
+    protected Vendedor vendedor;
+    protected Date tiempoMaxEntrega;
     
-    public Producto(){}
-        
-    public Producto(String idProducto, String nombre, String descripcion, String categoria, double precio, 
+    protected static final Logger LOGGER = Logger.getLogger("Usuario Logger");
+    protected static final DBConnection CONNECTION = DBConnection.getInstance();
+    protected String id_vendedor;
+    private final String eliminarP = "update db_poliventas.tb_producto set estado=? where id_producto=?";
+    private final String modificarP = "update db_poliventas.tb_producto set nombre=?,descripcion=?,precio=?,categoria=?,stock=?, estado=?,"
+            + " where id_producto=?";
+    private final String insert = "insert into db_poliventas.tb_producto values(?,?,?,?,?,?,?,?)";
+
+    public Producto() {
+    }
+
+    public Producto(String idProducto, String nombre, String descripcion, String categoria, double precio,
             Date tiempoMaxEntrega, CalificacionProducto calificacionP, CalificacionVendedor calificacionV, int n) {
         this.idProducto = idProducto;
         this.nombre = nombre;
@@ -36,7 +51,8 @@ public class Producto {
         this.calificacionV = calificacionV;
         this.numBusquedas = n;
     }
-     public Producto(String nombre, String categoria, double precio, 
+
+    public Producto(String nombre, String categoria, double precio,
             Date tiempoMaxEntrega, CalificacionProducto calificacionP, CalificacionVendedor calificacionV) {
         this.nombre = nombre;
         this.categoria = categoria;
@@ -45,7 +61,7 @@ public class Producto {
         this.calificacionP = calificacionP;
         this.calificacionV = calificacionV;
     }
-    
+
     public Producto(String idProducto, String nombre, String descripcion, String categoria, double precio, CalificacionProducto calificacionP, CalificacionVendedor calificacionV, Vendedor vendedor) {
         this.idProducto = idProducto;
         this.nombre = nombre;
@@ -55,7 +71,7 @@ public class Producto {
         this.calificacionP = calificacionP;
         this.vendedor = vendedor;
     }
-    
+
     public Producto(String idProducto, String nombre, String descripcion, String categoria, double precio, int calificacion) {
         this.idProducto = idProducto;
         this.nombre = nombre;
@@ -64,7 +80,7 @@ public class Producto {
         this.precio = precio;
         this.calificacion = calificacion;
     }
-    
+
     public Producto(String nombre, String categoria, double precio, CalificacionProducto calificacionP) {
         this.nombre = nombre;
         this.categoria = categoria;
@@ -79,8 +95,8 @@ public class Producto {
         this.precio = precio;
         this.calificacion = calificacion;
     }
-    
-    public Producto(String idProducto, String nombre, String descripcion, double precio, String categoria, int stock, int numBusquedas,int calificacion) {
+
+    public Producto(String idProducto, String nombre, String descripcion, double precio, String categoria, int stock, int numBusquedas, int calificacion) {
         this.idProducto = idProducto;
         this.nombre = nombre;
         this.descripcion = descripcion;
@@ -90,7 +106,7 @@ public class Producto {
         this.numBusquedas = numBusquedas;
         this.calificacion = calificacion;
     }
-    
+
     public Producto(String idProducto, String nombre, String descripcion, double precio, String categoria, int stock, Vendedor vendedor) {
         this.idProducto = idProducto;
         this.nombre = nombre;
@@ -100,7 +116,22 @@ public class Producto {
         this.stock = stock;
         this.vendedor = vendedor;
     }
-        
+
+    /**
+     * Constructor utilizado para realizar las consultas respectivas en la base de datos
+     */
+    public Producto(String idProducto, String nombre, String descripcion, double precio, String categoria, int stock, boolean estado, int calificacion, String vendedor) {
+        this.idProducto = idProducto;
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+        this.precio = precio;
+        this.categoria = categoria;
+        this.stock = stock;
+        this.estado = estado;
+        this.calificacion = calificacion;
+        this.id_vendedor = vendedor;
+    }
+
     public String getIdProducto() {
         return idProducto;
     }
@@ -205,7 +236,14 @@ public class Producto {
         this.calificacionV = calificacionV;
     }
 
-    
+    public String getId_vendedor() {
+        return id_vendedor;
+    }
+
+    public void setId_vendedor(String id_vendedor) {
+        this.id_vendedor = id_vendedor;
+    }
+
     @Override
     public int hashCode() {
         int hash = 7;
@@ -237,8 +275,70 @@ public class Producto {
 
     @Override
     public String toString() {
-        return "DETALLES DE PRODUCTO: " + "\nID Producto: " + idProducto + "\nNombre: " 
-                + nombre + "\nDescripcion: " + descripcion + "\nCategoria: " + categoria 
-                + "\nPrecio: " + precio + "\nCalificacion: " + calificacionP + "\nNBusquedas: "+this.numBusquedas;
+        return "DETALLES DE PRODUCTO: " + "\nID Producto: " + idProducto + "\nNombre: "
+                + nombre + "\nDescripcion: " + descripcion + "\nCategoria: " + categoria
+                + "\nPrecio: " + precio + "\nCalificacion: " + calificacionP + "\nNBusquedas: " + this.numBusquedas;
+    }
+
+    public boolean eliminarProducto() {
+        try {
+            CONNECTION.conectar();
+            PreparedStatement ingreso = CONNECTION.getConnection().prepareStatement(eliminarP);
+            ingreso.setBoolean(1, true);
+            ingreso.setString(2, this.getIdProducto());
+            ingreso.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, e.getMessage());
+            return false;
+        } finally {
+            CONNECTION.desconectar();
+        }
+    }
+
+    public boolean modificarProducto() {
+        try {
+            CONNECTION.conectar();
+            PreparedStatement ingreso = CONNECTION.getConnection().prepareStatement(modificarP);
+            ingreso.setString(1, this.getNombre().toLowerCase());
+            ingreso.setString(2, this.getDescripcion().toLowerCase());
+            ingreso.setDouble(3, this.getPrecio());
+            ingreso.setString(4, this.getCategoria().toLowerCase());
+            ingreso.setInt(5, this.getStock());
+            ingreso.setBoolean(6, this.isEstado());
+            ingreso.setString(7, this.getIdProducto());
+            ingreso.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, e.getMessage());
+            return false;
+        } finally {
+            CONNECTION.desconectar();
+        }
+    }
+
+    public boolean registrar() {
+        try {
+            CONNECTION.conectar();
+            PreparedStatement ingreso = CONNECTION.getConnection().prepareStatement(insert);
+            ingreso.setString(1, idProducto);
+            ingreso.setString(2, nombre);
+            ingreso.setString(3, descripcion);
+            ingreso.setDouble(4, precio);
+            ingreso.setString(5, categoria);
+            ingreso.setInt(6, stock);
+            ingreso.setBoolean(7, false);
+            ingreso.setString(8, id_vendedor);
+            ingreso.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, e.getMessage());
+            return false;
+
+        } finally {
+
+            CONNECTION.desconectar();
+
+        }
     }
 }
