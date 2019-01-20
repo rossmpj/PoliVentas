@@ -6,7 +6,9 @@
 package Vista.Administrador;
 
 import Auxiliares.CONSTANTES;
+import Vista.Principal.Vista;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -23,7 +25,7 @@ import javafx.scene.text.Font;
  *
  * @author Tiffy
  */
-public class VistaBuscarUsuario {
+public class VistaBuscarUsuario implements Vista {
 
     private final BorderPane root;
     private Button back, buscar;
@@ -35,7 +37,6 @@ public class VistaBuscarUsuario {
         this.color = color;
         inicializarObjetos();
         crearSeccionTitulo();
-        setCompradorListener();
         seccionResultadoBusqueda();
        
     }
@@ -63,10 +64,8 @@ public class VistaBuscarUsuario {
         btn.setAlignment(Pos.CENTER);
     }
 
-    private void setCompradorListener() {
-        back.setOnAction((ActionEvent e) -> {
-            root.getScene().setRoot(new AdministradorOptions().getRoot());
-        });
+    public void addBackButtonHandler(EventHandler agregarProductoButtonHandler){
+        back.setOnAction(agregarProductoButtonHandler);
     }
 
     private void crearSeccionTitulo() {

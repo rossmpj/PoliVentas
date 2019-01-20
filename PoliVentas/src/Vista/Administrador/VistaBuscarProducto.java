@@ -6,13 +6,14 @@
 package Vista.Administrador;
 
 import Auxiliares.CONSTANTES;
+import Vista.Principal.Vista;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -25,7 +26,7 @@ import javafx.scene.text.Font;
  *
  * @author Tiffy
  */
-public class VistaBuscarProducto {
+public class VistaBuscarProducto implements Vista {
 
     private final BorderPane root;
     private Button back, buscar;
@@ -38,7 +39,6 @@ public class VistaBuscarProducto {
         this.color = color;
         inicializarObjetos();
         crearSeccionTitulo();
-        setCompradorListener();
         seccionResultadoBusqueda();
 
     }
@@ -67,10 +67,8 @@ public class VistaBuscarProducto {
         btn.setAlignment(Pos.CENTER);
     }
 
-    private void setCompradorListener() {
-        back.setOnAction((ActionEvent e) -> {
-            root.getScene().setRoot(new AdministradorOptions().getRoot());
-        });
+    public void addBackButtonHandler(EventHandler agregarProductoButtonHandler){
+        back.setOnAction(agregarProductoButtonHandler);
     }
 
     private void crearSeccionTitulo() {
@@ -120,9 +118,6 @@ public class VistaBuscarProducto {
     return pro;  
     
     }
-    
-    
-    
     
     private VBox seccionAvatar() {
         VBox k = new VBox();

@@ -1,10 +1,10 @@
 package Vista.Vendedor;
 
-import Vista.*;
 import Vista.Principal.PaneLogin;
 import Auxiliares.CONSTANTES;
-import Vista.Administrador.VistaComun;
+import Vista.Principal.Vista;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -15,9 +15,9 @@ import javafx.scene.layout.*;
 
 /**
  *
- * @author Rosy
+ * @author Rosy, Galo Xavier Figueroa Villacreses
  */
-public class VendedorOptions {   
+public class VendedorOptions implements Vista{   
     private final BorderPane root;
     private Button VentasPendientes, ResumenVentas, MisProductos, CerrarSesion;
     
@@ -93,18 +93,19 @@ public class VendedorOptions {
         return ventas;
     }
     
+    public void addVentasPendientesButtonHandler(EventHandler ventasPendientesButtonHandler){
+        
+        VentasPendientes.setOnAction(ventasPendientesButtonHandler);
+        
+    }
+    
+    public void addMisProductosButtonHandler(EventHandler misProductosButtonHandler){
+        
+        MisProductos.setOnAction(misProductosButtonHandler);
+        
+    }
+    
     private void setListeners(){
-        VentasPendientes.setOnAction((ActionEvent e) -> {
-            root.getScene().setRoot(new VentasPendientes().getRoot());
-        });
-        
-        ResumenVentas.setOnAction((ActionEvent e) -> {
-            root.getScene().setRoot(new VistaComun("Resumen de ventas", "78EDF4", 'V').getRoot());
-        });
-        
-        MisProductos.setOnAction((ActionEvent e) -> {
-            root.getScene().setRoot(new MisProductos().getRoot());
-        });
         
         listenCerrarSesion();
     }

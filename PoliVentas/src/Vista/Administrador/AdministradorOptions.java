@@ -7,7 +7,9 @@ package Vista.Administrador;
 
 import Auxiliares.CONSTANTES;
 import Vista.Principal.PaneLogin;
+import Vista.Principal.Vista;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -23,7 +25,7 @@ import javafx.scene.layout.VBox;
  *
  * @author Tiffy
  */
-public class AdministradorOptions {
+public class AdministradorOptions implements Vista{
 
     private final BorderPane root;
     private Button busquedaSencilla, busquedaAvanzada, nuevoUser, buscarUser, nuevoProducto, buscarProducto,
@@ -159,12 +161,32 @@ public class AdministradorOptions {
         gp.setAlignment(Pos.CENTER);
         return gp;
     }
+    
+    public void addNuevoUsuarioButtonHandler(EventHandler nuevoUsuarioButtonHandler){
+        
+        nuevoUser.setOnAction(nuevoUsuarioButtonHandler);
+        
+    }
+    
+    public void addBuscarUsuarioButtonHandler(EventHandler buscarUsuarioButtonHandler){
+        
+        buscarUser.setOnAction(buscarUsuarioButtonHandler);
+        
+    }
+    
+    public void addNuevoProductoButtonHandler(EventHandler nuevoProductoButtonHandler){
+        
+        nuevoProducto.setOnAction(nuevoProductoButtonHandler);
+        
+    }
+    
+    public void addBuscarProductoButtonHandler(EventHandler buscarProductoButtonHandler){
+        
+        buscarProducto.setOnAction(buscarProductoButtonHandler);
+        
+    }
 
     private void setListeners() {
-        listenProducto();
-        listenUsuario();
-        listenCompra();
-        listenBusqueda();
         listenCerrarSesion();     
     }
     
@@ -173,44 +195,4 @@ public class AdministradorOptions {
             root.getScene().setRoot(new PaneLogin().getRoot());});
     }
 
-    private void listenProducto() {
-        buscarProducto.setOnAction((ActionEvent e) -> {
-            root.getScene().setRoot(new VistaBuscarProducto("51A7C1").getRoot());
-        });
-        nuevoProducto.setOnAction((ActionEvent e) -> {
-            root.getScene().setRoot(new VistaInfoProducto(true, "81F7D8", "Ingreso nuevo Producto").getRoot());
-        });
-    }
-
-    private void listenUsuario() {
-        buscarUser.setOnAction((ActionEvent e) -> {
-            root.getScene().setRoot(new VistaBuscarUsuario("A8ECDD").getRoot());
-        });
-
-        nuevoUser.setOnAction((ActionEvent e) -> {
-            root.getScene().setRoot(new VistaInfoUsuario(true, "C7E7E0", "Ingreso nuevo usuario").getRoot());
-        });
-    }
-
-    private void listenCompra() {
-        comprasPendientes.setOnAction((ActionEvent e) -> {
-            root.getScene().setRoot(new VistaComun("Compras Pendientes", "78EDF4",'A').getRoot());
-        });
-        comprasAnuladas.setOnAction((ActionEvent e) -> {
-            root.getScene().setRoot(new VistaComun("Compras Anuladas", "5DC2E1",'A').getRoot());
-        });
-        comprasExitosas.setOnAction((ActionEvent e) -> {
-            root.getScene().setRoot(new VistaComun("Compras Exitosas", "BCFBFF",'A').getRoot());
-        });
-    }
-
-    private void listenBusqueda() {
-        busquedaSencilla.setOnAction((ActionEvent e) -> {
-            root.getScene().setRoot(new VistaComun("Búsqueda Sencilla", "A8EFFA",'A').getRoot());
-        });
-        busquedaAvanzada.setOnAction((ActionEvent e) -> {
-            root.getScene().setRoot(new VistaComun("Búsqueda Avanzada", "A8B6FA",'A').getRoot());
-        });
-
-    }
 }

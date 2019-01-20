@@ -1,6 +1,13 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package Vista.Vendedor;
 
+import Vista.Principal.Vista;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -12,9 +19,9 @@ import javafx.scene.layout.VBox;
 
 /**
  *
- * @author Rosy
+ * @author Rosy, Galo Xavier Figueroa Villacreses
  */
-public class VentasPendientes {
+public class VentasPendientes implements Vista{
     private final BorderPane root;
     private Button AnularVenta, VerMapa, Regresar;
     
@@ -69,6 +76,10 @@ public class VentasPendientes {
         contenedorTablaProductos.setPadding(new Insets(10, 10, 10, 10));
         contenedorTablaProductos.getChildren().add(productos);
         root.setCenter(contenedorTablaProductos);
+    }
+    
+    public void addBackButtonHandler(EventHandler agregarProductoButtonHandler){
+        Regresar.setOnAction(agregarProductoButtonHandler);
     }
     
     private void setListeners(){

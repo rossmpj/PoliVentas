@@ -6,7 +6,8 @@
 package Vista.Administrador;
 
 import Auxiliares.CONSTANTES;
-import javafx.event.ActionEvent;
+import Vista.Principal.Vista;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -24,7 +25,7 @@ import javafx.scene.layout.VBox;
  *
  * @author Tiffy
  */
-public class VistaInfoProducto {
+public class VistaInfoProducto implements Vista {
 
     private final BorderPane root;
     private boolean ingreso;
@@ -56,7 +57,6 @@ public class VistaInfoProducto {
         descripcion = new TextArea();
         descripcion.setPrefHeight(100);
         gestionBotones();
-        gestionSalida();
     }
 
     private VBox gestionBotones() {
@@ -76,16 +76,8 @@ public class VistaInfoProducto {
         return sa;
     }
 
-    private void gestionSalida() {
-        if (ingreso) {
-            back.setOnAction((ActionEvent e) -> {
-                root.getScene().setRoot(new AdministradorOptions().getRoot());
-            });
-        } else {
-            back.setOnAction((ActionEvent e) -> {
-                root.getScene().setRoot(new VistaBuscarProducto("51A7C1").getRoot());
-            });
-        }
+    public void addBackButtonHandler(EventHandler agregarProductoButtonHandler){
+        back.setOnAction(agregarProductoButtonHandler);
     }
 
     private void construccion() {

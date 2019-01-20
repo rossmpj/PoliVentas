@@ -6,6 +6,9 @@
 package Vista.Principal;
 
 import Auxiliares.CONSTANTES;
+import Controlador.Administrador.ControladorAdministradorOptions;
+import Controlador.Comprador.ControladorCompradorOptions;
+import Controlador.Vendedor.ControladorVendedorOptions;
 import Vista.Administrador.AdministradorOptions;
 import Vista.Comprador.CompradorOptions;
 import Vista.Vendedor.VendedorOptions;
@@ -53,15 +56,31 @@ public class VistaTemporal {
     }
         private void setListeners(){
         comprador.setOnAction((ActionEvent e) -> {
-            root.getScene().setRoot(new CompradorOptions().getRoot());
+            
+            CompradorOptions compradorOptionsView = new CompradorOptions();
+            ControladorCompradorOptions controladorCompradorOptions = new ControladorCompradorOptions(compradorOptionsView);
+            
+            root.getScene().setRoot(compradorOptionsView.getRoot());
+            
+            
         });    
         
         vendedor.setOnAction((ActionEvent e) -> {
-            root.getScene().setRoot(new VendedorOptions().getRoot());
+            
+            VendedorOptions vendedorOptionsView = new VendedorOptions();
+            ControladorVendedorOptions controladorVendedorOptions = new ControladorVendedorOptions(vendedorOptionsView);
+            
+            root.getScene().setRoot(vendedorOptionsView.getRoot());
+            
         });
         
         admin.setOnAction((ActionEvent e) -> {
-            root.getScene().setRoot(new AdministradorOptions().getRoot());
+            
+            AdministradorOptions administradorOptionsView = new AdministradorOptions();
+            ControladorAdministradorOptions controladorVendedorOptions = new ControladorAdministradorOptions(administradorOptionsView);
+            
+            root.getScene().setRoot(administradorOptionsView.getRoot());
+            
         });
         
     }
@@ -95,7 +114,6 @@ public class VistaTemporal {
         return root;
     }
 
-    
     public void estiloBotones(Button btn, String base, String path){
         btn.setStyle("-fx-font: 9 Verdana; -fx-base: #"+base+";");
         Image image = new Image(getClass().getResourceAsStream(CONSTANTES.PATH_IMG+path));

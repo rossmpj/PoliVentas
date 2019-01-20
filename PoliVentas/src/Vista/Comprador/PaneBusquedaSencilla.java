@@ -2,9 +2,10 @@ package Vista.Comprador;
 
 import Auxiliares.*;
 import Modelo.Producto;
+import Vista.Principal.Vista;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -19,7 +20,7 @@ import javafx.scene.text.Font;
  *
  * @author Rosy
  */
-public class PaneBusquedaSencilla {
+public class PaneBusquedaSencilla implements Vista{
     private final BorderPane root;
     private Button buscarBtn, back;
     private TextField busquedaTfld;
@@ -76,7 +77,6 @@ public class PaneBusquedaSencilla {
         contenedorTitulos.setSpacing(7);
         contenedorTitulos.getChildren().addAll(seccionEncabezado(), seccionIngresarBusqueda());
         ScrollPane tv = new ScrollPane();
-        setCompradorListener();
         //cargarContenido();
         v3.getChildren().add(tv);
         buscarBtn.setOnAction(e->{
@@ -164,9 +164,7 @@ public class PaneBusquedaSencilla {
         btn.setAlignment(Pos.CENTER);
     }
     
-    private void setCompradorListener(){
-        back.setOnAction((ActionEvent e) -> {
-            root.getScene().setRoot(new CompradorOptions().getRoot());            
-        });
+    public void addBackButtonHandler(EventHandler agregarProductoButtonHandler){
+        back.setOnAction(agregarProductoButtonHandler);
     }
 }

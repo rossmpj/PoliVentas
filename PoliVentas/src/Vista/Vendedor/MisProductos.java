@@ -1,6 +1,12 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package Vista.Vendedor;
 
-import javafx.event.ActionEvent;
+import Vista.Principal.Vista;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -12,9 +18,9 @@ import javafx.scene.layout.VBox;
 
 /**
  *
- * @author Rosy
+ * @author Rosy, Galo Xavier Figueroa Villacreses
  */
-public class MisProductos {
+public class MisProductos implements Vista{
     private final BorderPane root;
     private Button AgregarProducto, ModificarProducto, EliminarProducto, Regresar;
     
@@ -28,7 +34,6 @@ public class MisProductos {
         inicializarBotones();
         crearSeccionProductos();
         seccionCalificaciones();
-        setListeners();
     }
     
     private void inicializarBotones(){   
@@ -74,14 +79,12 @@ public class MisProductos {
         root.setCenter(contenedorTablaProductos);
     }
     
-    private void setListeners(){
-        AgregarProducto.setOnAction((ActionEvent e) -> {
-            root.getScene().setRoot(new NuevoProducto().getRoot());
-        });
-        
-        Regresar.setOnAction((ActionEvent e) -> {
-            root.getScene().setRoot(new VendedorOptions().getRoot());
-        });          
+    public void addAgregarProductoButtonHandler(EventHandler agregarProductoButtonHandler){
+        AgregarProducto.setOnAction(agregarProductoButtonHandler);
+    }
+    
+    public void addBackButtonHandler(EventHandler agregarProductoButtonHandler){
+        Regresar.setOnAction(agregarProductoButtonHandler);
     }
     
     public void estiloBotones(Button btn){

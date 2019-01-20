@@ -2,9 +2,9 @@ package Vista.Comprador;
 
 import Vista.Principal.PaneLogin;
 import Auxiliares.CONSTANTES;
-import Vista.Administrador.VistaComun;
-import Vista.Principal.ArticulosMasBuscados;
+import Vista.Principal.Vista;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -17,7 +17,7 @@ import javafx.scene.layout.*;
  *
  * @author Rosy
  */
-public class CompradorOptions {   
+public class CompradorOptions implements Vista{   
     private final BorderPane root;
     private Button BusquedaSencilla, BusquedaAvanzada, ComprasPendientes,
      Historial, ArticulosMasBuscados, NuevosArticulos, CerrarSesion;
@@ -112,25 +112,25 @@ public class CompradorOptions {
         return pedido;
     }
     
+    public void addBusquedaSencillaButtonHandler(EventHandler busquedaSencillaButtonHandler){
+        
+        BusquedaSencilla.setOnAction(busquedaSencillaButtonHandler);
+        
+    }
+    
+    public void addComprasPendientesButtonHandler(EventHandler comprasPendientesButtonHandler){
+        
+        ComprasPendientes.setOnAction(comprasPendientesButtonHandler);
+        
+    }
+    
+    public void addArticulosMasBuscadosButtonHandler(EventHandler articulosMasBuscadosButtonHandler){
+        
+        ArticulosMasBuscados.setOnAction(articulosMasBuscadosButtonHandler);
+        
+    }
+    
     private void setListeners(){
-        BusquedaSencilla.setOnAction((ActionEvent e) -> {
-            root.getScene().setRoot(new PaneBusquedaSencilla().getRoot());
-        });    
-        BusquedaAvanzada.setOnAction((ActionEvent e) -> {
-            root.getScene().setRoot(new VistaComun("Búsqueda Avanzada", "A8B6FA",'C').getRoot());
-        });
-        ComprasPendientes.setOnAction((ActionEvent e) -> {
-            root.getScene().setRoot(new PaneComprasPendientes().getRoot());
-        });
-        Historial.setOnAction((ActionEvent e) -> {
-            root.getScene().setRoot(new VistaComun("Historial", "FAB1A8",'C').getRoot());
-        });
-        ArticulosMasBuscados.setOnAction((ActionEvent e) -> {
-            root.getScene().setRoot(new ArticulosMasBuscados().getRoot());
-        });
-        NuevosArticulos.setOnAction((ActionEvent e) -> {
-            root.getScene().setRoot(new VistaComun("Nuevos Artículos", "DFA8FA",'C').getRoot());
-        });
         listenCerrarSesion();
     }
     

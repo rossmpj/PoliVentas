@@ -1,7 +1,8 @@
 package Vista.Comprador;
 
+import Vista.Principal.Vista;
 import javafx.beans.value.ObservableValue;
-import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -19,7 +20,7 @@ import javafx.scene.layout.VBox;
  *
  * @author Rosy
  */
-public class PaneComprasPendientes {
+public class PaneComprasPendientes implements Vista{
     private final BorderPane root;
     private RadioButton  c, n;
     private Label EntregaATiempo;
@@ -35,7 +36,6 @@ public class PaneComprasPendientes {
         inicializarBotones();
         crearSeccionProductos();
         seccionCalificaciones();
-        setListeners();
     }
     
     private void inicializarBotones(){   
@@ -103,10 +103,8 @@ public class PaneComprasPendientes {
         root.setCenter(contenedorTablaProductos);
     }
     
-    private void setListeners(){
-        Regresar.setOnAction((ActionEvent e) -> {
-            root.getScene().setRoot(new CompradorOptions().getRoot());
-        });          
+    public void addBackButtonHandler(EventHandler agregarProductoButtonHandler){
+        Regresar.setOnAction(agregarProductoButtonHandler);
     }
     
     public void estiloBotones(Button btn){

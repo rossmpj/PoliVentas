@@ -5,7 +5,6 @@
  */
 package Vista.Vendedor;
 
-import Vista.Administrador.*;
 import Auxiliares.CONSTANTES;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
@@ -23,7 +22,7 @@ import javafx.scene.layout.VBox;
 
 /**
  *
- * @author Tiffy
+ * @author Tiffy, Galo Xavier Figueroa Villacreses
  */
 public class NuevoProducto {
 

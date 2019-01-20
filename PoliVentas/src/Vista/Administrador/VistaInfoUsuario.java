@@ -6,8 +6,9 @@
 package Vista.Administrador;
 
 import Auxiliares.CONSTANTES;
+import Vista.Principal.Vista;
 import javafx.collections.FXCollections;
-import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -26,7 +27,7 @@ import javafx.scene.layout.VBox;
  *
  * @author Tiffy
  */
-public class VistaInfoUsuario {
+public class VistaInfoUsuario implements Vista{
 
     private final BorderPane root;
     private boolean ingreso;
@@ -66,7 +67,6 @@ public class VistaInfoUsuario {
         rol = new ComboBox();
         cargarCombo();
         gestionBotones();
-        gestionSalida();
     }
 
     private VBox gestionBotones() {
@@ -86,14 +86,8 @@ public class VistaInfoUsuario {
         return sa;
     }
 
-    private void gestionSalida() {
-        if (ingreso) {
-            back.setOnAction((ActionEvent e) -> {
-                root.getScene().setRoot(new AdministradorOptions().getRoot());});
-        } else {
-            back.setOnAction((ActionEvent e) -> {
-                root.getScene().setRoot(new VistaBuscarUsuario("A8ECDD").getRoot());});
-        }
+    public void addBackButtonHandler(EventHandler agregarProductoButtonHandler){
+        back.setOnAction(agregarProductoButtonHandler);
     }
 
     private void construccion() {
