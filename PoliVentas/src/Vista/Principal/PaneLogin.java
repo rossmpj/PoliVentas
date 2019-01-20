@@ -1,7 +1,16 @@
 package Vista.Principal;
 
 import Auxiliares.CONSTANTES;
+import Auxiliares.DBConnection;
+import static Auxiliares.DBConnection.getInstance;
+import Modelo.Usuario;
 import Vista.Administrador.VistaInfoUsuario;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.PreparedStatement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -24,15 +33,17 @@ import javafx.scene.text.Font;
  *
  * @author ROSA
  */
-public class PaneLogin implements Vista {
+public class PaneLogin  implements Vista  {
     private final BorderPane root;
     private Button login, signIn;
     private TextField user;
     private PasswordField contra;
     
+    
     public BorderPane getRoot() {
         return root;
     }
+    
 
     public PaneLogin() {
         root = new BorderPane();
@@ -40,6 +51,36 @@ public class PaneLogin implements Vista {
         root.setBackground(new Background(myBF));
         inicializarObjetos();
         pantallaLogin();
+    }
+    
+    public boolean login(Usuario usr){
+        PreparedStatement ps=null;
+        ResultSet rs=null;
+        Connection con=(Connection) getInstance();//Connection con=getConexion();
+        
+        String sql="SELECT ci_usuario, username, contrasena FROM tb_usuario WHERE username=?";
+        try{
+            ps=con.prepareStatement(sql);
+            ps.setString(1,usr.getUsuario());
+            rs= ps.executeQuery();
+            
+              if (rs.next()) {
+                if (usr.getContrasena().equals(rs.getString(3))) {
+                    usr.setCedula(rs.getString(1));
+                    usr.setUsuario(rs.getString(2));
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+
+            return false;
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(PaneLogin.class.getName()).log(Level.SEVERE, null, ex);
+             return false;
+        }
+    
     }
 
     private VBox encabezado() {
@@ -109,12 +150,40 @@ public class PaneLogin implements Vista {
     
     private void setLoginListener(){
         login.setOnAction((ActionEvent e) -> {
-            root.getScene().setRoot(new VistaTemporal().getRoot());
+            root.getScene().setRoot(new VistaTemporal().getRoot()
+            );
         });
         signIn.setOnAction((ActionEvent e) -> {
             root.getScene().setRoot(new VistaInfoUsuario(true, "FADCA8", "Formulario de Registro").getRoot());
         });
     }
+   private void login(ActionEvent event){
+      Usuario mod = new Usuario();
+        
+        String pass = new String(contra.getText());
+        
+        if (!user.getText().equals("") && !pass.equals("")) {
+            
+            
+            
+            mod.setUsuario(user.getText());
+            mod.setContrasena(pass);
+            
+            if (login(mod)) {
+                Inicio.frmLog = null;
+                this.dispose();
+                
+                menu frmMenu = new menu(mod);
+                frmMenu.setVisible(true);
+                
+            } else {
+                JOptionPane.showMessageDialog(null, "Datos incorrectos");
+                limpiar();
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Debe ingresar sus datos");
+        } 
+   }  
     
     private void estiloBotones(Button btn, String colorHEX){
         btn.setAlignment(Pos.CENTER);
