@@ -7,7 +7,7 @@ package Controlador.Comprador;
 
 import Controlador.Principal.WindowsController;
 import Modelo.Pedido;
-import Vista.Comprador.PaneComprasPendientes;
+import Vista.Comprador.VistaComprasPendientes;
 
 /**
  *
@@ -16,9 +16,9 @@ import Vista.Comprador.PaneComprasPendientes;
 public class ControladorComprasPendientes {
     
     private final Pedido ModeloPedido;
-    private final PaneComprasPendientes VistaComprasPendientes;
+    private final VistaComprasPendientes VistaComprasPendientes;
 
-    public ControladorComprasPendientes(Pedido ModeloPedido, PaneComprasPendientes VistaComprasPendientes) {
+    public ControladorComprasPendientes(Pedido ModeloPedido, VistaComprasPendientes VistaComprasPendientes) {
         
         this.ModeloPedido = ModeloPedido;
         this.VistaComprasPendientes = VistaComprasPendientes;

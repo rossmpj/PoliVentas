@@ -6,6 +6,7 @@
 package Vista.Principal;
 
 import Auxiliares.CONSTANTES;
+import static Auxiliares.PatronVistaTitulos.crearTituloSubMenu;
 import Controlador.Administrador.ControladorAdministradorOptions;
 import Controlador.Comprador.ControladorCompradorOptions;
 import Controlador.Vendedor.ControladorVendedorOptions;
@@ -27,7 +28,7 @@ import javafx.scene.layout.VBox;
  *
  * @author Tiffy
  */
-public class VistaTemporal {
+public class VistaTemporal implements Vista {
 
     private final BorderPane root;
     private Button comprador, vendedor, admin;
@@ -86,11 +87,7 @@ public class VistaTemporal {
     }
         
          private void crearSeccionTitulo(){
-        Label compr = new Label("Elija un usuario...");
-        compr.setPrefSize(720, 80);
-        compr.setStyle("-fx-font: 25 Verdana; -fx-text-fill: #FFFFFF; -fx-background-color: #58D3F7; ");
-        compr.setAlignment(Pos.CENTER);
-        root.setTop(compr);
+        root.setTop(crearTituloSubMenu("Elija un usuario...","58D3F7"));
     }
         
         
@@ -115,9 +112,9 @@ public class VistaTemporal {
     }
 
     public void estiloBotones(Button btn, String base, String path){
-        btn.setStyle("-fx-font: 9 Verdana; -fx-base: #"+base+";");
+        btn.setStyle("-fx-font: 12 Verdana; -fx-base: #"+base+";");
         Image image = new Image(getClass().getResourceAsStream(CONSTANTES.PATH_IMG+path));
         btn.setGraphic(new ImageView(image));
-        btn.setPrefSize(150,100);
+        btn.setPrefSize(200, 110);
     }
 }

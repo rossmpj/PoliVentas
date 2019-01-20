@@ -1,11 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Vista.Principal;
 
 import Auxiliares.CONSTANTES;
+import Vista.Administrador.VistaInfoUsuario;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -28,9 +24,9 @@ import javafx.scene.text.Font;
  *
  * @author ROSA
  */
-public class PaneLogin {
+public class PaneLogin implements Vista {
     private final BorderPane root;
-    private Button login;
+    private Button login, signIn;
     private TextField user;
     private PasswordField contra;
     
@@ -50,7 +46,7 @@ public class PaneLogin {
         VBox encabezados = new VBox();
         Label lblWelcome = new Label("Bienvenido");
         lblWelcome.setFont(new Font("Verdana",30));
-        lblWelcome.setStyle("-fx-text-fill: #000278;");
+        lblWelcome.setStyle("-fx-text-fill: #000278; -fx-font-weight: bold;");
         lblWelcome.setAlignment(Pos.CENTER);
         encabezados.setAlignment(Pos.CENTER);
         Image image = new Image(CONSTANTES.PATH_IMG+"/logoo.jpg") ;
@@ -60,7 +56,7 @@ public class PaneLogin {
          iv2.setPreserveRatio(true);
          iv2.setSmooth(true);
          iv2.setCache(true);
-         
+        encabezados.setSpacing(10);
         encabezados.getChildren().addAll(lblWelcome,iv2);
         return encabezados;
     }
@@ -91,9 +87,9 @@ public class PaneLogin {
 
     private void inicializarObjetos() {
         login = new Button("Ingresar");
-        login.setAlignment(Pos.CENTER);
-        login.setPrefSize(150, 50);
-        login.setStyle("-fx-font: 15 Verdana; -fx-base: #0B93FE; -fx-text-fill: white;");
+        signIn = new Button("Registrarse");
+        estiloBotones(login, "0B93FE");
+        estiloBotones(signIn, "0059A0");
         user = new TextField();
         user.setPrefWidth(300);
         user.setPrefHeight(50);
@@ -104,8 +100,9 @@ public class PaneLogin {
 
     private VBox boton() {
         VBox v = new VBox();
-        v.getChildren().add(login);
+        v.getChildren().addAll(login, signIn);
         v.setAlignment(Pos.CENTER);
+        v.setSpacing(7);
         login.setDefaultButton(true);
         return v;
     }
@@ -114,5 +111,15 @@ public class PaneLogin {
         login.setOnAction((ActionEvent e) -> {
             root.getScene().setRoot(new VistaTemporal().getRoot());
         });
+        signIn.setOnAction((ActionEvent e) -> {
+            root.getScene().setRoot(new VistaInfoUsuario(true, "FADCA8", "Formulario de Registro").getRoot());
+        });
+    }
+    
+    private void estiloBotones(Button btn, String colorHEX){
+        btn.setAlignment(Pos.CENTER);
+        btn.setPrefSize(150, 50);
+        btn.setStyle("-fx-font: 17 Verdana;  -fx-base: #"+colorHEX+"; -fx-text-fill: white;");
+        
     }
 }

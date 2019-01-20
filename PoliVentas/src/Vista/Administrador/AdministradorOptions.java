@@ -3,16 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package Vista.Administrador;
 
 import Auxiliares.CONSTANTES;
 import Vista.Principal.PaneLogin;
-import Vista.Principal.Vista;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.event.EventHandler;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -20,15 +20,17 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import static Auxiliares.PatronVistaTitulos.crearTituloMenuPrincipal;
+import Vista.Principal.Vista;
 
 /**
  *
  * @author Tiffy
  */
-public class AdministradorOptions implements Vista{
+public class AdministradorOptions implements Vista {
 
     private final BorderPane root;
-    private Button busquedaSencilla, busquedaAvanzada, nuevoUser, buscarUser, nuevoProducto, buscarProducto,
+    private Button nuevoUser, buscarUser, nuevoProducto, buscarProducto,
             comprasPendientes, comprasAnuladas, comprasExitosas, cerrarSesion;
 
     public AdministradorOptions() {
@@ -43,8 +45,6 @@ public class AdministradorOptions implements Vista{
     }
 
     private void inicializarBotones() {
-        busquedaSencilla = new Button("Búsqueda\nSencilla");
-        busquedaAvanzada = new Button("Búsqueda\nAvanzada");
         nuevoUser = new Button("Agregar\nUsuario");
         buscarUser = new Button("Buscar\nUsuario");
         nuevoProducto = new Button("Nuevo\nproducto");
@@ -79,10 +79,8 @@ public class AdministradorOptions implements Vista{
     }
 
     private void llamarBotones() {
-        estiloBotones(busquedaSencilla, "A8EFFA", "/busqueda.png");
-        estiloBotones(busquedaAvanzada, "A8B6FA", "/ajustes.png");
         estiloBotones(nuevoUser, "C7E7E0", "/add-user.png");
-        estiloBotones(buscarUser, "A8ECDD", "/searchu.png");//C3F58E
+        estiloBotones(buscarUser, "A8ECDD", "/searchu.png");
         estiloBotones(nuevoProducto, "81F7D8", "/valor.png");
         estiloBotones(buscarProducto, "51A7C1", "/bolsa.png");
         estiloBotones(comprasPendientes, "78EDF4", "/cartp.png");
@@ -111,16 +109,6 @@ public class AdministradorOptions implements Vista{
         return productos;
     }
 
-    private VBox crearSeccionBusquedas() {
-        VBox busqueda = new VBox();
-        HBox busqueda1 = new HBox();
-        Label lblTitle = new Label("Búsqueda");
-        estiloLabels(lblTitle, "515489");
-        busqueda1.getChildren().addAll(busquedaSencilla, busquedaAvanzada);
-        busqueda.getChildren().addAll(lblTitle, busqueda1);
-        return busqueda;
-    }
-
     private VBox crearSeccionCompra() {
         VBox compras = new VBox();
         HBox compras1 = new HBox();
@@ -132,19 +120,14 @@ public class AdministradorOptions implements Vista{
         return compras;
     }
 
-    private void crearSeccionTituloAdmin() { //comun
-        Label comprador = new Label("Menú Administrador");
-        comprador.setPrefSize(720, 80);
-        comprador.setStyle("-fx-font: 25 Verdana; -fx-text-fill: #FFFFFF; -fx-background-color: #47DEBD; ");
-        comprador.setAlignment(Pos.CENTER);
-        root.setTop(comprador);
+    private void crearSeccionTituloAdmin() {
+        root.setTop(crearTituloMenuPrincipal("Menú Administrador", "47DEBD"));
     }
 
     private GridPane GridPaneSeccion1() {
         GridPane gp = new GridPane();
-        gp.add(crearSeccionBusquedas(), 0, 0);
-        gp.add(crearSeccionProductos(), 1, 0);
-        gp.add(crearSeccionUsuarios(), 2, 0);
+        gp.add(crearSeccionProductos(), 0, 0);
+        gp.add(crearSeccionUsuarios(), 1, 0);
         gp.setHgap(10);
         gp.setVgap(30);
         gp.setAlignment(Pos.CENTER);
@@ -157,11 +140,19 @@ public class AdministradorOptions implements Vista{
         gp.add(cerrarSesion, 1, 2);
         gp.setHgap(10);
         gp.setVgap(10);
-        gp.setPadding(new Insets(0, 24, 0, 0));
         gp.setAlignment(Pos.CENTER);
         return gp;
     }
+
+    private void setListeners() {
+        listenCerrarSesion();     
+    }
     
+    private void listenCerrarSesion(){
+     cerrarSesion.setOnAction((ActionEvent e) -> {
+            root.getScene().setRoot(new PaneLogin().getRoot());});
+    }
+
     public void addNuevoUsuarioButtonHandler(EventHandler nuevoUsuarioButtonHandler){
         
         nuevoUser.setOnAction(nuevoUsuarioButtonHandler);
@@ -185,14 +176,5 @@ public class AdministradorOptions implements Vista{
         buscarProducto.setOnAction(buscarProductoButtonHandler);
         
     }
-
-    private void setListeners() {
-        listenCerrarSesion();     
-    }
     
-    private void listenCerrarSesion(){
-     cerrarSesion.setOnAction((ActionEvent e) -> {
-            root.getScene().setRoot(new PaneLogin().getRoot());});
-    }
-
 }

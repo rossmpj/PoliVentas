@@ -7,6 +7,7 @@ package Vista.Administrador;
 
 import Auxiliares.CONSTANTES;
 import Vista.Comprador.CompradorOptions;
+import Vista.Principal.Vista;
 import Vista.Vendedor.VendedorOptions;
 import javafx.event.ActionEvent;
 import javafx.geometry.Pos;
@@ -20,7 +21,7 @@ import javafx.scene.layout.BorderPane;
  *
  * @author Tiffy
  */
-public class VistaComun {
+public class VistaComun implements Vista {
      private final BorderPane root;
      private String tipo,color;
      private char user;

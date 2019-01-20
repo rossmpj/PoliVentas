@@ -1,10 +1,14 @@
 package Vista.Comprador;
 
 import Auxiliares.*;
+import static Auxiliares.PatronVistaTitulos.botonRegresarMenu;
+import static Auxiliares.PatronVistaTitulos.crearTituloSubMenu;
 import Modelo.Producto;
 import Vista.Principal.Vista;
+import java.text.Normalizer;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -20,7 +24,7 @@ import javafx.scene.text.Font;
  *
  * @author Rosy
  */
-public class PaneBusquedaSencilla implements Vista{
+public class VistaBusquedaSencilla implements Vista {
     private final BorderPane root;
     private Button buscarBtn, back;
     private TextField busquedaTfld;
@@ -32,7 +36,7 @@ public class PaneBusquedaSencilla implements Vista{
         return root;
     }
 
-    public PaneBusquedaSencilla() {
+    public VistaBusquedaSencilla() {
         root = new BorderPane();
         c = DBConnection.getInstance();
         BackgroundFill myBF = new BackgroundFill(Color.rgb(245, 255, 231), new CornerRadii(1), new Insets(0.0, 0.0, 0.0, 0.0));
@@ -42,24 +46,14 @@ public class PaneBusquedaSencilla implements Vista{
     }
 
     private VBox seccionEncabezado() {
-        VBox encabezados = new VBox();
-        Label lblTitle = new Label("Búsqueda Sencilla");
-        lblTitle.setPrefSize(720, 80);
-        lblTitle.setStyle("-fx-font: 25 Verdana; -fx-text-fill: #274400; -fx-background-color: #E8FDA5; ");
-        lblTitle.setAlignment(Pos.CENTER);
-        encabezados.setAlignment(Pos.CENTER);         
-        encabezados.getChildren().addAll(lblTitle);
-        return encabezados;
+        return crearTituloSubMenu("Búsqueda Sencilla", "E8FDA5");
     }
     
     private VBox seccionIngresarBusqueda(){
         VBox contenedorIngresoBusquedas = new VBox();
         GridPane gp = new GridPane();
-        Label ingresoArticulo = new Label("Ingrese artículo: ");
-        ingresoArticulo.setFont(new Font("Verdana", 15));
-        gp.addColumn(0, ingresoArticulo);
-        gp.addColumn(1, busquedaTfld);
-        gp.addColumn(2, buscarBtn);
+        gp.addColumn(0, busquedaTfld);
+        gp.addColumn(1, buscarBtn);
         gp.setHgap(15);
         gp.setVgap(10);
         gp.setAlignment(Pos.CENTER);
@@ -72,15 +66,16 @@ public class PaneBusquedaSencilla implements Vista{
     private void seccionResultadoBusqueda() {
         VBox contenedorTitulos = new VBox();
         VBox v3 = new VBox();
-        v3.setPadding(new Insets(0, 7, 0, 7));//top,derecha,abajo,izquierda
+        v3.setPadding(new Insets(0, 15, 0, 15));//top,derecha,abajo,izquierda
         contenedorTitulos.setAlignment(Pos.CENTER);
         contenedorTitulos.setSpacing(7);
         contenedorTitulos.getChildren().addAll(seccionEncabezado(), seccionIngresarBusqueda());
         ScrollPane tv = new ScrollPane();
-        //cargarContenido();
+        cargarContenido();
         v3.getChildren().add(tv);
         buscarBtn.setOnAction(e->{
             tv.setContent(vbox);
+            System.out.println(this.cleanString(this.busquedaTfld.getText()));
         });
         root.setTop(contenedorTitulos);
         root.setCenter(v3);
@@ -93,14 +88,22 @@ public class PaneBusquedaSencilla implements Vista{
         c.desconectar();
     }
     
+    public String cleanString(String texto) {
+        texto = Normalizer.normalize(texto, Normalizer.Form.NFD);
+        texto = texto.replaceAll("[\\p{InCombiningDiacriticalMarks}]", "");
+        return texto.replaceAll("[^\\w\\s]","").toLowerCase();
+    }
+    
     private void cargarContenido() {
-        //cargarLista();
+        cargarLista();
         for (Producto p : l_articulos){            
             HBox hb = new HBox();
             Label categoryNameLbl = new Label();
             Button buyButton = new Button("Comprar");
-            buyButton.setOnAction(e-> 
-            System.out.println("Comprar: " + p.getNombre()));
+            buyButton.setOnAction((ActionEvent e)-> {
+                System.out.println("Comprar: " + p.getNombre());
+                root.getScene().setRoot(new Comprar(p).getRoot());
+            });
             categoryNameLbl.setText(p.getCategoria());
             hb.setSpacing(100);
             hb.getChildren().addAll(nombreProducto(p.getNombre()), buyButton);
@@ -146,19 +149,19 @@ public class PaneBusquedaSencilla implements Vista{
     
     private void inicializarObjetos() {
         buscarBtn = new Button();
-        back = new Button();
-        busquedaTfld = new TextField();  
+        back = botonRegresarMenu();
+        busquedaTfld = new TextField(); 
+        busquedaTfld.setPromptText("Ingrese producto..."); 
         vbox = new VBox();
-        estiloBotones(back, "FFFFFF", "/back.png");
         estiloBotones(buscarBtn, "EAFF16","/search.png");
-        busquedaTfld.setPrefWidth(300);
+        busquedaTfld.setPrefWidth(350);
         busquedaTfld.setPrefHeight(40);
         root.setBottom(back);
     }    
     
     public void estiloBotones(Button btn, String base, String path){
         btn.setStyle("-fx-background-radius: 15em; -fx-min-width: 50px; -fx-min-height: 50px;"
-                + " -fx-max-width: 50px; -fx-max-height: 50px; -fx-base: #"+base+";");
+                + " -fx-max-width: 50px; -fx-max-height: 50px; -fx-base: #"+base+"; ");
         Image image = new Image(getClass().getResourceAsStream(CONSTANTES.PATH_IMG+path));
         btn.setGraphic(new ImageView(image));
         btn.setAlignment(Pos.CENTER);

@@ -6,8 +6,11 @@
 package Vista.Administrador;
 
 import Auxiliares.CONSTANTES;
+import static Auxiliares.PatronVistaTitulos.botonRegresarMenu;
+import static Auxiliares.PatronVistaTitulos.crearTituloSubMenu;
 import Vista.Principal.Vista;
 import javafx.collections.FXCollections;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -27,7 +30,7 @@ import javafx.scene.layout.VBox;
  *
  * @author Tiffy
  */
-public class VistaInfoUsuario implements Vista{
+public class VistaInfoUsuario implements Vista {
 
     private final BorderPane root;
     private boolean ingreso;
@@ -49,8 +52,7 @@ public class VistaInfoUsuario implements Vista{
     }
 
     private void inicializarBotones() {
-        back = new Button();
-        estiloBotones(back, "FFFFFF", "/back.png");
+        back = botonRegresarMenu();
         root.setBottom(back);
         ci = new TextField();
         ci.setPrefWidth(100);
@@ -92,10 +94,11 @@ public class VistaInfoUsuario implements Vista{
 
     private void construccion() {
         HBox hb = new HBox();
-        VBox contenedor=new VBox();
-        contenedor.setAlignment(Pos.TOP_RIGHT);
+        VBox contenedor = new VBox();
+        hb.setAlignment(Pos.CENTER);
         contenedor.setSpacing(10);
         hb.setSpacing(15);
+        hb.setPadding(new Insets(0, 20, 0, 20));//top,derecha,abajo,izquierda
         contenedor.getChildren().addAll(seccionAvatar(),gestionBotones());
         hb.getChildren().addAll(formulario(),contenedor);
         root.setCenter(hb);
@@ -119,25 +122,20 @@ public class VistaInfoUsuario implements Vista{
         grandPrix.addColumn(1, ci, nom, ape, tl, wapp, mail, dir, mat, rol, user, contra);
         grandPrix.setHgap(10);
         grandPrix.setVgap(3);
-        scawflone.setPadding(new Insets(0, 10, 0, 20));//top,derecha,abajo,izquierda
-        scawflone.setAlignment(Pos.TOP_CENTER);
+        scawflone.setAlignment(Pos.CENTER);
         scawflone.getChildren().add(grandPrix);
         return scawflone;
     }
 
     private void crearSeccionTitulo() {
-        Label comprador = new Label(this.titulo);
-        comprador.setPrefSize(720, 80);
-        comprador.setStyle("-fx-font: 25 Verdana; -fx-text-fill: #FFFFFF; -fx-background-color: #" + this.color + "; ");
-        comprador.setAlignment(Pos.CENTER);
-        root.setTop(comprador);
+        root.setTop(crearTituloSubMenu(titulo, color));
     }
 
     /**
      * De acuerdo a lo seleccionado en el combo, se aplicarán los filtros
      */
     private void cargarCombo() {
-        String se[] = {"Comprador", "Vendedor"};
+        String se[] = {"Administrador","Comprador", "Vendedor"};
         rol.setItems(FXCollections.observableArrayList(se));
     }
 

@@ -3,6 +3,9 @@ package Vista.Comprador;
 import Vista.Principal.PaneLogin;
 import Auxiliares.CONSTANTES;
 import Vista.Principal.Vista;
+import static Auxiliares.PatronVistaTitulos.crearTituloMenuPrincipal;
+import Vista.Administrador.VistaComun;
+import Vista.Principal.ArticulosMasBuscados;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -85,11 +88,7 @@ public class CompradorOptions implements Vista{
     }
     
     private void crearSeccionTituloComprador(){
-        Label comprador = new Label("Menú Comprador");
-        comprador.setPrefSize(720, 80);
-        comprador.setStyle("-fx-font: 25 Verdana; -fx-text-fill: #FFFFFF; -fx-background-color: #AEA8FA; ");
-        comprador.setAlignment(Pos.CENTER);
-        root.setTop(comprador);
+        root.setTop(crearTituloMenuPrincipal("Menú Comprador", "9C47DE"));
     }
     
     private VBox crearSeccionBusquedas(){
@@ -135,14 +134,14 @@ public class CompradorOptions implements Vista{
     }
     
     public void estiloBotones(Button btn, String base, String path){
-        btn.setStyle("-fx-font: 9 Verdana; -fx-base: #"+base+";");
+        btn.setStyle("-fx-font: 12 Verdana; -fx-base: #"+base+";");
         Image image = new Image(getClass().getResourceAsStream(CONSTANTES.PATH_IMG+path));
         btn.setGraphic(new ImageView(image));
-        btn.setPrefSize(130,100);
+        btn.setPrefSize(170,120);
     }
     
     public void estiloLabels(Label lbl, String base){
-        lbl.setPrefSize(260, 80);
+        lbl.setPrefSize(340, 80);
         lbl.setStyle("-fx-font: 17 Verdana; -fx-text-fill: #FFFFFF; -fx-background-color: #"+base+"; ");
         lbl.setAlignment(Pos.CENTER);
     }

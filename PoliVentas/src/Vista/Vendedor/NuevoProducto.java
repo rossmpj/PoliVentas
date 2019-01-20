@@ -6,6 +6,8 @@
 package Vista.Vendedor;
 
 import Auxiliares.CONSTANTES;
+import static Auxiliares.PatronVistaTitulos.crearTituloSubMenu;
+import Vista.Principal.Vista;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -24,7 +26,7 @@ import javafx.scene.layout.VBox;
  *
  * @author Tiffy, Galo Xavier Figueroa Villacreses
  */
-public class NuevoProducto {
+public class NuevoProducto implements Vista {
 
     private final BorderPane root;
     private boolean ingreso;
@@ -129,11 +131,7 @@ public class NuevoProducto {
     }
 
     private void crearSeccionTitulo() {
-        Label comprador = new Label(this.titulo);
-        comprador.setPrefSize(720, 80);
-        comprador.setStyle("-fx-font: 25 Verdana; -fx-text-fill: #FFFFFF; -fx-background-color: #" + this.color + "; ");
-        comprador.setAlignment(Pos.CENTER);
-        root.setTop(comprador);
+        root.setTop(crearTituloSubMenu(titulo, color));
     }
 
     public BorderPane getRoot() {

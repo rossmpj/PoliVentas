@@ -6,7 +6,10 @@
 package Vista.Administrador;
 
 import Auxiliares.CONSTANTES;
+import static Auxiliares.PatronVistaTitulos.botonRegresarMenu;
+import static Auxiliares.PatronVistaTitulos.crearTituloSubMenu;
 import Vista.Principal.Vista;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -45,8 +48,7 @@ public class VistaInfoProducto implements Vista {
     }
 
     private void inicializarObjetos() {
-        back = new Button();
-        estiloBotones(back, "FFFFFF", "/back.png");
+        back =  botonRegresarMenu();
         root.setBottom(back);
         nombre = new TextField();
         nombre.setPrefWidth(100);
@@ -111,11 +113,7 @@ public class VistaInfoProducto implements Vista {
     }
 
     private void crearSeccionTitulo() {
-        Label comprador = new Label(this.titulo);
-        comprador.setPrefSize(720, 80);
-        comprador.setStyle("-fx-font: 25 Verdana; -fx-text-fill: #FFFFFF; -fx-background-color: #" + this.color + "; ");
-        comprador.setAlignment(Pos.CENTER);
-        root.setTop(comprador);
+        root.setTop(crearTituloSubMenu(titulo, color));
     }
 
     public BorderPane getRoot() {

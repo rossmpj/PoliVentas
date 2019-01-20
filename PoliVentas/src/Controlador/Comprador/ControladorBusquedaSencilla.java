@@ -7,7 +7,7 @@ package Controlador.Comprador;
 
 import Controlador.Principal.WindowsController;
 import Modelo.Producto;
-import Vista.Comprador.PaneBusquedaSencilla;
+import Vista.Comprador.VistaBusquedaSencilla;
 
 /**
  *
@@ -16,9 +16,9 @@ import Vista.Comprador.PaneBusquedaSencilla;
 public class ControladorBusquedaSencilla {
     
     private final Producto ModeloProducto;
-    private final PaneBusquedaSencilla VistaBusquedaSencilla;
+    private final VistaBusquedaSencilla VistaBusquedaSencilla;
 
-    public ControladorBusquedaSencilla(Producto ModeloProducto, PaneBusquedaSencilla VistaBusquedaSencilla) {
+    public ControladorBusquedaSencilla(Producto ModeloProducto, VistaBusquedaSencilla VistaBusquedaSencilla) {
         this.ModeloProducto = ModeloProducto;
         this.VistaBusquedaSencilla = VistaBusquedaSencilla;
         

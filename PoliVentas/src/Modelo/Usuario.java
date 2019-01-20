@@ -1,14 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Modelo;
 
 import Auxiliares.DBConnection;
-import java.sql.ResultSet;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -18,6 +12,7 @@ import java.util.logging.Logger;
  * @author Rosa
  */
 public class Usuario {
+
     protected String nombres;
     protected String apellidos;
     protected String telefono;
@@ -26,16 +21,20 @@ public class Usuario {
     protected String direccion;
     protected String cedula;
     protected String matricula;
-    protected Usuario rol; //revisar 
+    protected String usuario;
+    protected String contrasena;
+    protected boolean estado;
     protected static final DBConnection CONNECTION = DBConnection.getInstance();
-    private static final Logger LOGGER = Logger.getLogger("Usuario Logger");
+    protected static final Logger LOGGER = Logger.getLogger("Usuario Logger");
+    private final String insert = "INSERT INTO db_poliventas.tb_usuario values(?,?,?,?,?,?,?,?,?,?)";
+    private final boolean validar = nombres != null && apellidos != null && email != null
+            && direccion != null && cedula != null && matricula != null;
 
     public Usuario() {
     }
-    
-    public Usuario(String nombres, String apellidos, String telefono, 
-                   boolean whatsapp, String email, String direccion, 
-                   String cedula, String matricula) {
+
+    public Usuario(String cedula, String nombres, String apellidos, String telefono, String direccion,
+            boolean whatsapp, String matricula, String email) {
         this.nombres = nombres;
         this.apellidos = apellidos;
         this.telefono = telefono;
@@ -45,10 +44,8 @@ public class Usuario {
         this.cedula = cedula;
         this.matricula = matricula;
     }
-    
-    public Usuario(String nombres, String apellidos, String telefono, 
-                   boolean whatsapp, String email, String direccion, 
-                   String cedula, String matricula, Usuario rol) {
+
+    public Usuario(String nombres, String apellidos, String telefono, boolean whatsapp, String email, String direccion, String cedula, String matricula, String usuario, String contrasena, boolean estado) {
         this.nombres = nombres;
         this.apellidos = apellidos;
         this.telefono = telefono;
@@ -57,7 +54,24 @@ public class Usuario {
         this.direccion = direccion;
         this.cedula = cedula;
         this.matricula = matricula;
-        this.rol = rol;
+        this.usuario = usuario;
+        this.contrasena = contrasena;
+        this.estado = estado;
+    }
+
+    public Usuario( String cedula,String nombres, String apellidos, String telefono,
+            String direccion,boolean whatsapp,String matricula, String email, 
+             String usuario, String contrasena) {
+        this.nombres = nombres;
+        this.apellidos = apellidos;
+        this.telefono = telefono;
+        this.whatsapp = whatsapp;
+        this.email = email;
+        this.direccion = direccion;
+        this.cedula = cedula;
+        this.matricula = matricula;
+        this.usuario = usuario;
+        this.contrasena = contrasena;
     }
 
     public String getNombres() {
@@ -124,81 +138,71 @@ public class Usuario {
         this.matricula = matricula;
     }
 
-    public Usuario getRol() {
-        return rol;
+    public String getUsuario() {
+        return usuario;
     }
 
-    public void setRol(Usuario rol) {
-        this.rol = rol;
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
     }
-    
-    public boolean create(){
-        
-        if(nombres != null && apellidos != null && email != null && 
-                direccion != null && cedula != null && matricula != null){
-            
-            CONNECTION.conectar();
-            
-            try{
-                
-                Statement statement = CONNECTION.getConnection().createStatement();
-                statement.executeQuery("INSERT INTO db_poliventas.tb_usuario values("
-                        + cedula + ", " + nombres + ", " + apellidos + ", " + telefono + ", " + 
-                        whatsapp + ", " + matricula + ", " + email + ")");
-                
+
+    public String getContrasena() {
+        return contrasena;
+    }
+
+    public void setContrasena(String contrasena) {
+        this.contrasena = contrasena;
+    }
+
+    public boolean isEstado() {
+        return estado;
+    }
+
+    public void setEstado(boolean estado) {
+        this.estado = estado;
+    }
+
+    public boolean registrar() {
+
+        if (validar) {
+
+            CONNECTION.conectar(); //revisar, la conexion debe ser general no llamarla a cada rato...
+
+            try {
+                PreparedStatement ingreso = CONNECTION.getConnection().prepareStatement(insert);
+                ingreso.setString(1, cedula);
+                ingreso.setString(2, nombres.toLowerCase());
+                ingreso.setString(3, apellidos.toLowerCase());
+                ingreso.setString(4, telefono);
+                ingreso.setBoolean(5, whatsapp);
+                ingreso.setString(6, matricula);
+                ingreso.setString(7, email.toLowerCase());
+                ingreso.setString(8, direccion.toLowerCase());
+                ingreso.setString(9, usuario.toLowerCase());
+                ingreso.setString(10, contrasena.toLowerCase());
+                ingreso.executeUpdate();
+                System.out.println("ingreso exitoso usuario...");
                 return true;
-                
-            } catch(SQLException e){
-                
+            } catch (SQLException e) {
                 LOGGER.log(Level.SEVERE, e.getMessage());
                 return false;
-                
-            } finally{
-                
+
+            } finally {
+
                 CONNECTION.desconectar();
-                
+
             }
         }
-        
+
         return false;
-    }
-    
-    public Usuario get(String id){
-        
-        CONNECTION.conectar();
-        
-        try{
-
-            Statement statement = CONNECTION.getConnection().createStatement();
-            ResultSet result = statement.executeQuery("SELECT * FROM db_poliventas.tb_usuario WHERE ci_usuario = " + id);
-            
-            if(result.next()){
-                
-                return new Usuario(result.getString("nombres"), result.getString("apellidos"), result.getString("telefono"),
-                        result.getBoolean("whatsapp"), result.getString("email"), result.getString("direccion"),
-                        result.getString("cedula"), result.getString("matricula"));
-            }
-            
-            return null;
-
-        } catch(SQLException e){
-
-            LOGGER.log(Level.SEVERE, e.getMessage());
-            return null;
-
-        } finally{
-
-            CONNECTION.desconectar();
-
-        }
     }
 
     @Override
     public String toString() {
-        return "Usuario" + " Nombres:" + nombres + ", apellidos:" + apellidos 
-                + ", telefono:" + telefono + ", whatsapp:" + whatsapp 
-                + ", email:" + email + ", direccion:" + direccion 
-                + ", cedula:" + cedula + ", matricula:" + matricula + ", rol:" + rol;
+        return "Usuario" + " Nombres:" + nombres + ", apellidos:" + apellidos
+                + ", telefono:" + telefono + ", whatsapp:" + whatsapp
+                + ", email:" + email + ", direccion:" + direccion
+                + ", cedula:" + cedula + ", matricula:" + matricula;
     }
 
     @Override
@@ -212,7 +216,6 @@ public class Usuario {
         hash = 97 * hash + Objects.hashCode(this.direccion);
         hash = 97 * hash + Objects.hashCode(this.cedula);
         hash = 97 * hash + Objects.hashCode(this.matricula);
-        hash = 97 * hash + Objects.hashCode(this.rol);
         return hash;
     }
 
@@ -252,6 +255,6 @@ public class Usuario {
         if (!Objects.equals(this.matricula, other.matricula)) {
             return false;
         }
-        return Objects.equals(this.rol, other.rol);
+        return true;
     }
 }

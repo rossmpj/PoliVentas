@@ -9,8 +9,8 @@ import Controlador.Principal.WindowsController;
 import Modelo.Pedido;
 import Modelo.Producto;
 import Vista.Comprador.CompradorOptions;
-import Vista.Comprador.PaneBusquedaSencilla;
-import Vista.Comprador.PaneComprasPendientes;
+import Vista.Comprador.VistaBusquedaSencilla;
+import Vista.Comprador.VistaComprasPendientes;
 import Vista.Principal.ArticulosMasBuscados;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -39,7 +39,7 @@ public class ControladorCompradorOptions {
         public void handle(Event event) {
             
             Producto producto = new Producto();
-            PaneBusquedaSencilla busquedaSencillaView = new PaneBusquedaSencilla();
+            VistaBusquedaSencilla busquedaSencillaView = new VistaBusquedaSencilla();
             ControladorBusquedaSencilla controladorVentasPendientes = new ControladorBusquedaSencilla(producto, busquedaSencillaView);
             
             WindowsController.next(CompradorOptionsView, busquedaSencillaView);
@@ -53,7 +53,7 @@ public class ControladorCompradorOptions {
         public void handle(Event event) {
             
             Pedido pedido = new Pedido();
-            PaneComprasPendientes comprasPendientesView = new PaneComprasPendientes();
+            VistaComprasPendientes comprasPendientesView = new VistaComprasPendientes();
             ControladorComprasPendientes controladorComprasPendientes = new ControladorComprasPendientes(pedido, comprasPendientesView);
             
             WindowsController.next(CompradorOptionsView, comprasPendientesView);
