@@ -34,7 +34,7 @@ public class ArticulosMasBuscados implements Vista {
     private Button iniciarSesionBtn;
     private Button registrarseBtn;
     private Label title;
-    public static registro frmReg;
+    public static VistaInfoUsuario frmReg;
     public static PaneLogin frmLog;
 
     @Override
