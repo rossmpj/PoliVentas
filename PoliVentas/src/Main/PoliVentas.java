@@ -1,11 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Main;
 
 import Auxiliares.CONSTANTES;
+import Controlador.Comprador.ControladorArticulosMasBuscados;
+import Modelo.Producto;
 import Vista.Principal.ArticulosMasBuscados;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
@@ -23,8 +20,9 @@ public class PoliVentas extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-
+        Producto ModeloProducto = new Producto();
         ArticulosMasBuscados p = new ArticulosMasBuscados();
+        ControladorArticulosMasBuscados controller = new ControladorArticulosMasBuscados(ModeloProducto, p);
         scene = new Scene(new Group(), 850, 650);
         scene.setRoot(p.getRoot());
         primaryStage.setTitle("PoliVentas");

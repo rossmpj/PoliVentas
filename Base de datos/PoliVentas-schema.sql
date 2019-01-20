@@ -18,14 +18,14 @@ create table tb_usuario(
 );
 
 create table tb_comprador(
-	id_comprador varchar(10),
+	id_comprador varchar(11),
     cedula varchar(10) not null,
     primary key (id_comprador),
     constraint ci_comprador foreign key (cedula) references tb_usuario(ci_usuario)
 );
 
 create table tb_vendedor(
-	id_vendedor varchar(10),
+	id_vendedor varchar(11),
     cedula varchar(10) not null,
     id_comprador varchar(10),
     primary key (id_vendedor),
@@ -40,14 +40,15 @@ create table tb_producto(
     precio double not null,
     categoria varchar(30),
     stock int,
-    estado boolean,    
+    estado boolean, 
+    num_busquedas int,
     id_vendedor varchar(10),
     primary key(id_producto),
     constraint id_vendedor foreign key (id_vendedor) references tb_vendedor(id_vendedor)
 );
 
 create table tb_administrador(
-	id_administrador varchar(10),
+	id_administrador varchar(11),
     cedula varchar(10) not null,
     primary key (id_administrador),
     constraint ci_administrador foreign key (cedula) references tb_usuario(ci_usuario)

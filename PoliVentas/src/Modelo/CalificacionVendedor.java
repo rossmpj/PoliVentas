@@ -10,7 +10,8 @@ public class CalificacionVendedor {
     private Vendedor vendedor;
     private Comprador comprador;
 
-    public CalificacionVendedor(String idCalificacionV, int calificacionV, Vendedor vendedor, Comprador comprador) {
+    public CalificacionVendedor(String idCalificacionV, int calificacionV, 
+            Vendedor vendedor, Comprador comprador) {
         this.idCalificacionV = idCalificacionV;
         this.calificacionV = calificacionV;
         this.vendedor = vendedor;

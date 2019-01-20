@@ -2,9 +2,8 @@ package Vista.Principal;
 
 import Modelo.Producto;
 import Vista.Administrador.VistaInfoUsuario;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -28,16 +27,58 @@ import javafx.util.Callback;
  * @author Karen
  */
 public class ArticulosMasBuscados implements Vista {
-    private final TableView<Producto> tabla = new TableView<>();
-    private ObservableList<Producto> observableList;
+    private TableView<Producto> tabla;
+    private TableColumn<Producto, String> colNombre, colDescripcion, colPrecio, colCateg,
+            colStock,colNB, colCalif;
     private final BorderPane root;
     private Button iniciarSesionBtn;
     private Button registrarseBtn;
     private Label title;
 
+    @Override
     public BorderPane getRoot() {
         return root;
     }
+
+    public TableColumn<Producto, String> getColNombre() {
+        return colNombre;
+    }
+
+    public TableColumn<Producto, String> getColDescripcion() {
+        return colDescripcion;
+    }
+
+    public TableColumn<Producto, String> getColPrecio() {
+        return colPrecio;
+    }
+
+    public TableColumn<Producto, String> getColCateg() {
+        return colCateg;
+    }
+
+    public TableColumn<Producto, String> getColStock() {
+        return colStock;
+    }
+
+    public TableColumn<Producto, String> getColNB() {
+        return colNB;
+    }
+
+    public TableColumn<Producto, String> getColCalif() {
+        return colCalif;
+    }
+    
+    public void addRegistrarseBtnHandler(EventHandler registrarseBtnHandler){
+        this.registrarseBtn.setOnAction(registrarseBtnHandler);
+    }
+    
+    public void addIniciarSesionBtnHandler(EventHandler iniciarSesionBtnHandler){
+        this.iniciarSesionBtn.setOnAction(iniciarSesionBtnHandler);
+    }
+    
+    public TableView<Producto> getTabla(){
+        return this.tabla;
+    }  
     
     public ArticulosMasBuscados() {
         root = new BorderPane();
@@ -50,7 +91,7 @@ public class ArticulosMasBuscados implements Vista {
     } 
     
     private void inicializarObjetos(){
-        observableList = FXCollections.observableArrayList();
+        this.tabla = new TableView<>();
         iniciarSesionBtn = new Button("Iniciar Sesión");
         registrarseBtn = new Button("Registrarse");
         title = new Label("Artículos más buscados");   
@@ -62,8 +103,6 @@ public class ArticulosMasBuscados implements Vista {
         configurarAparienciaDeTabla();
         addColumnsToTable();
         addButtonToTable();
-        cargarData();
-        tabla.setItems(observableList);
         contenedorTabla.getChildren().addAll(tabla);
         root.setCenter(contenedorTabla);
     }
@@ -75,21 +114,19 @@ public class ArticulosMasBuscados implements Vista {
     }
     
     private void addColumnsToTable(){
-        TableColumn<Producto, Integer> colId = new TableColumn<>("ID");
-        colId.setCellValueFactory(new PropertyValueFactory<>("idProducto"));        
-        TableColumn<Producto, Integer> colNombre= new TableColumn<>("Nombre");
-        colNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
-        TableColumn<Producto, String> colDescripcion = new TableColumn<>("Descripción");
-        colDescripcion.setCellValueFactory(new PropertyValueFactory<>("descripcion"));
-        TableColumn<Producto, String> colCateg = new TableColumn<>("Categoría");
-        colCateg.setCellValueFactory(new PropertyValueFactory<>("categoria"));
-        TableColumn<Producto, String> colCalif = new TableColumn<>("Calificación");
-        colCalif.setCellValueFactory(new PropertyValueFactory<>("calificacion"));
-        tabla.getColumns().addAll(colId, colNombre, colDescripcion, colCateg, colCalif);
-    }
+        colNombre= new TableColumn<>("Nombre");
+        colDescripcion = new TableColumn<>("Descripción");
+        colPrecio = new TableColumn<>("Precio");
+        colCateg = new TableColumn<>("Categoría");
+        colStock = new TableColumn<>("Stock");
+        colNB = new TableColumn<>("Búsquedas");
+        colCalif = new TableColumn<>("Calificación");
+        tabla.getColumns().addAll(this.colNombre,this.colDescripcion,this.colPrecio,
+                this.colCateg, this.colStock, this.colNB,this.colCalif);
+          }
     
     private void addButtonToTable() {
-        TableColumn<Producto, Void> colBtn = new TableColumn("");
+        TableColumn<Producto, Void> colBtn = new TableColumn("Accion");
         Callback<TableColumn<Producto, Void>, TableCell<Producto, Void>> cellFactory = (final TableColumn<Producto, Void> param) -> {
             final TableCell<Producto, Void> cell = new TableCell<Producto, Void>() {
                 private final Button btn = new Button("Ver"); {
@@ -139,29 +176,10 @@ public class ArticulosMasBuscados implements Vista {
         contenedorEncabezado.setAlignment(Pos.CENTER);
         contenedorEncabezado.setSpacing(90);
         contenedorEncabezado.setStyle("-fx-background-color: #01C5FF;");
-        //contenedorEncabezado.setEffect(ds);
+        contenedorEncabezado.setEffect(ds);
         contenedorEncabezado.getChildren().addAll(seccionLabel(), seccionBotones());
         root.setTop(contenedorEncabezado);
     }  
-    
-    private void cargarData() {
-        observableList.addAll(new Producto("01", "Audifonos", "Audifonos para celulares", "Tecnologica",10.00, 3),
-        new Producto("02", "Cargadores", "Cargadores para celulares", "Tecnologica",15.00,4),
-        new Producto("03", "Tortas", "Tortas de vainilla", "Comida",3.00, 4),
-        new Producto("04", "Copa Mexicana", "Copa mexicana con guacamole", "Comida",2.50, 4),
-        new Producto("05", "Micas", "Micas para celulares", "Articulos varios",13.00, 3),
-        new Producto("06", "Case", "Case para celulares", "Articulos varios",13.00, 2),
-        new Producto("07", "Cargadores", "Cargadores para celulares", "Tecnologica",15.00,4),
-        new Producto("08", "Tortas", "Tortas de vainilla", "Comida",3.00, 4),
-        new Producto("09", "Copa Mexicana", "Copa mexicana con guacamole", "Comida",2.50, 4),
-        new Producto("10", "Micas", "Micas para celulares", "Articulos varios",13.00, 3),
-        new Producto("11", "Case", "Case para celulares", "Articulos varios",13.00, 2),
-        new Producto("12", "Case", "Case para celulares", "Articulos varios",13.00, 2),
-        new Producto("13", "Case", "Case para celulares", "Articulos varios",13.00, 2),
-        new Producto("14", "Case", "Case para celulares", "Articulos varios",13.00, 2),
-        new Producto("15", "Case", "Case para celulares", "Articulos varios",13.00, 2)
-        );
-    }
     
     public void estiloBotones(Button btn, String colorHEX){
         btn.setStyle("-fx-font: 15 Verdana; -fx-base: #"+colorHEX+";");

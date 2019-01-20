@@ -94,7 +94,15 @@ public class MensajesAcciones {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("404 not found");
         alert.setHeaderText(null);
-        alert.setContentText("Lo sentimos,el registro que está buscando no existe");
+        alert.setContentText("Lo sentimos, el registro que está buscando no existe");
+        alert.showAndWait();
+    }
+    
+    public static void productoNoEncontrado() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("404 not found");
+        alert.setHeaderText(null);
+        alert.setContentText("Lo sentimos, el artículo que está buscando no existe");
         alert.showAndWait();
     }
     

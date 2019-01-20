@@ -41,10 +41,10 @@ public class SendMail {
             message.setText("Se ha realizado el pago del siguiente producto:\n"+msg);
             message.setSubject("Realizar entrega de producto");
             message.addRecipients(Message.RecipientType.TO, new InternetAddress[] { new InternetAddress(To) });
-            Transport t = session.getTransport("smtp");
-            t.connect(GMAIL_HOST,Username, PassWord);
-            t.sendMessage(message, message.getAllRecipients());
-            t.close();
+            try (Transport t = session.getTransport("smtp")) {
+                t.connect(GMAIL_HOST,Username, PassWord);
+                t.sendMessage(message, message.getAllRecipients());
+            }
             System.out.println("sended");
             MensajesAcciones.NotificarVendedor();
         } catch (MessagingException e) {

@@ -4,7 +4,6 @@ import Auxiliares.CONSTANTES;
 import Auxiliares.PatronVistaTitulos;
 import static Auxiliares.PatronVistaTitulos.crearTituloMenuPrincipal;
 import Modelo.Producto;
-import Vista.Administrador.VistaComun;
 import Vista.Principal.Vista;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
@@ -27,6 +26,7 @@ public class Comprar implements Vista {
     private final Label nota;
     private Producto product;
     
+    @Override
     public BorderPane getRoot(){
         return root;
     }
