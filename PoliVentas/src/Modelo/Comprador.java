@@ -5,7 +5,7 @@ package Modelo;
  * @author Rosa
  */
 public class Comprador extends Usuario {
-
+protected CalificacionVendedor calificacionV;
     protected String id_comprador;
 
     /**
@@ -36,4 +36,18 @@ public class Comprador extends Usuario {
         return id_comprador;
     }
 
-}
+    public void setId_comprador(String id_comprador) {
+        this.id_comprador = id_comprador;
+    }
+
+    public CalificacionVendedor getCalificacionV() {
+        return calificacionV;
+    }
+
+    public void setCalificacionV(CalificacionVendedor calificacionV) {
+        this.calificacionV = calificacionV;
+    }
+    
+    
+
+    }

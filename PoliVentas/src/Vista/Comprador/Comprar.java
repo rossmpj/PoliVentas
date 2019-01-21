@@ -24,7 +24,7 @@ public class Comprar implements Vista {
     private final BorderPane root;
     private Button PagoEfectivo, PagoVirtual, back;
     private final Label nota;
-    private Producto product;
+    private final Producto product;
     
     @Override
     public BorderPane getRoot(){

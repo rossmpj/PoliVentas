@@ -17,6 +17,8 @@ public class Pedido {
     private Time horaPedido;
     private Date fechaEntrega;
     private Time horaEntrega;
+    private String horaP;
+    private String horaE;
     private String lugarEntrega;
     private Pago metodoPago;
     private Comprador comprador;
@@ -49,6 +51,38 @@ public class Pedido {
         this.lugarEntrega = lugarEntrega;
         this.metodoPago = metodoPago;
         this.comprador = comprador;
+        this.vendedor = vendedor;
+        this.product = product;
+    }
+    
+    public Pedido(String idPedido, String estado, double costo, int cantidadPedida, Date fechaPedido, Time horaPedido, Date fechaEntrega, Time horaEntrega, String lugarEntrega, Comprador comprador, Vendedor vendedor, Producto product) {
+        this.idPedido = idPedido;
+        this.estado = estado;
+        this.costo = costo;
+        this.cantidadPedida = cantidadPedida;
+        this.fechaPedido = fechaPedido;
+        this.horaPedido = horaPedido;
+        this.fechaEntrega = fechaEntrega;
+        this.horaEntrega = horaEntrega;
+        this.lugarEntrega = lugarEntrega;
+        this.comprador = comprador;
+        this.vendedor = vendedor;
+        this.product = product;
+    }
+
+    public Pedido(String idPedido, String estado, 
+            double costo, int cantidadPedida, Date
+            fechaPedido, String horaP, Date fechaEntrega, String horaE, String lugarEntrega, Comprador co, Vendedor vendedor, Producto product) {
+        this.idPedido = idPedido;
+        this.estado = estado;
+        this.costo = costo;
+        this.cantidadPedida = cantidadPedida;
+        this.fechaPedido = fechaPedido;
+        this.horaP = horaP;
+        this.fechaEntrega = fechaEntrega;
+        this.horaE = horaE;
+        this.lugarEntrega = lugarEntrega;
+        this.comprador = co;
         this.vendedor = vendedor;
         this.product = product;
     }

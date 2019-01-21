@@ -124,17 +124,21 @@ public class ControladorBusquedaSencilla {
         @Override
         public void handle(Event event) {
             String campo = cleanString(VistaBusquedaSencilla.getBusquedaTextField());
-            cargarLista(campo);
-            if(l_articulos.isEmpty()){
-                MensajesAcciones.productoNoEncontrado();
+            if(campo.length()<3){
+                MensajesAcciones.IngresoNoValido();
+            }else{
+                cargarLista(campo);
+                if(l_articulos.isEmpty()){
+                    MensajesAcciones.productoNoEncontrado();
+                }
+                cargarContenido();
+                for (Producto p : l_articulos){
+                    conexion.conectar();
+                    modificarArticulo(p.getIdProducto(), p.getNumBusquedas()+1, conexion.getConnection());
+                    conexion.desconectar();
+                }
+                VistaBusquedaSencilla.setBusquedaScrollPane(VistaBusquedaSencilla.getVBoxProductosEncontrados());
             }
-            cargarContenido();
-            for (Producto p : l_articulos){
-                conexion.conectar();
-                modificarArticulo(p.getIdProducto(), p.getNumBusquedas()+1, conexion.getConnection());
-                conexion.desconectar();
-            }
-            VistaBusquedaSencilla.setBusquedaScrollPane(VistaBusquedaSencilla.getVBoxProductosEncontrados());
         }
         
         public String cleanString(String texto) {

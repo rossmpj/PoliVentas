@@ -87,7 +87,6 @@ public class ArticulosMasBuscados implements Vista {
         inicializarObjetos();
         BackgroundFill myBF = new BackgroundFill(Color.WHITESMOKE, new CornerRadii(1), new Insets(0.0, 0.0, 0.0, 0.0));
         root.setBackground(new Background(myBF));
-        setListeners();
         crearSeccionEncabezado();
         crearSeccionTabla();
     } 
@@ -188,12 +187,5 @@ public class ArticulosMasBuscados implements Vista {
         btn.setPrefSize(130, 35);
     }
     
-    private void setListeners(){
-        iniciarSesionBtn.setOnAction((ActionEvent e) -> {
-            root.getScene().setRoot(new PaneLogin().getRoot());
-        });    
-        registrarseBtn.setOnAction((ActionEvent e) -> {
-            root.getScene().setRoot(new VistaInfoUsuario(true, "FADCA8", "Formulario de Registro").getRoot());
-        });
-    }
+    
 }

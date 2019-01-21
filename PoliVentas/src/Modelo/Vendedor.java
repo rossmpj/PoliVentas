@@ -31,4 +31,9 @@ public class Vendedor extends Comprador{
      public String getId_vendedor() {
         return id_vendedor;
     }
+
+    public void setId_vendedor(String id_vendedor) {
+        this.id_vendedor = id_vendedor;
+    }
+     
 }

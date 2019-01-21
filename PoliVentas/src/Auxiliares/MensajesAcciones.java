@@ -121,4 +121,96 @@ public class MensajesAcciones {
         alert.setContentText("Lo sentimos, no se ha podido notificar al vendedor");
         alert.showAndWait();
     }
+    
+    
+    public static void CalificacionProductoSi(){
+        Alert advertencia = new Alert(Alert.AlertType.INFORMATION);
+            advertencia.setTitle("Calificacion Producto");
+            advertencia.setContentText("Se ha guardado la calificación correctamente");
+            advertencia.setHeaderText(null);
+            advertencia.initStyle(StageStyle.UTILITY);
+            advertencia.showAndWait();
+    }
+    
+    public static void CalificacionProductoNo(){
+        Alert advertencia = new Alert(Alert.AlertType.ERROR);
+            advertencia.setTitle("Calificacion Producto");
+            advertencia.setContentText("Lo sentimos, no se pudo guardar la calificación");
+            advertencia.setHeaderText(null);
+            advertencia.initStyle(StageStyle.UTILITY);
+            advertencia.showAndWait();
+    }
+    
+    public static void CalificacionVendedorSi(){
+        Alert advertencia = new Alert(Alert.AlertType.INFORMATION);
+            advertencia.setTitle("Calificacion Vendedor");
+            advertencia.setContentText("Se ha guardado la calificación correctamente");
+            advertencia.setHeaderText(null);
+            advertencia.initStyle(StageStyle.UTILITY);
+            advertencia.showAndWait();
+    }
+    
+    public static void CalificacionVendedorNo(){
+        Alert advertencia = new Alert(Alert.AlertType.ERROR);
+            advertencia.setTitle("Calificacion Vendedor");
+            advertencia.setContentText("Lo sentimos, no se pudo guardar la calificación");
+            advertencia.setHeaderText(null);
+            advertencia.initStyle(StageStyle.UTILITY);
+            advertencia.showAndWait();
+    }
+    
+    public static void PedidoAnulado(){
+        Alert advertencia = new Alert(Alert.AlertType.CONFIRMATION);
+            advertencia.setTitle("Anular pedido");
+            advertencia.setContentText("Está seguro de que desea anular el pedido?");
+            advertencia.setHeaderText(null);
+            advertencia.initStyle(StageStyle.UTILITY);
+            advertencia.showAndWait();
+    }
+    
+    public static void PedidoAnuladoSi(){
+        Alert advertencia = new Alert(Alert.AlertType.INFORMATION);
+            advertencia.setTitle("Anular pedido");
+            advertencia.setContentText("Se ha anulado su pedido");
+            advertencia.setHeaderText(null);
+            advertencia.initStyle(StageStyle.UTILITY);
+            advertencia.showAndWait();
+    }
+    
+    public static void PedidoAnuladoNo(){
+        Alert advertencia = new Alert(Alert.AlertType.INFORMATION);
+            advertencia.setTitle("Anular pedido");
+            advertencia.setContentText("Lo sentimos, no su pedido no ha sido anulado");
+            advertencia.setHeaderText(null);
+            advertencia.initStyle(StageStyle.UTILITY);
+            advertencia.showAndWait();
+    }
+    
+    public static void PedidoExitoso(){
+        Alert advertencia = new Alert(Alert.AlertType.INFORMATION);
+            advertencia.setTitle("Pedido entregado");
+            advertencia.setContentText("Gracias por confirmar la entrega de su pedido");
+            advertencia.setHeaderText(null);
+            advertencia.initStyle(StageStyle.UTILITY);
+            advertencia.showAndWait();
+    }
+    
+    public static void PedidoFallido(){
+        Alert advertencia = new Alert(Alert.AlertType.ERROR);
+            advertencia.setTitle("Pedido no entregado");
+            advertencia.setContentText("Lo sentimos, no se pudo realizar la actualizacion de su pedido");
+            advertencia.setHeaderText(null);
+            advertencia.initStyle(StageStyle.UTILITY);
+            advertencia.showAndWait();
+    }
+    
+    public static void IngresoNoValido(){
+        Alert advertencia = new Alert(Alert.AlertType.ERROR);
+            advertencia.setTitle("Búsqueda fallida");
+            advertencia.setContentText("Ingrese al menos 3 caracteres para realizar la búsqueda");
+            advertencia.setHeaderText(null);
+            advertencia.initStyle(StageStyle.UTILITY);
+            advertencia.showAndWait();
+    }
+
 }
