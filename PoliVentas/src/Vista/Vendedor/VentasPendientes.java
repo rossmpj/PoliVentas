@@ -86,19 +86,39 @@ public class VentasPendientes implements Vista{
     private void createTable(){
         
         pedidos = new TableView<>();
-        TableColumn<Producto, String> idCOL = new TableColumn<>("ID Pedido");
+        TableColumn<Pedido, String> idCOL = new TableColumn<>("ID Pedido");
         idCOL.setCellValueFactory(new PropertyValueFactory<>("idPedido"));
         
-        TableColumn<Producto, String> nombreCOL = new TableColumn<>("ID Producto");
-        nombreCOL.setCellValueFactory(new PropertyValueFactory<>("idProductos"));
+        TableColumn<Pedido, String> productoCOL = new TableColumn<>("Producto");
+        productoCOL.setCellValueFactory(new PropertyValueFactory<>("id_product"));
         
-        TableColumn<Producto, String> descripcionCOL = new TableColumn<>("Cantidad");
-        descripcionCOL.setCellValueFactory(new PropertyValueFactory<>("cantidadPedida"));
+        TableColumn<Pedido, String> compradorCOL = new TableColumn<>("Comprador");
+        compradorCOL.setCellValueFactory(new PropertyValueFactory<>("id_comprador"));
         
-        TableColumn<Producto, String> precioCOL = new TableColumn<>("Costo");
-        precioCOL.setCellValueFactory(new PropertyValueFactory<>("costo"));
+        TableColumn<Pedido, String> cantidadCOL = new TableColumn<>("Cantidad");
+        cantidadCOL.setCellValueFactory(new PropertyValueFactory<>("cantidadPedida"));
         
+        TableColumn<Pedido, String> costoCOL = new TableColumn<>("Costo");
+        costoCOL.setCellValueFactory(new PropertyValueFactory<>("costo"));
         
+        TableColumn<Pedido, String> fechaPedidoCOL = new TableColumn<>("Fecha del pedido");
+        fechaPedidoCOL.setCellValueFactory(new PropertyValueFactory<>("fechaPedido"));
+        
+        TableColumn<Pedido, String> fechaEntregaCOL = new TableColumn<>("Fecha de entrega");
+        fechaEntregaCOL.setCellValueFactory(new PropertyValueFactory<>("fechaEntrega"));
+        
+        TableColumn<Pedido, String> lugarCOL = new TableColumn<>("Lugar de entrega");
+        lugarCOL.setCellValueFactory(new PropertyValueFactory<>("lugarEntrega"));
+        
+        pedidos.getColumns().addAll(idCOL, productoCOL, compradorCOL, cantidadCOL, costoCOL, fechaPedidoCOL, fechaEntregaCOL, lugarCOL);
+    }
+    
+    public void addAnularVentaButtonHandler(EventHandler anularVentaButtonHandler){
+        AnularVenta.setOnAction(anularVentaButtonHandler);
+    }
+    
+    public void addVerMapaButtonHandler(EventHandler verMapaButtonHandler){
+        VerMapa.setOnAction(verMapaButtonHandler);
     }
     
     public void addBackButtonHandler(EventHandler agregarProductoButtonHandler){

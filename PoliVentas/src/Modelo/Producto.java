@@ -365,7 +365,6 @@ public class Producto {
         ObservableList<Producto> productos = FXCollections.observableArrayList();
         
         try {
-            Statement in = conexion.getConnection().createStatement();
             String query = 
             "select p.id_producto, p.nombre, p.descripcion, p.precio, p.categoria, p.stock from tb_producto p where p.id_vendedor = ? and p.estado = FALSE;";
             

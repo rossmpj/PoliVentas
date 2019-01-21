@@ -36,9 +36,8 @@ public class ControladorVendedorOptions{
         @Override
         public void handle(Event event) {
             
-            Pedido pedido = new Pedido();
             VentasPendientes ventasPendientesView = new VentasPendientes();
-            ControladorVentasPendientes controladorVentasPendientes = new ControladorVentasPendientes(pedido, ventasPendientesView);
+            ControladorVentasPendientes controladorVentasPendientes = new ControladorVentasPendientes(ventasPendientesView);
             
             WindowsController.next(VistaVendedorOptions, ventasPendientesView);
             
