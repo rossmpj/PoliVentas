@@ -3,10 +3,14 @@ package Modelo;
 import Auxiliares.DBConnection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 /**
  *
@@ -34,7 +38,8 @@ public class Producto {
     private final String eliminarP = "update db_poliventas.tb_producto set estado=? where id_producto=?";
     private final String modificarP = "update db_poliventas.tb_producto set nombre=?,descripcion=?,precio=?,categoria=?,stock=?, estado=?"
             + " where id_producto=?";
-    private final String insert = "insert into db_poliventas.tb_producto values(?,?,?,?,?,?,?,?)";
+    private final String insert = "insert into db_poliventas.tb_producto(id_producto, nombre, descripcion, "
+            + "precio, categoria, stock, estado, id_vendedor) values(?,?,?,?,?,?,?,?)";
 
     public Producto() {
     }
@@ -132,6 +137,16 @@ public class Producto {
         this.id_vendedor = vendedor;
     }
 
+    public Producto(String idProducto, String nombre, String descripcion, double precio, String categoria, int stock) {
+        this.idProducto = idProducto;
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+        this.precio = precio;
+        this.categoria = categoria;
+        this.stock = stock;
+    }
+    
+    
     public String getIdProducto() {
         return idProducto;
     }
@@ -340,5 +355,39 @@ public class Producto {
             CONNECTION.desconectar();
 
         }
+    }
+    
+    public static ObservableList<Producto> getMisProductos(String idVendedor){
+        
+        DBConnection conexion = DBConnection.getInstance();
+        conexion.conectar();
+        
+        ObservableList<Producto> productos = FXCollections.observableArrayList();
+        
+        try {
+            Statement in = conexion.getConnection().createStatement();
+            String query = 
+            "select p.id_producto, p.nombre, p.descripcion, p.precio, p.categoria, p.stock from tb_producto p where p.id_vendedor = ? and p.estado = FALSE;";
+            
+            PreparedStatement buscar = conexion.getConnection().prepareStatement(query);
+            buscar.setString(1, idVendedor);
+            ResultSet resultado = buscar.executeQuery();
+            while(resultado.next()){
+                productos.add(
+                        new Producto(
+                        resultado.getString("p.id_producto"),
+                        resultado.getString("p.nombre"), 
+                        resultado.getString("p.descripcion"), 
+                        Double.parseDouble(resultado.getString("p.precio")), 
+                        resultado.getString("p.categoria"),
+                        Integer.parseInt(resultado.getString("p.stock")))
+                );
+            }
+        } catch (SQLException ex) {
+            System.out.println("EXCEPCION: " + ex.getMessage());
+        } finally{
+            conexion.desconectar();
+        }
+        return productos;
     }
 }

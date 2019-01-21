@@ -5,6 +5,8 @@
  */
 package Vista.Vendedor;
 
+import Modelo.Pedido;
+import Modelo.Producto;
 import Vista.Principal.Vista;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -12,7 +14,9 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 
@@ -24,7 +28,9 @@ import javafx.scene.layout.VBox;
 public class VentasPendientes implements Vista{
     private final BorderPane root;
     private Button AnularVenta, VerMapa, Regresar;
+    private TableView<Pedido> pedidos;
     
+    @Override
     public BorderPane getRoot(){
         return root;
     }
@@ -35,7 +41,6 @@ public class VentasPendientes implements Vista{
         inicializarBotones();
         crearSeccionVentasPendientes();
         seccionCalificaciones();
-        setListeners();
     }
     
     private void inicializarBotones(){   
@@ -72,24 +77,39 @@ public class VentasPendientes implements Vista{
     
     private void crearSeccionVentasPendientes(){
         VBox contenedorTablaProductos = new VBox();
-        TableView productos = new TableView();
+        createTable();
         contenedorTablaProductos.setPadding(new Insets(10, 10, 10, 10));
-        contenedorTablaProductos.getChildren().add(productos);
+        contenedorTablaProductos.getChildren().add(pedidos);
         root.setCenter(contenedorTablaProductos);
+    }
+    
+    private void createTable(){
+        
+        pedidos = new TableView<>();
+        TableColumn<Producto, String> idCOL = new TableColumn<>("ID Pedido");
+        idCOL.setCellValueFactory(new PropertyValueFactory<>("idPedido"));
+        
+        TableColumn<Producto, String> nombreCOL = new TableColumn<>("ID Producto");
+        nombreCOL.setCellValueFactory(new PropertyValueFactory<>("idProductos"));
+        
+        TableColumn<Producto, String> descripcionCOL = new TableColumn<>("Cantidad");
+        descripcionCOL.setCellValueFactory(new PropertyValueFactory<>("cantidadPedida"));
+        
+        TableColumn<Producto, String> precioCOL = new TableColumn<>("Costo");
+        precioCOL.setCellValueFactory(new PropertyValueFactory<>("costo"));
+        
+        
     }
     
     public void addBackButtonHandler(EventHandler agregarProductoButtonHandler){
         Regresar.setOnAction(agregarProductoButtonHandler);
     }
     
-    private void setListeners(){
-        
-        Regresar.setOnAction((ActionEvent e) -> {
-            root.getScene().setRoot(new VendedorOptions().getRoot());
-        });          
-    }
-    
     public void estiloBotones(Button btn){
         btn.setStyle("-fx-font: 17 Verdana;");
+    }
+    
+    public TableView<Pedido> getTablaPedidos(){
+        return pedidos;
     }
 }

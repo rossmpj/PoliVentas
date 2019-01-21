@@ -8,6 +8,7 @@ package Controlador.Vendedor;
 import Controlador.Principal.WindowsController;
 import Modelo.Pedido;
 import Modelo.Producto;
+import Vista.Principal.Vista;
 import Vista.Vendedor.MisProductos;
 import Vista.Vendedor.VendedorOptions;
 import Vista.Vendedor.VentasPendientes;
@@ -18,7 +19,7 @@ import javafx.event.EventHandler;
  *
  * @author Galo Xavier Figueroa Villacreses
  */
-public class ControladorVendedorOptions {
+public class ControladorVendedorOptions{
     
     private final VendedorOptions VistaVendedorOptions;
 
@@ -50,9 +51,8 @@ public class ControladorVendedorOptions {
         @Override
         public void handle(Event event) {
             
-            Producto producto = new Producto();
             MisProductos misProductosView = new MisProductos();
-            ControladorMisProductos controladorMisProductos = new ControladorMisProductos(producto, misProductosView);
+            ControladorMisProductos controladorMisProductos = new ControladorMisProductos(misProductosView);
             
             WindowsController.next(VistaVendedorOptions, misProductosView);
             

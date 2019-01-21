@@ -5,13 +5,19 @@
  */
 package Vista.Vendedor;
 
+import Modelo.Producto;
 import Vista.Principal.Vista;
+import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.event.EventHandler;
+import javafx.event.EventType;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 
@@ -23,7 +29,9 @@ import javafx.scene.layout.VBox;
 public class MisProductos implements Vista{
     private final BorderPane root;
     private Button AgregarProducto, ModificarProducto, EliminarProducto, Regresar;
+    private TableView<Producto> productos;
     
+    @Override
     public BorderPane getRoot(){
         return root;
     }
@@ -36,9 +44,9 @@ public class MisProductos implements Vista{
         seccionCalificaciones();
     }
     
-    private void inicializarBotones(){   
+    private void inicializarBotones(){
         
-        AgregarProducto = new Button("Agregar vendedor");
+        AgregarProducto = new Button("Agregar producto");
         AgregarProducto.setStyle("-fx-font: 17 Verdana; ");
         
         ModificarProducto = new Button("Modificar producto");
@@ -73,14 +81,49 @@ public class MisProductos implements Vista{
     
     private void crearSeccionProductos(){
         VBox contenedorTablaProductos = new VBox();
-        TableView productos = new TableView();
+        
+        createTable();
+        
         contenedorTablaProductos.setPadding(new Insets(10, 10, 10, 10));
         contenedorTablaProductos.getChildren().add(productos);
         root.setCenter(contenedorTablaProductos);
     }
     
+    private void createTable(){
+        
+        productos = new TableView<>();
+        TableColumn<Producto, String> idCOL = new TableColumn<>("ID");
+        idCOL.setCellValueFactory(new PropertyValueFactory<>("idProducto"));
+        
+        TableColumn<Producto, String> nombreCOL = new TableColumn<>("Nombre");
+        nombreCOL.setCellValueFactory(new PropertyValueFactory<>("nombre"));
+        
+        TableColumn<Producto, String> descripcionCOL = new TableColumn<>("Descripción");
+        descripcionCOL.setCellValueFactory(new PropertyValueFactory<>("descripcion"));
+        
+        TableColumn<Producto, String> precioCOL = new TableColumn<>("Precio");
+        precioCOL.setCellValueFactory(new PropertyValueFactory<>("precio"));
+        
+        TableColumn<Producto, String> categoriaCOL = new TableColumn<>("Categoría");
+        categoriaCOL.setCellValueFactory(new PropertyValueFactory<>("categoria"));
+        
+        TableColumn<Producto, String> stockCOL = new TableColumn<>("Stock");
+        stockCOL.setCellValueFactory(new PropertyValueFactory<>("stock"));
+        
+        productos.getColumns().addAll(idCOL,nombreCOL, descripcionCOL, precioCOL, categoriaCOL, stockCOL);
+        
+    }
+    
     public void addAgregarProductoButtonHandler(EventHandler agregarProductoButtonHandler){
         AgregarProducto.setOnAction(agregarProductoButtonHandler);
+    }
+    
+    public void addModificarProductoButtonHandler(EventHandler modificarProductoButtonHandler){
+        ModificarProducto.setOnAction(modificarProductoButtonHandler);
+    }
+    
+    public void addDeleteButtonHandler(EventHandler deleteButtonHandler){
+        EliminarProducto.setOnAction(deleteButtonHandler);
     }
     
     public void addBackButtonHandler(EventHandler agregarProductoButtonHandler){
@@ -89,5 +132,9 @@ public class MisProductos implements Vista{
     
     public void estiloBotones(Button btn){
         btn.setStyle("-fx-font: 17 Verdana;");
+    }
+    
+    public TableView getTablaProductos(){
+        return productos;
     }
 }

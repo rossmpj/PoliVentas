@@ -9,6 +9,7 @@ import Auxiliares.CONSTANTES;
 import static Auxiliares.PatronVistaTitulos.crearTituloSubMenu;
 import Vista.Principal.Vista;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -26,18 +27,16 @@ import javafx.scene.layout.VBox;
  *
  * @author Tiffy, Galo Xavier Figueroa Villacreses
  */
-public class NuevoProducto implements Vista {
+public class VistaInfoProducto implements Vista {
 
     private final BorderPane root;
-    private boolean ingreso;
-    private String color, titulo;
-    private Button guardar, actualizar, eliminar, back;
-    private TextField nombre, categoria, precio, cantidad, vendedor;
+    private final String color, titulo;
+    private Button guardar, back;
+    private TextField id, nombre, categoria, precio, cantidad;
     private TextArea descripcion;
     
-    public NuevoProducto() {
+    public VistaInfoProducto() {
         root = new BorderPane();
-        this.ingreso = true;
         this.color = "f0f0f0";
         this.titulo = "Agregue su producto nuevo";
         crearSeccionTitulo();
@@ -45,9 +44,8 @@ public class NuevoProducto implements Vista {
         construccion();
     }
 
-    public NuevoProducto(boolean ingreso, String color, String titulo) {
+    public VistaInfoProducto(String color, String titulo) {
         root = new BorderPane();
-        this.ingreso = ingreso;
         this.color = color;
         this.titulo = titulo;
         crearSeccionTitulo();
@@ -59,45 +57,36 @@ public class NuevoProducto implements Vista {
         back = new Button();
         estiloBotones(back, "FFFFFF", "/back.png");
         root.setBottom(back);
+        id = new TextField();
         nombre = new TextField();
         nombre.setPrefWidth(100);
         categoria = new TextField();
         precio = new TextField();
         cantidad = new TextField();
-        vendedor = new TextField();
         descripcion = new TextArea();
         descripcion.setPrefHeight(100);
         gestionBotones();
-        gestionSalida();
     }
 
     private VBox gestionBotones() {
         VBox sa = new VBox();
         sa.setAlignment(Pos.CENTER_RIGHT);
-        if (this.ingreso) {
-            guardar = new Button("Guardar");
-            guardar.setPrefSize(100, 50);
-            sa.getChildren().add(guardar);
-        } else {
-            actualizar = new Button("Actualizar");
-            eliminar = new Button("Eliminar\nProducto");
-            actualizar.setPrefSize(100, 50);
-            eliminar.setPrefSize(100, 50);
-            sa.getChildren().addAll(actualizar, eliminar);
-        }
+        guardar = new Button("Guardar");
+        guardar.setPrefSize(100, 50);
+        sa.getChildren().add(guardar);
         return sa;
     }
-
-    private void gestionSalida() {
-        if (ingreso) {
-            back.setOnAction((ActionEvent e) -> {
-                root.getScene().setRoot(new MisProductos().getRoot());
-            });
-        } else {
-            back.setOnAction((ActionEvent e) -> {
-                root.getScene().setRoot(new MisProductos().getRoot());
-            });
-        }
+    
+    public void addCreateButtonHandler(EventHandler createButtonHandler){
+        guardar.setOnAction(createButtonHandler);
+    }
+    
+    public void addUpdateButtonHandler(EventHandler updateButtonHandler){
+        guardar.setOnAction(updateButtonHandler);
+    }
+    
+    public void addBackButtonHandler(EventHandler backButtonHandler){
+        back.setOnAction(backButtonHandler);
     }
 
     private void construccion() {
@@ -114,14 +103,14 @@ public class NuevoProducto implements Vista {
     private VBox formulario() {
         VBox scawflone = new VBox();
         GridPane grandPrix = new GridPane();
+        Label idl = new Label("ID");
         Label nom = new Label("Nombre");
         Label des = new Label("Descripción");
         Label pre = new Label("Precio");
         Label cant = new Label("Cantidad");
         Label cat = new Label("Categoría");
-        Label idv = new Label("Id Vendedor");
-        grandPrix.addColumn(0, nom, des, pre, cant, cat, idv);
-        grandPrix.addColumn(1, nombre, descripcion, precio, cantidad, categoria, vendedor);
+        grandPrix.addColumn(0, idl, nom, des, pre, cant, cat);
+        grandPrix.addColumn(1, id, nombre, descripcion, precio, cantidad, categoria);
         grandPrix.setHgap(15);
         grandPrix.setVgap(15);
         scawflone.setPadding(new Insets(30, 10, 0, 20));//top,derecha,abajo,izquierda
@@ -134,6 +123,7 @@ public class NuevoProducto implements Vista {
         root.setTop(crearTituloSubMenu(titulo, color));
     }
 
+    @Override
     public BorderPane getRoot() {
         return root;
     }
@@ -156,4 +146,30 @@ public class NuevoProducto implements Vista {
         k.getChildren().add(myLabel);
         return k;
     }
+     
+    public TextField getID() {
+        return id;
+    }
+
+    public TextField getNombre() {
+        return nombre;
+    }
+
+    public TextField getCategoria() {
+        return categoria;
+    }
+
+    public TextField getPrecio() {
+        return precio;
+    }
+
+    public TextField getCantidad() {
+        return cantidad;
+    }
+
+    public TextArea getDescripcion() {
+        return descripcion;
+    }
+     
+    
 }

@@ -7,13 +7,16 @@ package Controlador.Vendedor;
 
 import Controlador.Principal.WindowsController;
 import Modelo.Pedido;
+import Vista.Principal.Vista;
 import Vista.Vendedor.VentasPendientes;
+import javafx.collections.ObservableList;
+import javafx.scene.control.TableView;
 
 /**
  *
  * @author Galo Xavier Figueroa Villacreses
  */
-public class ControladorVentasPendientes {
+public class ControladorVentasPendientes{
     
     private final Pedido ModeloPedido;
     private final VentasPendientes VistaVentasPendientes;
