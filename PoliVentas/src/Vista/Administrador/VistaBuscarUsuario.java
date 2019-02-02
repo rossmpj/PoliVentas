@@ -10,6 +10,7 @@ import Auxiliares.CONSTANTES;
 import static Auxiliares.PatronVistaTitulos.botonRegresarMenu;
 import static Auxiliares.PatronVistaTitulos.crearTituloSubMenu;
 import Modelo.Usuario;
+import Vista.Principal.PaneLogin;
 import Vista.Principal.Vista;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

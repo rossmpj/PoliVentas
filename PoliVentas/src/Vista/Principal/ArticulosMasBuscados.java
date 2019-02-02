@@ -1,17 +1,14 @@
 package Vista.Principal;
 
+import Auxiliares.PatronVistaTitulos;
 import Modelo.Producto;
-import Vista.Administrador.VistaInfoUsuario;
-import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
@@ -20,7 +17,6 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.util.Callback;
 
 /**
  *
@@ -28,18 +24,22 @@ import javafx.util.Callback;
  */
 public class ArticulosMasBuscados implements Vista {
     private TableView<Producto> tabla;
+    private TableColumn<Producto, Void> colBtn;
     private TableColumn<Producto, String> colNombre, colDescripcion, colPrecio, colCateg,
             colStock,colNB, colCalif;
     private final BorderPane root;
+    private boolean ingreso;
     private Button iniciarSesionBtn;
-    private Button registrarseBtn;
+    private Button registrarseBtn, back, btn;
     private Label title;
-    public static VistaInfoUsuario frmReg;
-    public static PaneLogin frmLog;
 
     @Override
     public BorderPane getRoot() {
         return root;
+    }
+
+    public TableColumn<Producto, Void> getColBtn() {
+        return colBtn;
     }
 
     public TableColumn<Producto, String> getColNombre() {
@@ -82,8 +82,9 @@ public class ArticulosMasBuscados implements Vista {
         return this.tabla;
     }  
     
-    public ArticulosMasBuscados() {
+    public ArticulosMasBuscados(boolean ingreso) {
         root = new BorderPane();
+        this.ingreso = ingreso;
         inicializarObjetos();
         BackgroundFill myBF = new BackgroundFill(Color.WHITESMOKE, new CornerRadii(1), new Insets(0.0, 0.0, 0.0, 0.0));
         root.setBackground(new Background(myBF));
@@ -95,7 +96,9 @@ public class ArticulosMasBuscados implements Vista {
         this.tabla = new TableView<>();
         iniciarSesionBtn = new Button("Iniciar Sesión");
         registrarseBtn = new Button("Registrarse");
-        title = new Label("Artículos más buscados");   
+        //this.btn.setText("Ver");
+        title = new Label("Artículos más buscados");  
+        back = PatronVistaTitulos.botonRegresarMenu();
     }
     
     private void crearSeccionTabla(){
@@ -127,27 +130,8 @@ public class ArticulosMasBuscados implements Vista {
           }
     
     private void addButtonToTable() {
-        TableColumn<Producto, Void> colBtn = new TableColumn("Accion");
-        Callback<TableColumn<Producto, Void>, TableCell<Producto, Void>> cellFactory = (final TableColumn<Producto, Void> param) -> {
-            final TableCell<Producto, Void> cell = new TableCell<Producto, Void>() {
-                private final Button btn = new Button("Ver"); {
-                btn.setOnAction((ActionEvent event) -> {
-                    root.getScene().setRoot(new PaneLogin().getRoot());
-                });
-            }
-                @Override
-                public void updateItem(Void item, boolean empty) {
-                    super.updateItem(item, empty);
-                    if (empty) {
-                        setGraphic(null);
-                    } else {
-                        setGraphic(btn);
-                    }
-                }
-            };
-            return cell;
-        };
-        colBtn.setCellFactory(cellFactory);
+        colBtn = new TableColumn("Accion");
+        
         tabla.getColumns().add(colBtn);
     }
     
@@ -167,7 +151,11 @@ public class ArticulosMasBuscados implements Vista {
         contenedorBotones.setSpacing(15);
         this.estiloBotones(registrarseBtn, "0059A0");
         this.estiloBotones(iniciarSesionBtn, "0059A0");
-        contenedorBotones.getChildren().addAll(iniciarSesionBtn, registrarseBtn);
+        if (!this.ingreso) {
+            contenedorBotones.getChildren().addAll(iniciarSesionBtn, registrarseBtn);
+        }else{
+            contenedorBotones.getChildren().add(back);
+        }
         return contenedorBotones;
     }
     
@@ -186,6 +174,20 @@ public class ArticulosMasBuscados implements Vista {
         btn.setStyle("-fx-font: 15 Verdana; -fx-base: #"+colorHEX+";");
         btn.setPrefSize(130, 35);
     }
+
+    public boolean isIngreso() {
+        return ingreso;
+    }
+
+    public void setIngreso(boolean ingreso) {
+        this.ingreso = ingreso;
+    }   
+
+    public void addBackButtonHandler(EventHandler addBackButtonHandler){
+        this.back.setOnAction(addBackButtonHandler);
+    }
     
-    
+//    public void addVerButtonHandler(EventHandler addVerButtonHandler){
+//        this.btn.setOnAction(addVerButtonHandler);
+//    }
 }

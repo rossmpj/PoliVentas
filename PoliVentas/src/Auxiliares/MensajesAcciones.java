@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Auxiliares;
 
 import javafx.scene.control.Alert;
@@ -204,6 +199,10 @@ public class MensajesAcciones {
             advertencia.showAndWait();
     }
     
+    /**
+     * Método utilizado en la vista de búsqueda sencilla, que muestra un mensaje 
+     * de error en caso de que el usuario haya buscado un artículo con menos de 3 caracteres
+     */
     public static void IngresoNoValido(){
         Alert advertencia = new Alert(Alert.AlertType.ERROR);
             advertencia.setTitle("Búsqueda fallida");
@@ -212,5 +211,14 @@ public class MensajesAcciones {
             advertencia.initStyle(StageStyle.UTILITY);
             advertencia.showAndWait();
     }
-
+    /**
+     * Método que muestra un cuadro de diálogo indicando un inicio de sesioón incorrecto
+     */
+    public static void validarIngreso(){
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Inicio de sesión incorrecto");
+        alert.setHeaderText("");
+        alert.setContentText("Nombre de usuario o contraseña incorrectos");
+        alert.showAndWait();
+    }
 }

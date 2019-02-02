@@ -9,6 +9,7 @@ import Auxiliares.CONSTANTES;
 import static Auxiliares.PatronVistaTitulos.botonRegresarMenu;
 import static Auxiliares.PatronVistaTitulos.crearTituloSubMenu;
 import Modelo.Usuario;
+import Vista.Principal.PaneLogin;
 import Vista.Principal.Vista;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -164,7 +165,7 @@ public class VistaInfoUsuario implements Vista {
     }
     
     private void crearSeccionTitulo() {
-        root.setTop(crearTituloSubMenu(titulo, color));
+        root.setTop(crearTituloSubMenu(titulo,color));
     }
     
     private void cargarCombo() {
@@ -176,6 +177,7 @@ public class VistaInfoUsuario implements Vista {
         return rol.getSelectionModel().getSelectedItem();
     }
     
+    @Override
     public BorderPane getRoot() {
         return root;
     }

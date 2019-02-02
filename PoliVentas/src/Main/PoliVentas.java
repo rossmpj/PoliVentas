@@ -21,13 +21,13 @@ public class PoliVentas extends Application {
     @Override
     public void start(Stage primaryStage) {
         Producto ModeloProducto = new Producto();
-        ArticulosMasBuscados p = new ArticulosMasBuscados();
+        ArticulosMasBuscados p = new ArticulosMasBuscados(false);
         ControladorArticulosMasBuscados controller = new ControladorArticulosMasBuscados(ModeloProducto, p);
         scene = new Scene(new Group(), 850, 650);
         scene.setRoot(p.getRoot());
         primaryStage.setTitle("PoliVentas");
         primaryStage.setScene(scene);
-        Image image = new Image(CONSTANTES.PATH_IMG+"/logoo.jpg");
+        Image image = new Image(CONSTANTES.PATH_IMG + "/logoo.jpg");
         primaryStage.getIcons().add(image);
         primaryStage.resizableProperty().setValue(Boolean.FALSE);
         primaryStage.show();
@@ -37,9 +37,6 @@ public class PoliVentas extends Application {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
         launch(args);
     }
-
-    
 }

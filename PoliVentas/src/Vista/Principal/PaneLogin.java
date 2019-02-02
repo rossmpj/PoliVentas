@@ -1,21 +1,9 @@
 package Vista.Principal;
 
 import Auxiliares.CONSTANTES;
-import Auxiliares.DBConnection;
-import static Auxiliares.DBConnection.getInstance;
-import Modelo.Usuario;
-import Vista.Administrador.VistaInfoUsuario;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.PreparedStatement;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -30,7 +18,6 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import javafx.stage.StageStyle;
 
 /**
  *
@@ -42,7 +29,8 @@ public class PaneLogin implements Vista {
     private Button login, signIn;
     private TextField user;
     private PasswordField contra;
-
+      
+    @Override
     public BorderPane getRoot() {
         return root;
     }
@@ -53,36 +41,6 @@ public class PaneLogin implements Vista {
         root.setBackground(new Background(myBF));
         inicializarObjetos();
         pantallaLogin();
-    }
-
-    public boolean login(Usuario usr) {
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-        Connection con = (Connection) getInstance();//Connection con=getConexion();
-
-        String sql = "SELECT ci_usuario, username, contrasena FROM tb_usuario WHERE username=?";
-        try {
-            ps = con.prepareStatement(sql);
-            ps.setString(1, usr.getUsuario());
-            rs = ps.executeQuery();
-
-            if (rs.next()) {
-                if (usr.getContrasena().equals(rs.getString(3))) {
-                    usr.setCedula(rs.getString(1));
-                    usr.setUsuario(rs.getString(2));
-                    return true;
-                } else {
-                    return false;
-                }
-            }
-
-            return false;
-
-        } catch (SQLException ex) {
-            Logger.getLogger(PaneLogin.class.getName()).log(Level.SEVERE, null, ex);
-            return false;
-        }
-
     }
 
     private VBox encabezado() {
@@ -124,7 +82,6 @@ public class PaneLogin implements Vista {
         vb.setAlignment(Pos.CENTER);
         vb.setSpacing(10);
         vb.getChildren().addAll(encabezado(), v2, boton());
-        setLoginListener();
         root.setTop(vb);
     }
 
@@ -150,52 +107,33 @@ public class PaneLogin implements Vista {
         return v;
     }
 
-    private void setLoginListener() {
-        login.setOnAction((ActionEvent e) -> {
-            root.getScene().setRoot(new VistaTemporal().getRoot()
-            );
-        });
-        signIn.setOnAction((ActionEvent e) -> {
-            root.getScene().setRoot(new VistaInfoUsuario(true, "FADCA8", "Formulario de Registro").getRoot());
-        });
-    }
-
-    private void login(ActionEvent event) {
-        Usuario mod = new Usuario();
-
-        String pass = new String(contra.getText());
-
-        if (!user.getText().equals("") && !pass.equals("")) {
-
-            mod.setUsuario(user.getText());
-            mod.setContrasena(pass);
-
-            if (login(mod)) {
-                ArticulosMasBuscados.frmLog = null;
-                //this.dispose();
-
-            } else {
-                Alert dialogo= new Alert(AlertType.INFORMATION);
-                dialogo.setTitle("Error");
-                dialogo.setHeaderText(null);
-                dialogo.setContentText("Datos incorrectos");
-                dialogo.initStyle(StageStyle.UTILITY);
-                dialogo.showAndWait();
-            }
-        } else {
-            Alert dialogo= new Alert(AlertType.INFORMATION);
-                dialogo.setTitle("Error");
-                dialogo.setHeaderText(null);
-                dialogo.setContentText("Debe ingresar sus datos");
-                dialogo.initStyle(StageStyle.UTILITY);
-                dialogo.showAndWait();
-        }
-    }
-
     private void estiloBotones(Button btn, String colorHEX) {
         btn.setAlignment(Pos.CENTER);
         btn.setPrefSize(150, 50);
         btn.setStyle("-fx-font: 17 Verdana;  -fx-base: #" + colorHEX + "; -fx-text-fill: white;");
+    }
+    
+    public void addLoginButtonHandler(EventHandler loginButtonHandler){
+        this.login.setOnAction(loginButtonHandler);
+    }
+    
+    public void addSignInButtonHandler(EventHandler signInButtonHandler){
+        this.signIn.setOnAction(signInButtonHandler);
+    }
 
+    public String getUser() {
+        return user.getText();
+    }
+
+    public void setUser(String user) {
+        this.user.setText(user);
+    }
+
+    public String getContra() {
+        return contra.getText();
+    }
+
+    public void setContra(String contra) {
+        this.contra.setText(contra);
     }
 }

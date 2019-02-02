@@ -37,9 +37,9 @@ public class AdministradorOptions implements Vista {
         root = new BorderPane();
         crearSeccionTituloAdmin();
         createContent();
-        setListeners();
     }
 
+    @Override
     public BorderPane getRoot() {
         return root;
     }
@@ -144,15 +144,10 @@ public class AdministradorOptions implements Vista {
         return gp;
     }
 
-    private void setListeners() {
-        listenCerrarSesion();     
+    public void addCerrarSesionButtonHandler(EventHandler cerrarSesionButtonHandler){
+        cerrarSesion.setOnAction(cerrarSesionButtonHandler);
     }
     
-    private void listenCerrarSesion(){
-     cerrarSesion.setOnAction((ActionEvent e) -> {
-            root.getScene().setRoot(new PaneLogin().getRoot());});
-    }
-
     public void addNuevoUsuarioButtonHandler(EventHandler nuevoUsuarioButtonHandler){
         
         nuevoUser.setOnAction(nuevoUsuarioButtonHandler);

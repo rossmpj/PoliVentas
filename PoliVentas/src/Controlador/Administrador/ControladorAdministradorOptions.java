@@ -5,6 +5,7 @@
  */
 package Controlador.Administrador;
 
+import Controlador.Principal.ControladorLogin;
 import Controlador.Principal.WindowsController;
 import Modelo.Administrador;
 import Modelo.Producto;
@@ -14,6 +15,7 @@ import Vista.Administrador.VistaBuscarProducto;
 import Vista.Administrador.VistaBuscarUsuario;
 import Vista.Administrador.VistaInfoProducto;
 import Vista.Administrador.VistaInfoUsuario;
+import Vista.Principal.PaneLogin;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 
@@ -30,6 +32,7 @@ public class ControladorAdministradorOptions {
         this.VistaAdministradorOptions = VistaAdministradorOptions;
 
         this.VistaAdministradorOptions.addNuevoUsuarioButtonHandler(new NuevoUsuarioButtonHandler());
+        this.VistaAdministradorOptions.addCerrarSesionButtonHandler(new CerrarSesionButtonHandler());
         this.VistaAdministradorOptions.addBuscarUsuarioButtonHandler(new BuscarUsuarioButtonHandler());
         this.VistaAdministradorOptions.addNuevoProductoButtonHandler(new NuevoProductoButtonHandler());
         this.VistaAdministradorOptions.addBuscarProductoButtonHandler(new BuscarProductoButtonHandler());
@@ -92,6 +95,15 @@ public class ControladorAdministradorOptions {
 
         }
 
+    }
+    
+    private class CerrarSesionButtonHandler implements EventHandler {
+        @Override
+        public void handle(Event event) {        
+            PaneLogin loginView = new PaneLogin();
+            ControladorLogin controladorLogin = new ControladorLogin(loginView);
+            WindowsController.next(VistaAdministradorOptions, loginView);
+        }  
     }
 
 }

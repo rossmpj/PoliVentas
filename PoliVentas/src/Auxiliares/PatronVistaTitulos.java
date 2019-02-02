@@ -22,7 +22,7 @@ public class PatronVistaTitulos {
         contenedorTitulo.setAlignment(Pos.CENTER);
         contenedorTitulo.setStyle("-fx-background-color: #"+colorHEX+";");
         comprador.setStyle("-fx-font: 25 Verdana; -fx-text-fill: #FFFFFF; -fx-font-weight: bold;");
-        contenedorTitulo.getChildren().add(comprador);
+        contenedorTitulo.getChildren().addAll(comprador);
         return contenedorTitulo;
     }
     
@@ -33,7 +33,7 @@ public class PatronVistaTitulos {
         contenedorTitulo.setAlignment(Pos.CENTER);
         contenedorTitulo.setStyle("-fx-background-color: #"+colorHEX+";");
         comprador.setStyle("-fx-font: 25 Verdana; -fx-text-fill: #FFFFFF; ");
-        contenedorTitulo.getChildren().add(comprador);
+        contenedorTitulo.getChildren().addAll(comprador);
         return contenedorTitulo;
     }      
     

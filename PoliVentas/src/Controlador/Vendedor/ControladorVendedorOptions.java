@@ -1,14 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Controlador.Vendedor;
 
+import Controlador.Principal.ControladorLogin;
 import Controlador.Principal.WindowsController;
-import Modelo.Pedido;
-import Modelo.Producto;
-import Vista.Principal.Vista;
+import Vista.Principal.PaneLogin;
 import Vista.Vendedor.MisProductos;
 import Vista.Vendedor.VendedorOptions;
 import Vista.Vendedor.VentasPendientes;
@@ -26,7 +20,7 @@ public class ControladorVendedorOptions{
     public ControladorVendedorOptions(VendedorOptions VistaVendedorOptions) {
         
         this.VistaVendedorOptions = VistaVendedorOptions;
-        
+        this.VistaVendedorOptions.addCerrarSesionButtonHandler(new CerrarSesionButtonHandler());
         this.VistaVendedorOptions.addVentasPendientesButtonHandler(new VentasPendientesButtonHandler());
         this.VistaVendedorOptions.addMisProductosButtonHandler(new MisProductosButtonHandler());
     }
@@ -40,7 +34,6 @@ public class ControladorVendedorOptions{
             ControladorVentasPendientes controladorVentasPendientes = new ControladorVentasPendientes(ventasPendientesView);
             
             WindowsController.next(VistaVendedorOptions, ventasPendientesView);
-            
         }
         
     }
@@ -56,7 +49,14 @@ public class ControladorVendedorOptions{
             WindowsController.next(VistaVendedorOptions, misProductosView);
             
         }
-        
     }
     
+    private class CerrarSesionButtonHandler implements EventHandler {
+        @Override
+        public void handle(Event event) {        
+            PaneLogin loginView = new PaneLogin();
+            ControladorLogin controladorLogin = new ControladorLogin(loginView);
+            WindowsController.next(VistaVendedorOptions, loginView);
+        }  
+    }
 }

@@ -9,6 +9,7 @@ import Auxiliares.CONSTANTES;
 import static Auxiliares.PatronVistaTitulos.botonRegresarMenu;
 import static Auxiliares.PatronVistaTitulos.crearTituloSubMenu;
 import Modelo.Producto;
+import Vista.Principal.PaneLogin;
 import Vista.Principal.Vista;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;

@@ -198,7 +198,7 @@ public class VistaComprasPendientes implements Vista {
     }
     
     private void crearSeccionTituloComprador(){
-        root.setTop(crearTituloSubMenu("Compras Pendientes", "A8C5FA"));
+        root.setTop(crearTituloSubMenu("Compras Pendientes","A8C5FA"));
     }
     
     private void crearSeccionProductos(){

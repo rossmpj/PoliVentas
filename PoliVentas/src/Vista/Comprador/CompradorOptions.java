@@ -4,8 +4,6 @@ import Vista.Principal.PaneLogin;
 import Auxiliares.CONSTANTES;
 import Vista.Principal.Vista;
 import static Auxiliares.PatronVistaTitulos.crearTituloMenuPrincipal;
-import Vista.Administrador.VistaComun;
-import Vista.Principal.ArticulosMasBuscados;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -25,6 +23,7 @@ public class CompradorOptions implements Vista{
     private Button BusquedaSencilla, BusquedaAvanzada, ComprasPendientes,
      Historial, ArticulosMasBuscados, NuevosArticulos, CerrarSesion;
     
+    @Override
     public BorderPane getRoot(){
         return root;
     }
@@ -33,7 +32,6 @@ public class CompradorOptions implements Vista{
         root = new BorderPane();
         crearSeccionTituloComprador();
         createContent();
-        setListeners();
     }
 
     private void createContent(){
@@ -112,25 +110,19 @@ public class CompradorOptions implements Vista{
     }
     
     public void addBusquedaSencillaButtonHandler(EventHandler busquedaSencillaButtonHandler){
-        
         BusquedaSencilla.setOnAction(busquedaSencillaButtonHandler);
-        
     }
     
     public void addComprasPendientesButtonHandler(EventHandler comprasPendientesButtonHandler){
-        
-        ComprasPendientes.setOnAction(comprasPendientesButtonHandler);
-        
+        ComprasPendientes.setOnAction(comprasPendientesButtonHandler); 
     }
     
     public void addArticulosMasBuscadosButtonHandler(EventHandler articulosMasBuscadosButtonHandler){
-        
         ArticulosMasBuscados.setOnAction(articulosMasBuscadosButtonHandler);
-        
     }
     
-    private void setListeners(){
-        listenCerrarSesion();
+    public void addCerrarSesionButtonHandler(EventHandler cerrarSesionButtonHandler){
+        CerrarSesion.setOnAction(cerrarSesionButtonHandler);
     }
     
     public void estiloBotones(Button btn, String base, String path){
@@ -145,10 +137,4 @@ public class CompradorOptions implements Vista{
         lbl.setStyle("-fx-font: 17 Verdana; -fx-text-fill: #FFFFFF; -fx-background-color: #"+base+"; ");
         lbl.setAlignment(Pos.CENTER);
     }
-    
-    private void listenCerrarSesion(){
-     CerrarSesion.setOnAction((ActionEvent e) -> {
-            root.getScene().setRoot(new PaneLogin().getRoot());});
-    }
-    
 }

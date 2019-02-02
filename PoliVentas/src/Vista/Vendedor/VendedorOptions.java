@@ -1,11 +1,8 @@
 package Vista.Vendedor;
 
-import Vista.Principal.PaneLogin;
 import Auxiliares.CONSTANTES;
 import Vista.Principal.Vista;
 import static Auxiliares.PatronVistaTitulos.crearTituloMenuPrincipal;
-import Vista.Administrador.VistaComun;
-import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -23,6 +20,7 @@ public class VendedorOptions implements Vista{
     private final BorderPane root;
     private Button VentasPendientes, ResumenVentas, MisProductos, CerrarSesion;
     
+    @Override
     public BorderPane getRoot(){
         return root;
     }
@@ -31,7 +29,6 @@ public class VendedorOptions implements Vista{
         root = new BorderPane();
         crearSeccionTituloVendedor();
         createContent();
-        setListeners();
     }
 
     private void createContent(){
@@ -91,21 +88,12 @@ public class VendedorOptions implements Vista{
         return ventas;
     }
     
-    public void addVentasPendientesButtonHandler(EventHandler ventasPendientesButtonHandler){
-        
-        VentasPendientes.setOnAction(ventasPendientesButtonHandler);
-        
+    public void addVentasPendientesButtonHandler(EventHandler ventasPendientesButtonHandler){ 
+        VentasPendientes.setOnAction(ventasPendientesButtonHandler); 
     }
     
     public void addMisProductosButtonHandler(EventHandler misProductosButtonHandler){
-        
-        MisProductos.setOnAction(misProductosButtonHandler);
-        
-    }
-    
-    private void setListeners(){
-        
-        listenCerrarSesion();
+        MisProductos.setOnAction(misProductosButtonHandler); 
     }
     
     public void estiloBotones(Button btn, String base, String path){
@@ -121,9 +109,7 @@ public class VendedorOptions implements Vista{
         lbl.setAlignment(Pos.CENTER);
     }
     
-    private void listenCerrarSesion(){
-     CerrarSesion.setOnAction((ActionEvent e) -> {
-            root.getScene().setRoot(new PaneLogin().getRoot());});
+    public void addCerrarSesionButtonHandler(EventHandler cerrarSesionButtonHandler){
+        CerrarSesion.setOnAction(cerrarSesionButtonHandler);
     }
-
 }

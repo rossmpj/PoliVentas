@@ -108,3 +108,13 @@ create table tb_pedido(
     id_producto_ped varchar(10),
     constraint id_producto_ped foreign key (id_producto_ped) references tb_producto(id_producto)
 );
+
+delimiter $
+create procedure login (in idus varchar(10), in pass varchar(10), out cedula varchar(10))
+	begin
+		set cedula = null;
+		select ci_usuario into cedula
+		from tb_usuario
+		where STRCMP(username,idus)=0  and  STRCMP(contrasena,pass)=0;
+	end $
+delimiter ;

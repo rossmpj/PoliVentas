@@ -1,10 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Controlador.Comprador;
 
+import Controlador.Principal.ControladorLogin;
 import Controlador.Principal.WindowsController;
 import Modelo.Pedido;
 import Modelo.Producto;
@@ -12,6 +8,7 @@ import Vista.Comprador.CompradorOptions;
 import Vista.Comprador.VistaBusquedaSencilla;
 import Vista.Comprador.VistaComprasPendientes;
 import Vista.Principal.ArticulosMasBuscados;
+import Vista.Principal.PaneLogin;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 
@@ -26,7 +23,7 @@ public class ControladorCompradorOptions {
     public ControladorCompradorOptions(CompradorOptions CompradorOptionsView) {
         
         this.CompradorOptionsView = CompradorOptionsView;
-        
+        this.CompradorOptionsView.addCerrarSesionButtonHandler(new CerrarSesionButtonHandler());
         this.CompradorOptionsView.addBusquedaSencillaButtonHandler(new BusquedaSencillaButtonHandler());
         this.CompradorOptionsView.addComprasPendientesButtonHandler(new ComprasPendientesButtonHandler());
         this.CompradorOptionsView.addArticulosMasBuscadosButtonHandler(new ArticulosMasBuscadosButtonHandler());
@@ -41,7 +38,6 @@ public class ControladorCompradorOptions {
             Producto producto = new Producto();
             VistaBusquedaSencilla busquedaSencillaView = new VistaBusquedaSencilla();
             ControladorBusquedaSencilla controladorVentasPendientes = new ControladorBusquedaSencilla(producto, busquedaSencillaView);
-            
             WindowsController.next(CompradorOptionsView, busquedaSencillaView);
         }
         
@@ -54,25 +50,30 @@ public class ControladorCompradorOptions {
             
             Pedido pedido = new Pedido();
             VistaComprasPendientes comprasPendientesView = new VistaComprasPendientes();
-            ControladorComprasPendientes controladorComprasPendientes = new ControladorComprasPendientes(pedido, comprasPendientesView);
-            
+            ControladorComprasPendientes controladorComprasPendientes = new ControladorComprasPendientes(pedido, comprasPendientesView);  
             WindowsController.next(CompradorOptionsView, comprasPendientesView);
         }
         
     }
     
     private class ArticulosMasBuscadosButtonHandler implements EventHandler {
-
         @Override
         public void handle(Event event) {
-            
             Producto producto = new Producto();
-            ArticulosMasBuscados articulosMasBuscadosView = new ArticulosMasBuscados();
+            ArticulosMasBuscados articulosMasBuscadosView = new ArticulosMasBuscados(true);
             ControladorArticulosMasBuscados controladorArticulosMasBuscados = new ControladorArticulosMasBuscados(producto, articulosMasBuscadosView);
             
-            CompradorOptionsView.getRoot().getScene().setRoot(articulosMasBuscadosView.getRoot());
-        }
-        
+            WindowsController.next(CompradorOptionsView, articulosMasBuscadosView);
+            //CompradorOptionsView.getRoot().getScene().setRoot(articulosMasBuscadosView.getRoot());
+        }   
     }
     
+    private class CerrarSesionButtonHandler implements EventHandler {
+        @Override
+        public void handle(Event event) {        
+            PaneLogin loginView = new PaneLogin();
+            ControladorLogin controladorLogin = new ControladorLogin(loginView);
+            WindowsController.next(CompradorOptionsView, loginView);
+        }  
+    }
 }
