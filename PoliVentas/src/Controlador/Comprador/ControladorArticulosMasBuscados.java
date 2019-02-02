@@ -42,7 +42,6 @@ public class ControladorArticulosMasBuscados {
         this.VistaArticulosMasBuscados = VistaArticulosMasBuscados;
         this.observableList = FXCollections.observableArrayList();
         this.VistaArticulosMasBuscados.addIniciarSesionBtnHandler(new IniciarSesionBtnHandler());
-        //this.VistaArticulosMasBuscados.addVerButtonHandler(new AddVerButtonHandler());
         this.VistaArticulosMasBuscados.addRegistrarseBtnHandler(new RegistrarseBtnHandler());
         this.VistaArticulosMasBuscados.addBackButtonHandler(new AddBackButtonHandler());
         cargarData();
@@ -118,13 +117,6 @@ public class ControladorArticulosMasBuscados {
             WindowsController.next(VistaArticulosMasBuscados, compView);
         }
     }
-    
-//    private class AddVerButtonHandler implements EventHandler {
-//        @Override
-//        public void handle(Event event) {
-//            
-//        }
-//    }
     
     private void f(){
         Callback<TableColumn<Producto, Void>, TableCell<Producto, Void>> cellFactory = (final TableColumn<Producto, Void> param) -> {

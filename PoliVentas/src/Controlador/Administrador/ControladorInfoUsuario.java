@@ -29,7 +29,6 @@ public class ControladorInfoUsuario {
         } else {
             this.VistaNuevoUsuario.addAlmacenarButtonHandler(new almacenarUButtonHandler());
         }
-
     }
 
     private class almacenarUButtonHandler implements EventHandler {

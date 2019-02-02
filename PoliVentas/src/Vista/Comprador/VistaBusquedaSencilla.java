@@ -4,6 +4,7 @@ import Auxiliares.*;
 import static Auxiliares.PatronVistaTitulos.botonRegresarMenu;
 import static Auxiliares.PatronVistaTitulos.crearTituloSubMenu;
 import Vista.Principal.Vista;
+import java.text.Normalizer;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -13,6 +14,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Line;
+import javafx.scene.text.Font;
 
 /**
  *
@@ -20,7 +23,7 @@ import javafx.scene.paint.Color;
  */
 public class VistaBusquedaSencilla implements Vista {
     private final BorderPane root;
-    private Button buscarBtn, back, clean;
+    private Button buscarBtn, back, clean, comprar;
     private TextField busquedaTextField;
     private VBox vbox;
     private ScrollPane busquedaScrollPane;
@@ -36,7 +39,6 @@ public class VistaBusquedaSencilla implements Vista {
         root.setBackground(new Background(myBF));
         inicializarObjetos();
         seccionResultadoBusqueda();
-        setListeners();
     }
 
     private VBox seccionEncabezado() {
@@ -100,11 +102,15 @@ public class VistaBusquedaSencilla implements Vista {
     public void addBuscarButtonHandler(EventHandler buscarButtonHandler){
         this.buscarBtn.setOnAction(buscarButtonHandler);
     }
+        
+    public String cleanString(String texto) {
+        texto = Normalizer.normalize(texto, Normalizer.Form.NFD);
+        texto = texto.replaceAll("[\\p{InCombiningDiacriticalMarks}]", "");
+        return texto.replaceAll("[^\\w\\s]","").toLowerCase();
+    } 
     
-    private void setListeners(){
-        back.setOnAction((ActionEvent e) -> {
-            root.getScene().setRoot(new CompradorOptions().getRoot());            
-        });          
+    public void addComprarButtonHandler(EventHandler buyButtonHandler) {
+        comprar.setOnAction(buyButtonHandler);
     }
     
     public void addCleanButtonHandler(EventHandler cleanButtonHandler){
@@ -131,4 +137,50 @@ public class VistaBusquedaSencilla implements Vista {
         this.busquedaScrollPane.setContent(contenedor);
     }
     
+    public Line drawLine(){
+        Line linea = new Line(0, 0, 640, 0);
+        linea.setStroke(Color.STEELBLUE);
+        linea.setStrokeWidth(2);
+        return linea;
+    }
+    
+    public VBox nombreProducto(String nombre){
+        VBox v = new VBox();
+        Label productNameLbl = new Label("Entrega máxima: "+nombre);
+        v.getChildren().add(productNameLbl);
+        return v;
+    }
+    
+    public Label precioProducto(double precio){
+        Label priceLbl = new Label();
+        priceLbl.setFont(new Font("Verdana",14));
+        priceLbl.setText("$"+String.valueOf(precio));
+        return priceLbl;
+    }
+    
+    public HBox crearEstrellas(int calificacion, String n){
+        HBox contenedorStars = new HBox();
+        HBox hb = new HBox();
+        Label l = new Label("Calificación " + n + ": ");
+        for (int i=0; i<calificacion;i++){
+                Image image = new Image(CONSTANTES.PATH_IMG + "/star.png") ;
+                ImageView iv2 = new ImageView();
+                iv2.setImage(image);
+                contenedorStars.getChildren().add(iv2);
+            }
+        hb.getChildren().addAll(l, contenedorStars);
+        return hb;
+    }
+    
+    public Button getComprar() {
+        return comprar;
+    }
+
+    public void setComprar(Button comprar) {
+        this.comprar = comprar;
+    }
+
+    public void iniciarCompra() {
+        comprar = new Button("Comprar");
+    }
 }

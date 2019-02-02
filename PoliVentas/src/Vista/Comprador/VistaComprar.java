@@ -5,7 +5,7 @@ import Auxiliares.PatronVistaTitulos;
 import static Auxiliares.PatronVistaTitulos.crearTituloMenuPrincipal;
 import Modelo.Producto;
 import Vista.Principal.Vista;
-import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -20,7 +20,7 @@ import javafx.scene.layout.VBox;
  *
  * @author Rosy
  */
-public class Comprar implements Vista {
+public class VistaComprar implements Vista {
     private final BorderPane root;
     private Button PagoEfectivo, PagoVirtual, back;
     private final Label nota;
@@ -31,13 +31,12 @@ public class Comprar implements Vista {
         return root;
     }
     
-    public Comprar(Producto p){
+    public VistaComprar(Producto p){
         root = new BorderPane();
         product = p;
         nota = new Label("Usted está a punto de comprar un@: "+ p.getNombre());//hay que establecer cantidad
         crearSeccionTituloComprador();
         createContent();
-        setListeners();
     }
 
     private void createContent(){
@@ -74,22 +73,24 @@ public class Comprar implements Vista {
         root.setTop(crearTituloMenuPrincipal("Elija método de pago", "A5FDB9"));
     }
   
-    private void setListeners(){
-        SendMail m = new SendMail();
-        PagoEfectivo.setOnAction((ActionEvent e) -> {
-            this.PagoVirtual.setDisable(true);
-            m.SendMail("rosita_mariap@hotmail.es", product.toString());
-            //root.getScene().setRoot(new VistaBusquedaSencilla().getRoot());
-        });    
-        PagoVirtual.setOnAction((ActionEvent e) -> {
-            this.PagoEfectivo.setDisable(true);
-             m.SendMail("rosita_mariap@hotmail.es", product.toString());
-            //root.getScene().setRoot(new VistaComun("Búsqueda Avanzada", "A8B6FA",'C').getRoot());
-        });
-        back.setOnAction((ActionEvent e) -> {
-            root.getScene().setRoot(new VistaBusquedaSencilla().getRoot());
-        });
-        
+    public void addPagoEfectivoButtonHandler(EventHandler pagoEfectivoButtonHandler) {
+        this.PagoEfectivo.setOnAction(pagoEfectivoButtonHandler);
+    }
+    
+    public void addPagoVirtualButtonHandler(EventHandler pagoVirtualButtonHandler){
+        this.PagoVirtual.setOnAction(pagoVirtualButtonHandler);
+    }
+    
+    public void addBackButtonHandler(EventHandler backButtonHandler){
+        this.back.setOnAction(backButtonHandler);
+    }
+
+    public Button getPagoEfectivo() {
+        return PagoEfectivo;
+    }
+
+    public Button getPagoVirtual() {
+        return PagoVirtual;
     }
     
     public void estiloLabels(Label lbl, String base){

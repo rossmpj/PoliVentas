@@ -7,7 +7,6 @@ package Controlador.Vendedor;
 
 import Controlador.Principal.WindowsController;
 import Modelo.Producto;
-import Vista.Principal.Vista;
 import Vista.Vendedor.MisProductos;
 import Vista.Vendedor.VistaInfoProducto;
 import javafx.collections.ObservableList;

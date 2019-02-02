@@ -8,7 +8,6 @@ package Controlador.Vendedor;
 import Auxiliares.Validators;
 import Controlador.Principal.WindowsController;
 import Modelo.Producto;
-import Vista.Principal.Vista;
 import Vista.Vendedor.VistaInfoProducto;
 import javafx.event.Event;
 import javafx.event.EventHandler;

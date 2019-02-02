@@ -6,9 +6,7 @@
 package Vista.Vendedor;
 
 import Modelo.Pedido;
-import Modelo.Producto;
 import Vista.Principal.Vista;
-import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;

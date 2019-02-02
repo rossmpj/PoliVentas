@@ -29,6 +29,7 @@ import javafx.event.EventHandler;
 public class ControladorLogin {
          
     private final PaneLogin LoginView;
+    public static String ced;
 
     public ControladorLogin(PaneLogin LoginView) {
         this.LoginView = LoginView;        
@@ -47,6 +48,8 @@ public class ControladorLogin {
             final boolean esVendedor = isVendedor(usu, c.getConnection());
             final boolean esAdmin = isAdministrador(usu, c.getConnection());
             System.out.println("ci: "+usu);
+            ced = usu;
+            System.out.println(ced);
             c.desconectar();
             if (usu != null) {
                 if ( (esComprador && esVendedor) || (esComprador) ) {

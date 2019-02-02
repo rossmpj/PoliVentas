@@ -7,9 +7,7 @@ package Vista.Vendedor;
 
 import Auxiliares.CONSTANTES;
 import static Auxiliares.PatronVistaTitulos.crearTituloSubMenu;
-import Vista.Principal.PaneLogin;
 import Vista.Principal.Vista;
-import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;

@@ -29,8 +29,7 @@ public class ArticulosMasBuscados implements Vista {
             colStock,colNB, colCalif;
     private final BorderPane root;
     private boolean ingreso;
-    private Button iniciarSesionBtn;
-    private Button registrarseBtn, back, btn;
+    private Button iniciarSesionBtn,registrarseBtn, back;
     private Label title;
 
     @Override
@@ -96,7 +95,6 @@ public class ArticulosMasBuscados implements Vista {
         this.tabla = new TableView<>();
         iniciarSesionBtn = new Button("Iniciar Sesión");
         registrarseBtn = new Button("Registrarse");
-        //this.btn.setText("Ver");
         title = new Label("Artículos más buscados");  
         back = PatronVistaTitulos.botonRegresarMenu();
     }
@@ -186,8 +184,4 @@ public class ArticulosMasBuscados implements Vista {
     public void addBackButtonHandler(EventHandler addBackButtonHandler){
         this.back.setOnAction(addBackButtonHandler);
     }
-    
-//    public void addVerButtonHandler(EventHandler addVerButtonHandler){
-//        this.btn.setOnAction(addVerButtonHandler);
-//    }
 }

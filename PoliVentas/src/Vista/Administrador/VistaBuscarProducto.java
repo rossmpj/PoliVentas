@@ -9,7 +9,6 @@ package Vista.Administrador;
 import Auxiliares.CONSTANTES;
 import static Auxiliares.PatronVistaTitulos.botonRegresarMenu;
 import static Auxiliares.PatronVistaTitulos.crearTituloSubMenu;
-import Vista.Principal.PaneLogin;
 import Vista.Principal.Vista;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -37,7 +36,7 @@ public class VistaBuscarProducto implements Vista {
 
     private final BorderPane root;
     private Button back, buscar, herramientas, ver,clean;
-    private String color;
+    private final String color;
     private TextField campo;
     private MenuBar menu;
     VBox efectoMenu;
@@ -53,6 +52,7 @@ public class VistaBuscarProducto implements Vista {
         llamarEfecto();
     }
 
+    @Override
     public BorderPane getRoot() {
         return root;
     }

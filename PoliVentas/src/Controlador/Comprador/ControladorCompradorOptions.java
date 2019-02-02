@@ -9,6 +9,10 @@ import Vista.Comprador.VistaBusquedaSencilla;
 import Vista.Comprador.VistaComprasPendientes;
 import Vista.Principal.ArticulosMasBuscados;
 import Vista.Principal.PaneLogin;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 
@@ -30,6 +34,20 @@ public class ControladorCompradorOptions {
         
     }
 
+    public static String buscarIDComprador(Connection c) {
+        String id = null;
+        try {
+            Statement in = c.createStatement();
+            ResultSet resultado = in.executeQuery("select id_comprador from tb_comprador where cedula ="+ ControladorLogin.ced+";");
+            while (resultado.next()) {
+                id = resultado.getString("id_comprador");
+            }
+        } catch (SQLException ex) {
+            System.out.println("EXCEPCION: " + ex.getMessage());
+        }
+        return id;
+    }
+    
     private class BusquedaSencillaButtonHandler implements EventHandler {
 
         @Override

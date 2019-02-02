@@ -2,6 +2,8 @@ package Controlador.Comprador;
 
 import Auxiliares.DBConnection;
 import Auxiliares.MensajesAcciones;
+import static Controlador.Comprador.ControladorCompradorOptions.buscarIDComprador;
+import Controlador.Principal.ControladorLogin;
 import Controlador.Principal.WindowsController;
 import Modelo.CalificacionVendedor;
 import Modelo.Comprador;
@@ -50,8 +52,10 @@ public class ControladorComprasPendientes {
     }
     
     private void cargarData() {
-        conexion.conectar();        
-        buscarPedidosPendientes("comp001", conexion.getConnection(), this.observableList);
+        conexion.conectar();  
+        String id = buscarIDComprador(conexion.getConnection());
+        System.out.println("id: "+id);
+        buscarPedidosPendientes(id, conexion.getConnection(), this.observableList);
         conexion.desconectar();
     }
     
@@ -136,6 +140,8 @@ public class ControladorComprasPendientes {
             System.out.println("EXCEPCION: " + ex.getMessage());
         }
     }
+    
+    
     
     public void buscarPedidosPendientes(String id, Connection c, ObservableList<Pedido> lista){
         try {
