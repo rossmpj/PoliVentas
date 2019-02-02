@@ -1,8 +1,10 @@
 package Modelo;
 
 import Auxiliares.DBConnection;
+import java.sql.CallableStatement;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Types;
 import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -281,6 +283,29 @@ public class Usuario {
             CONNECTION.desconectar();
         }
 
+    }
+    
+    /**
+     * Método que permite mostrar el rol al que pertenece el usuario
+     * @return 
+     */
+     public String mostrarRol() {
+        try {
+            CONNECTION.conectar();
+            String consulta = "{call  encontraRol (?,?)}";
+            CallableStatement sp = CONNECTION.getConnection().prepareCall(consulta);
+            sp.setString(1, this.getCedula());
+            sp.registerOutParameter(2, Types.VARCHAR);
+            sp.execute();
+            String rol = sp.getString(2);
+            sp.close();
+            return rol;
+        } catch (SQLException ex) {
+            System.out.println("EXCEPCION callProxPedido: " + ex.getMessage());
+            return null;
+        } finally {
+            CONNECTION.desconectar();
+        }
     }
 
     @Override

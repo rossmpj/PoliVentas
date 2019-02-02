@@ -1,4 +1,4 @@
-drop database if exists db_poliventas;
+#drop database if exists db_poliventas;
 CREATE DATABASE db_poliventas;
 USE db_poliventas;
 
@@ -116,5 +116,24 @@ create procedure login (in idus varchar(10), in pass varchar(10), out cedula var
 		select ci_usuario into cedula
 		from tb_usuario
 		where STRCMP(username,idus)=0  and  STRCMP(contrasena,pass)=0;
+	end $
+delimiter ;
+
+delimiter $
+create procedure encontraRol (in ci varchar(10), out rol varchar(15))
+	begin
+		set @c=(select cedula from tb_comprador where cedula=ci);
+        set @v=(select cedula from tb_administrador where cedula=ci);
+        set @vc=(select cedula from tb_vendedor where cedula=ci);
+        if(@v is not null) then
+        set rol="Administrador";
+        end if;
+        if(@c is not null) then
+        set rol= "Comprador";
+		end if;
+        if(@vc is not null) then
+        set rol="Vendedor";
+        end if;      
+        
 	end $
 delimiter ;

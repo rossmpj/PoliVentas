@@ -40,7 +40,7 @@ public class VistaInfoUsuario implements Vista {
     private TextField ci, nom, ape, tl, mail, mat, user, contra;
     private TextArea dir;
     public CheckBox wapp, eliminado;
-    private ComboBox<String> rol;
+    private ComboBox<String> rol, nuevoRol;
     private Usuario u;
     
     public VistaInfoUsuario(boolean ingreso, String color, String titulo) {
@@ -82,6 +82,8 @@ public class VistaInfoUsuario implements Vista {
         dir = new TextArea();
         dir.setPrefHeight(100);
         rol = new ComboBox();
+        nuevoRol = new ComboBox();
+        nuevoRol.setDisable(true);
         cargarCombo();
         gestionBotones();
     }
@@ -153,8 +155,18 @@ public class VistaInfoUsuario implements Vista {
         Label roll = new Label("Rol");
         Label usser = new Label("Usuario");
         Label cont = new Label("Contraseña");
+        HBox ne = new HBox();
+        ne.getChildren().add(rol);
+        if (!this.ingreso) {
+            Button b = new Button("CambiarRol");
+            b.setOnAction(e -> {
+                nuevoRol.setDisable(false);
+            });
+            ne.setSpacing(5);
+            ne.getChildren().addAll(b, nuevoRol);
+        }
         grandPrix.addColumn(0, cedula, nombres, apellidos, tlf, ws, email, direccion, matricula, roll, usser, cont);
-        grandPrix.addColumn(1, ci, nom, ape, tl, wapp, mail, dir, mat, rol, user, contra);
+        grandPrix.addColumn(1, ci, nom, ape, tl, wapp, mail, dir, mat, ne, user, contra);
         grandPrix.setHgap(10);
         grandPrix.setVgap(3);
         scawflone.setAlignment(Pos.CENTER);
@@ -167,8 +179,15 @@ public class VistaInfoUsuario implements Vista {
     }
     
     private void cargarCombo() {
-        String se[] = {"Administrador", "Comprador", "Vendedor"};
-        rol.setItems(FXCollections.observableArrayList(se));
+         String se[] = {"Administrador", "Comprador", "Vendedor"};
+        if (this.ingreso) {
+            rol.setItems(FXCollections.observableArrayList(se));
+        } else {
+            rol.setDisable(true);
+            rol.setItems(FXCollections.observableArrayList(this.u.mostrarRol()));
+            rol.getSelectionModel().selectFirst();
+            nuevoRol.setItems(FXCollections.observableArrayList(se));
+        }
     }
     
     public String seleccion() {

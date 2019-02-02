@@ -107,9 +107,9 @@ INSERT INTO `db_poliventas`.`tb_calificacion_producto` (`calificacion_producto`,
 INSERT INTO `db_poliventas`.`tb_calificacion_producto` (`calificacion_producto`, `id_producto`, `id_comprador`) VALUES ('5', 'umb006', 'comp006');
 
 
-INSERT INTO `db_poliventas`.`tb_calificacion_vendedor` (`calificacion_vendedor`, `id_vendedor`, `id_comprador`) VALUES (1, 'vend001', 'comp001');
-INSERT INTO `db_poliventas`.`tb_calificacion_vendedor` (`calificacion_vendedor`, `id_vendedor`, `id_comprador`) VALUES (2, 'vend002', 'comp002');
-INSERT INTO `db_poliventas`.`tb_calificacion_vendedor` (`calificacion_vendedor`, `id_vendedor`, `id_comprador`) VALUES (3, 'vend003', 'comp003');
-INSERT INTO `db_poliventas`.`tb_calificacion_vendedor` (`calificacion_vendedor`, `id_vendedor`, `id_comprador`) VALUES (4, 'vend004', 'comp004');
-INSERT INTO `db_poliventas`.`tb_calificacion_vendedor` (`calificacion_vendedor`, `id_vendedor`, `id_comprador`) VALUES (5, 'vend005', 'comp005');
-INSERT INTO `db_poliventas`.`tb_calificacion_vendedor` (`calificacion_vendedor`, `id_vendedor`, `id_comprador`) VALUES (5, 'vend006', 'comp006');
+INSERT INTO `db_poliventas`.`tb_calificacion_vendedor` (`calificacion_vendedor`, `id_vendedor`, `id_comprador`) VALUES (1, 'vend001', 'comp002');
+INSERT INTO `db_poliventas`.`tb_calificacion_vendedor` (`calificacion_vendedor`, `id_vendedor`, `id_comprador`) VALUES (2, 'vend002', 'comp001');
+INSERT INTO `db_poliventas`.`tb_calificacion_vendedor` (`calificacion_vendedor`, `id_vendedor`, `id_comprador`) VALUES (3, 'vend003', 'comp002');
+INSERT INTO `db_poliventas`.`tb_calificacion_vendedor` (`calificacion_vendedor`, `id_vendedor`, `id_comprador`) VALUES (4, 'vend004', 'comp002');
+INSERT INTO `db_poliventas`.`tb_calificacion_vendedor` (`calificacion_vendedor`, `id_vendedor`, `id_comprador`) VALUES (5, 'vend005', 'comp002');
+INSERT INTO `db_poliventas`.`tb_calificacion_vendedor` (`calificacion_vendedor`, `id_vendedor`, `id_comprador`) VALUES (5, 'vend006', 'comp002');
