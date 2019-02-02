@@ -9,10 +9,8 @@ import Auxiliares.CONSTANTES;
 import static Auxiliares.PatronVistaTitulos.botonRegresarMenu;
 import static Auxiliares.PatronVistaTitulos.crearTituloSubMenu;
 import Modelo.Usuario;
-import Vista.Principal.PaneLogin;
 import Vista.Principal.Vista;
 import javafx.collections.FXCollections;
-import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -214,6 +212,13 @@ public class VistaInfoUsuario implements Vista {
             dir.setText(u.getDireccion());
             eliminado.setSelected(u.isEstado());
         }
+    }
+    
+    
+    public Usuario updateUsuario(){
+    Usuario w= new Usuario(ci.getText(),nom.getText(),ape.getText(),tl.getText(),dir.getText(),wapp.isSelected(),mat.getText(),
+    mail.getText(),user.getText(),contra.getText(), eliminado.isSelected());  
+    return w;
     }
     
     public void limpiarCasillas() {

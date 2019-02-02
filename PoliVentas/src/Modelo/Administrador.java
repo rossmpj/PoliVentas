@@ -64,12 +64,18 @@ public class Administrador extends Usuario {
             CONNECTION.desconectar();
         }
     }
-
+    
+    /**
+     * Método que permite eliminar el usuario
+     * true: Eliminado
+     * @param user
+     * @return 
+     */
     public boolean eliminarUsuario(Usuario user) {
         try {
             CONNECTION.conectar();
             PreparedStatement ingreso = CONNECTION.getConnection().prepareStatement(eliminarUser);
-            ingreso.setBoolean(1, false);
+            ingreso.setBoolean(1, true);
             ingreso.setString(2, user.getCedula());
             ingreso.executeUpdate();
             return true;

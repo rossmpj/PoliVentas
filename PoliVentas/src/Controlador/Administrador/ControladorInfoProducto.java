@@ -74,7 +74,7 @@ public class ControladorInfoProducto {
 
         @Override
         public void handle(Event event) {
-            if (ModeloAdmin.modificarProducto(VistaNuevoProducto.getP())) {
+            if (ModeloAdmin.modificarProducto(VistaNuevoProducto.updateProducto())) {
                 MensajesAcciones.modificacionExitosa();
                 VistaNuevoProducto.limpiarCasillas();
             } else {

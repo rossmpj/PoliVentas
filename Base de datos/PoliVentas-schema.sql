@@ -1,4 +1,4 @@
-#drop database if exists db_poliventas;
+drop database if exists db_poliventas;
 CREATE DATABASE db_poliventas;
 USE db_poliventas;
 

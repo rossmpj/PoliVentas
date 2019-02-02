@@ -9,7 +9,6 @@ import Auxiliares.CONSTANTES;
 import static Auxiliares.PatronVistaTitulos.botonRegresarMenu;
 import static Auxiliares.PatronVistaTitulos.crearTituloSubMenu;
 import Modelo.Producto;
-import Vista.Principal.PaneLogin;
 import Vista.Principal.Vista;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -76,6 +75,14 @@ public class VistaInfoProducto implements Vista {
         }
     }
 
+    public Producto updateProducto() {
+        Producto nuevo = new Producto(getId().getText(), getNombre().getText(), getDescripcion().getText(),
+                Double.valueOf(getPrecio().getText()), getCategoria().getText(), Integer.valueOf(getCantidad().getText()),
+                getEliminado().isSelected(), 0, getVendedor().getText());
+        return nuevo;
+    }
+
+    
     private void inicializarObjetos() {
         back = botonRegresarMenu();
         root.setBottom(back);

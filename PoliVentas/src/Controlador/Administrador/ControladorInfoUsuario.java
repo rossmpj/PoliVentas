@@ -85,7 +85,7 @@ public class ControladorInfoUsuario {
 
         @Override
         public void handle(Event event) {
-            if (admin.modificarUsuario(VistaNuevoUsuario.getU())) {
+            if (admin.modificarUsuario(VistaNuevoUsuario.updateUsuario())) {
                 MensajesAcciones.modificacionExitosa();
                 VistaNuevoUsuario.limpiarCasillas();
             } else {
