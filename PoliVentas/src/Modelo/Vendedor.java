@@ -11,20 +11,24 @@ public class Vendedor extends Comprador{
      */
     public Vendedor() {
     }
-     /*   
-     * Constructor con parámetros del vendedor
+    
+    /**
+     * Constructor de la clase
+     * @param cedula
      * @param nombres
      * @param apellidos
      * @param telefono
-     * @param whatsapp
-     * @param email
      * @param direccion
-     * @param cedula
+     * @param whatsapp true si tiene whatsapp, false si no tiene
      * @param matricula
+     * @param email
+     * @param usuario
+     * @param contra
+     * @param es, true si el usuario está eliminado, false si está activo 
      */
     public Vendedor(String cedula, String nombres, String apellidos, String telefono,
-            String direccion, boolean whatsapp, String matricula, String email) {
-        super(cedula, nombres, apellidos, telefono, direccion, whatsapp, matricula, email);
+            String direccion, boolean whatsapp, String matricula, String email,String usuario, String contra,boolean es) {
+        super(cedula, nombres, apellidos, telefono, direccion, whatsapp, matricula, email, usuario, contra, es);
         this.idVendedor = "v"+cedula;
     }    
     

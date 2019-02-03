@@ -19,6 +19,7 @@ create table tb_usuario(
 
 create table tb_comprador(
 	id_comprador varchar(11),
+    saldo double default 0,
     cedula varchar(10) not null,
     primary key (id_comprador),
     constraint ci_comprador foreign key (cedula) references tb_usuario(ci_usuario)
@@ -27,7 +28,7 @@ create table tb_comprador(
 create table tb_vendedor(
 	id_vendedor varchar(11),
     cedula varchar(10) not null,
-    id_comprador varchar(10),
+    id_comprador varchar(11),
     primary key (id_vendedor),
     constraint ci_vendedor foreign key (cedula) references tb_usuario(ci_usuario),    
     constraint id_comprador foreign key (id_comprador) references tb_comprador(id_comprador)
@@ -41,8 +42,8 @@ create table tb_producto(
     categoria varchar(30),
     stock int,
     estado boolean, 
-    num_busquedas int,
-    id_vendedor varchar(10),
+    num_busquedas int default 0,
+    id_vendedor varchar(11),
     primary key(id_producto),
     constraint id_vendedor foreign key (id_vendedor) references tb_vendedor(id_vendedor)
 );
@@ -60,7 +61,7 @@ create table tb_calificacion_producto(
     calificacion_producto int default 0,
     id_producto varchar(10),
     constraint id_producto_calif foreign key (id_producto) references tb_producto(id_producto),
-    id_comprador varchar(10),
+    id_comprador varchar(11),
     constraint id_comprador_calif_prod foreign key (id_comprador) references tb_comprador(id_comprador)    
 );
 
@@ -68,9 +69,9 @@ create table tb_calificacion_vendedor(
 	id_calificacion_vend int auto_increment,
     calificacion_vendedor int default 0,
     primary key (id_calificacion_vend),
-    id_vendedor varchar(10),
+    id_vendedor varchar(11),
     constraint id_vendedor_calif foreign key (id_vendedor) references tb_vendedor(id_vendedor),
-    id_comprador varchar(10),
+    id_comprador varchar(11),
     constraint id_comprador_calif foreign key (id_comprador) references tb_comprador(id_comprador)
 );
 
@@ -101,9 +102,9 @@ create table tb_pedido(
     primary key (id_pedido),
     id_pago varchar(10),
     constraint id_pago_ped foreign key (id_pago) references tb_pago(id_forma_pago),
-    id_comprador_ped varchar(10),
+    id_comprador_ped varchar(11),
     constraint id_comprador_ped foreign key (id_comprador_ped) references tb_comprador(id_comprador),
-    id_vendedor_ped varchar(10),
+    id_vendedor_ped varchar(11),
     constraint id_vendedor_ped foreign key (id_vendedor_ped) references tb_vendedor(id_vendedor),
     id_producto_ped varchar(10),
     constraint id_producto_ped foreign key (id_producto_ped) references tb_producto(id_producto)
@@ -135,5 +136,22 @@ create procedure encontraRol (in ci varchar(10), out rol varchar(15))
         set rol="Vendedor";
         end if;      
         
+	end $
+delimiter ;
+
+/* Descontar del saldo del comprador, se asume que las validaciones para que alcance el saldo ya se realiza en la aplicacion*/
+
+delimiter $
+create procedure descontarSaldo (in id varchar(11), in monto double)
+	begin	
+	update tb_comprador set saldo=saldo-monto where id_comprador=id; 
+	end $
+delimiter ;
+
+/* Descontar el stock del producto indicado*/
+delimiter $
+create procedure descontarStock (in id varchar(10), in cantidad int)
+	begin	
+	update tb_producto set stock=stock-cantidad where id_producto=id; 
 	end $
 delimiter ;

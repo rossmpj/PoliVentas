@@ -5,10 +5,17 @@
  */
 package Modelo;
 
+import Auxiliares.DBConnection;
+import java.util.logging.Logger;
+
 /**
  *
  * @author Rosa
  */
 public interface Pago {
-    boolean pagar(String ci_cel);
+
+    static final DBConnection CONNECT = DBConnection.getInstance();
+    static final Logger LOG = Logger.getLogger("Metodo de pago ");
+
+    boolean pagar(String ci_cel,double monto);
 }

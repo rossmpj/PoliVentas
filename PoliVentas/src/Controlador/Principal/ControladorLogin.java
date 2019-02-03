@@ -13,7 +13,6 @@ import Vista.Administrador.VistaInfoUsuario;
 import Vista.Comprador.CompradorOptions;
 import Vista.Principal.PaneLogin;
 import Vista.Vendedor.VendedorOptions;
-import Vista.Vendedor.VendedorOptions;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;

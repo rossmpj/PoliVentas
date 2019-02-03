@@ -105,4 +105,8 @@ public class VistaComprar implements Vista {
         btn.setGraphic(new ImageView(image));
         btn.setPrefSize(300, 300);
     }   
+    
+    public Producto getProduct() {
+        return product;
+    }
 }

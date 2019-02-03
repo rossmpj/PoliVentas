@@ -1,6 +1,7 @@
 package Modelo;
 
 import Auxiliares.DBConnection;
+import java.sql.CallableStatement;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -32,25 +33,27 @@ public class Producto {
     protected CalificacionVendedor calificacionV;
     protected Vendedor vendedor;
     protected Date tiempoMaxEntrega;
-    
+
     protected static final Logger LOGGER = Logger.getLogger("Usuario Logger");
     protected static final DBConnection CONNECTION = DBConnection.getInstance();
     protected String idVendedor;
     private final String eliminarP = "update db_poliventas.tb_producto set estado=? where id_producto=?";
     private final String modificarP = "update db_poliventas.tb_producto set nombre=?,descripcion=?,precio=?,categoria=?,stock=?, estado=?"
             + " where id_producto=?";
+    private final String extraer = "select distinct ci_usuario,nombres,apellidos,telefono,direccion, whatsapp,matricula,email,username,contrasena,u.estado "
+            + "from tb_usuario u join tb_vendedor  v on ci_usuario=v.cedula join tb_producto p on p.id_vendedor=v.id_vendedor where p.id_producto=?";
     private final String insert = "insert into db_poliventas.tb_producto(id_producto, nombre, descripcion, "
             + "precio, categoria, stock, estado, id_vendedor) values(?,?,?,?,?,?,?,?)";
     private final String modifNumBusquedas = "UPDATE tb_producto SET num_busquedas = ? WHERE id_producto = ?";
     private final String buscarXNombreYDescripcion = "SELECT distinct p.id_producto, p.nombre, p.num_busquedas, p.descripcion, p.categoria, p.precio, "
-                    + "cp.calificacion_producto, cv.calificacion_vendedor, cv.id_vendedor, cp.id_producto, "
-                    + "e.fecha_entrega FROM tb_producto p, tb_calificacion_producto cp, "
-                    + "tb_vendedor v, tb_calificacion_vendedor cv, tb_pedido e "
-                    + "where p.id_producto = cp.id_producto and "
-                    + "p.id_vendedor = v.id_vendedor and "
-                    + "v.id_vendedor = cv.id_vendedor and "
-                    + "v.id_vendedor = e.id_vendedor_ped and (p.nombre like ? or p.descripcion like ?)";
-            
+            + "cp.calificacion_producto, cv.calificacion_vendedor, cv.id_vendedor, cp.id_producto, "
+            + "e.fecha_entrega FROM tb_producto p, tb_calificacion_producto cp, "
+            + "tb_vendedor v, tb_calificacion_vendedor cv, tb_pedido e "
+            + "where p.id_producto = cp.id_producto and "
+            + "p.id_vendedor = v.id_vendedor and "
+            + "v.id_vendedor = cv.id_vendedor and "
+            + "v.id_vendedor = e.id_vendedor_ped and (p.nombre like ? or p.descripcion like ?)";
+
     public Producto() {
     }
 
@@ -79,7 +82,8 @@ public class Producto {
     }
 
     /**
-     * Constructor utilizado para realizar las consultas respectivas en la base de datos
+     * Constructor utilizado para realizar las consultas respectivas en la base
+     * de datos
      */
     public Producto(String idProducto, String nombre, String descripcion, double precio, String categoria, int stock, boolean estado, int calificacion, String vendedor) {
         this.idProducto = idProducto;
@@ -101,7 +105,7 @@ public class Producto {
         this.categoria = categoria;
         this.stock = stock;
     }
-    
+
     public String getIdProducto() {
         return idProducto;
     }
@@ -183,7 +187,7 @@ public class Producto {
     }
 
     public Vendedor getVendedor() {
-        return vendedor;
+       return vendedor;
     }
 
     public void setVendedor(Vendedor vendedor) {
@@ -214,6 +218,10 @@ public class Producto {
         this.idVendedor = idVendedor;
     }
 
+    /**
+     * Sobreescritura del matodo hashCode
+     * @return int con hash
+     */
     @Override
     public int hashCode() {
         int hash = 7;
@@ -225,6 +233,11 @@ public class Producto {
         return hash;
     }
 
+    /**
+     * Sobreescritura del metodo equals
+     * @param obj
+     * @return  true or false
+     */
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
@@ -243,13 +256,21 @@ public class Producto {
         return true;
     }
 
+    /**
+     * Sobreescritura del metodo toString
+     * @return datos del producto
+     */
     @Override
     public String toString() {
         return "DETALLES DE PRODUCTO: " + "\nNombre: "
                 + nombre + "\nDescripcion: " + descripcion + "\nCategoria: " + categoria
-                + "\nPrecio: " + precio + "\nCalificacion: " + calificacionP ;
+                + "\nPrecio: " + precio + "\nCalificacion: " + calificacionP;
     }
 
+    /**
+     * Método que permite deshabilitar el producto
+     * @return true si se pudo eliminar, false si no
+     */
     public boolean eliminarProducto() {
         try {
             CONNECTION.conectar();
@@ -259,13 +280,17 @@ public class Producto {
             ingreso.executeUpdate();
             return true;
         } catch (SQLException e) {
-            LOGGER.log(Level.SEVERE, e.getMessage());
+             Logger.getLogger(Producto.class.getName()).log(Level.SEVERE, null, e);
             return false;
         } finally {
             CONNECTION.desconectar();
         }
     }
 
+    /**
+     * Método que permite modificar los datos del producto
+     * @return true si se pudo modificar, false si no
+     */
     public boolean modificarProducto() {
         try {
             CONNECTION.conectar();
@@ -280,13 +305,17 @@ public class Producto {
             ingreso.executeUpdate();
             return true;
         } catch (SQLException e) {
-            LOGGER.log(Level.SEVERE, e.getMessage());
+             Logger.getLogger(Producto.class.getName()).log(Level.SEVERE, null, e);
             return false;
         } finally {
             CONNECTION.desconectar();
         }
     }
 
+    /**
+     * Método que permite almacenar el producto en la base de datos
+     * @return  true si todo fue correcto, false si ocurrió alguna excepción 
+     */
     public boolean registrar() {
         try {
             CONNECTION.conectar();
@@ -302,54 +331,54 @@ public class Producto {
             ingreso.executeUpdate();
             return true;
         } catch (SQLException e) {
-            LOGGER.log(Level.SEVERE, e.getMessage());
+             Logger.getLogger(Producto.class.getName()).log(Level.SEVERE, null, e);
             return false;
         } finally {
             CONNECTION.desconectar();
         }
     }
-    
-    public static ObservableList<Producto> getMisProductos(String idVendedor){
-        
+
+    public static ObservableList<Producto> getMisProductos(String idVendedor) {
+
         DBConnection conexion = DBConnection.getInstance();
         conexion.conectar();
-        
+
         ObservableList<Producto> productos = FXCollections.observableArrayList();
-        
+
         try {
-            String query = 
-            "select p.id_producto, p.nombre, p.descripcion, p.precio, p.categoria, p.stock from tb_producto p where p.id_vendedor = ? and p.estado = FALSE;";
-            
+            String query
+                    = "select p.id_producto, p.nombre, p.descripcion, p.precio, p.categoria, p.stock from tb_producto p where p.id_vendedor = ? and p.estado = FALSE;";
+
             PreparedStatement buscar = conexion.getConnection().prepareStatement(query);
             buscar.setString(1, idVendedor);
             ResultSet resultado = buscar.executeQuery();
-            while(resultado.next()){
+            while (resultado.next()) {
                 productos.add(
                         new Producto(
-                        resultado.getString("p.id_producto"),
-                        resultado.getString("p.nombre"), 
-                        resultado.getString("p.descripcion"), 
-                        Double.parseDouble(resultado.getString("p.precio")), 
-                        resultado.getString("p.categoria"),
-                        Integer.parseInt(resultado.getString("p.stock")))
+                                resultado.getString("p.id_producto"),
+                                resultado.getString("p.nombre"),
+                                resultado.getString("p.descripcion"),
+                                Double.parseDouble(resultado.getString("p.precio")),
+                                resultado.getString("p.categoria"),
+                                Integer.parseInt(resultado.getString("p.stock")))
                 );
             }
         } catch (SQLException ex) {
-            System.out.println("EXCEPCION: " + ex.getMessage());
-        } finally{
+             Logger.getLogger(Producto.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
             conexion.desconectar();
         }
         return productos;
     }
-    
-    public void buscarProducto(String nom, String desc, ObservableList<Producto> lista){
+
+    public void buscarProducto(String nom, String desc, ObservableList<Producto> lista) {
         try {
             CONNECTION.conectar();
             PreparedStatement buscar = CONNECTION.getConnection().prepareStatement(buscarXNombreYDescripcion);
-            buscar.setString(1, '%'+nom+'%');
-            buscar.setString(2, '%'+desc+'%');
+            buscar.setString(1, '%' + nom + '%');
+            buscar.setString(2, '%' + desc + '%');
             ResultSet resultado = buscar.executeQuery();
-            while(resultado.next()){
+            while (resultado.next()) {
                 SimpleDateFormat t = new SimpleDateFormat("yyyy-MM-dd");
                 java.util.Date date = t.parse(resultado.getString("e.fecha_entrega"));
                 CalificacionVendedor vend = new CalificacionVendedor();
@@ -363,12 +392,12 @@ public class Producto {
                 prod.setIdCalificacionP("p.id_calificacion_producto");
                 prod.setCalificacionP(Integer.parseInt(resultado.getString("cp.calificacion_producto")));
                 lista.add(
-                    new Producto( 
-                        resultado.getString("p.id_producto"), resultado.getString("p.nombre"), 
-                        resultado.getString("p.descripcion"), resultado.getString("p.categoria"), 
-                        Double.parseDouble(resultado.getString("p.precio")), new Date(date.getTime()),
-                        prod, v, Integer.parseInt(resultado.getString("p.num_busquedas"))
-                    )
+                        new Producto(
+                                resultado.getString("p.id_producto"), resultado.getString("p.nombre"),
+                                resultado.getString("p.descripcion"), resultado.getString("p.categoria"),
+                                Double.parseDouble(resultado.getString("p.precio")), new Date(date.getTime()),
+                                prod, v, Integer.parseInt(resultado.getString("p.num_busquedas"))
+                        )
                 );
             }
         } catch (SQLException ex) {
@@ -378,21 +407,67 @@ public class Producto {
         } finally {
             CONNECTION.desconectar();
         }
-    }    
-    
+    }
+
     public boolean modificarBusquedasArticulo() {
         try {
             CONNECTION.conectar();
             PreparedStatement modifica = CONNECTION.getConnection().prepareStatement(modifNumBusquedas);
-            modifica.setString(1, String.valueOf(this.getCalificacion()+1));
+            modifica.setString(1, String.valueOf(this.getCalificacion() + 1));
             modifica.setString(2, this.getIdProducto());
             modifica.executeUpdate();
             return true;
         } catch (SQLException ex) {
-            LOGGER.log(Level.SEVERE, ex.getMessage());
+             Logger.getLogger(Producto.class.getName()).log(Level.SEVERE, null, ex);
             return false;
         } finally {
             CONNECTION.desconectar();
         }
+    }
+    /**
+     * Método que permite descontar del stock actual del producto
+     *
+     * @param cantidad del producto al momento de la compra
+     */
+    public void descontarStock(int cantidad) {
+        try {
+            CONNECTION.conectar();
+            String consulta = "{call  descontarStock(?,?)}";
+            CallableStatement sp = CONNECTION.getConnection().prepareCall(consulta);
+            sp.setString(1, this.idProducto);
+            sp.setInt(2, cantidad);
+            sp.execute();
+            sp.close();
+        } catch (SQLException e) {
+            Logger.getLogger(Producto.class.getName()).log(Level.SEVERE, null, e);
+        } finally {
+            CONNECTION.desconectar();
+        }
+    }
+
+    /**
+     * Método que permite obtener la cantidad actual del producto
+     *
+     * @return int, stock
+     */
+    public int obtenerStock() {
+        try {
+            int s = 0;
+            CONNECTION.conectar();
+            String consulta = "select stock from tb_producto where id_producto=?";
+            PreparedStatement ingreso = CONNECTION.getConnection().prepareStatement(consulta);
+            ingreso.setString(1, this.idProducto);
+            ResultSet resultado = ingreso.executeQuery();
+            while (resultado.next()) {
+                s = resultado.getInt("stock");
+            }
+            return s;
+        } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, e.getMessage());
+            return -1;
+        } finally {
+            CONNECTION.desconectar();
+        }
+
     }
 }

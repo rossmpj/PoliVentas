@@ -15,7 +15,7 @@ public class DBConnection {
     private Connection connection;
     private final String url = "jdbc:mysql://localhost:3306/db_poliventas?useSSL=false&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
     private final String user = "root";
-    private final String pass = "rmpincay";
+    private final String pass = "rmpincay"; 
     private static final Logger LOGGER = Logger.getLogger("DBConnection Logger");
     
     private DBConnection(){   

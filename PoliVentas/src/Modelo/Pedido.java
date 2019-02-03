@@ -8,6 +8,8 @@ import java.sql.SQLException;
 import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.collections.FXCollections;
@@ -36,6 +38,11 @@ public class Pedido {
     private String id_comprador;
     private String id_vendedor;
     private String id_product;
+    private String id_metodoPago;
+    private static final Logger LOGGER = Logger.getLogger("Usuario Logger");
+    private static final DBConnection CONNECTION = DBConnection.getInstance();
+    private String consulta= "INSERT INTO db_poliventas.tb_pedido (estado,costo,cantidad_pedida,fecha_pedido,hora_pedido,"
+            + "lugar_entrega,id_pago,id_comprador_ped, id_vendedor_ped,id_producto_ped) values (?,?,?,?,?,?,?,?,?,?)";
 
     public Pedido(){}
     
@@ -72,6 +79,37 @@ public class Pedido {
         this.id_comprador = id_comprador;
         this.id_product = id_product;
     }
+    
+    /***
+     * Construnctor para Insertar nuevo Pedido en la base de datos
+     * @param estado
+     * @param costo
+     * @param cantidadPedida
+     * @param fechaPedido
+     * @param horaPedido
+     * @param fechaEntrega
+     * @param horaEntrega
+     * @param lugarEntrega
+     * @param pago
+     * @param comprador
+     * @param vendedor
+     * @param product 
+     */
+     public Pedido(String estado, double costo, int cantidadPedida, Date fechaPedido, Time horaPedido, Date fechaEntrega, Time horaEntrega, String lugarEntrega,String pago ,String comprador, String vendedor, String product) {
+        this.estado = estado;
+        this.costo = costo;
+        this.cantidadPedida = cantidadPedida;
+        this.fechaPedido = fechaPedido;
+        this.horaPedido = horaPedido;
+        this.fechaEntrega = fechaEntrega;
+        this.horaEntrega = horaEntrega;
+        this.lugarEntrega = lugarEntrega;
+        this.id_comprador = comprador;
+        this.id_metodoPago= pago;
+        this.id_vendedor = vendedor;
+        this.id_product = product;
+    }
+    
 
     public String getIdPedido() {
         return idPedido;
@@ -216,6 +254,14 @@ public class Pedido {
     public void setProduct(Producto product) {
         this.product = product;
     }
+    
+      public String getId_metodoPago() {
+        return id_metodoPago;
+    }
+
+    public void setId_metodoPago(String id_metodoPago) {
+        this.id_metodoPago = id_metodoPago;
+    }
 
     @Override
     public String toString() {
@@ -258,10 +304,8 @@ public class Pedido {
                     resultado.getString("p.id_comprador_ped"), 
                     resultado.getString("p.id_producto_ped")));
             }
-        } catch (SQLException ex) {
-            System.out.println("EXCEPCION: " + ex.getMessage());
-        } catch (ParseException ex) {
-            Logger.getLogger(Producto.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException | ParseException ex) {
+             Logger.getLogger(Pedido.class.getName()).log(Level.SEVERE, null, ex);
         } finally{
             conexion.desconectar();
         }
@@ -277,7 +321,8 @@ public class Pedido {
             PreparedStatement ingreso = conexion.getConnection().prepareStatement(query);
             ingreso.setString(1, this.getIdPedido());
             ingreso.executeUpdate();
-        } catch (SQLException e) {
+        } catch (SQLException ex) {
+            Logger.getLogger(Pedido.class.getName()).log(Level.SEVERE, null, ex);
             return false;
         } finally {
             conexion.desconectar();
@@ -289,12 +334,13 @@ public class Pedido {
         DBConnection conexion = DBConnection.getInstance();
         conexion.conectar();
         try {
-            String consulta = "UPDATE tb_pedido SET estado = 'entregado' WHERE id_pedido = ?";
-            PreparedStatement modifica = conexion.getConnection().prepareStatement(consulta);
+            String c = "UPDATE tb_pedido SET estado = 'entregado' WHERE id_pedido = ?";
+            PreparedStatement modifica = conexion.getConnection().prepareStatement(c);
             modifica.setString(1, this.getIdPedido());
             modifica.executeUpdate();
             return true;            
         } catch (SQLException ex) {
+            Logger.getLogger(Pedido.class.getName()).log(Level.SEVERE, null, ex);
             return false;
         } finally {
             conexion.desconectar();
@@ -305,7 +351,7 @@ public class Pedido {
         DBConnection conexion = DBConnection.getInstance();
         conexion.conectar();
         try {
-            String consulta = "select * from tb_pedido p, (select * from tb_producto) pr ,"
+            String c = "select * from tb_pedido p, (select * from tb_producto) pr ,"
                     + "(select * from tb_vendedor) ve ,(select * from tb_calificacion_producto) cal, "
                     + "(select * from tb_comprador) co , (select * from tb_calificacion_vendedor) ca,"
                     + "(select * from tb_usuario) us where p.estado = 'pendiente' "
@@ -313,7 +359,7 @@ public class Pedido {
                     + "and co.id_comprador = p.id_comprador_ped and co.cedula = us.ci_usuario and ca.id_vendedor = ve.id_vendedor "
                     + "and ve.cedula = us.ci_usuario and ve.id_comprador = co.id_comprador and cal.id_producto = pr.id_producto "
                     + "and ve.id_comprador = p.id_comprador_ped and id_comprador_ped = ?";
-            PreparedStatement buscar = conexion.getConnection().prepareStatement(consulta);
+            PreparedStatement buscar = conexion.getConnection().prepareStatement(c);
             buscar.setString(1, this.getId_comprador());
             ResultSet resultado = buscar.executeQuery();
             while(resultado.next()){
@@ -351,13 +397,39 @@ public class Pedido {
                     co, ve, pr )
                 );
             }
-        } catch (SQLException ex) {
-            System.out.println("EXCEPCION: " + ex.getMessage());
-        } catch (ParseException ex) {
-            Logger.getLogger(Producto.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException | ParseException ex) {
+            Logger.getLogger(Pedido.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             conexion.desconectar();
         }
-    }    
+    } 
+    
+    /**
+     * Método que permite registrar el pedido en la base de datos
+     * @return true, si se registró con exito, false si no se pudo
+     */
+    public boolean registrar(){
+    try {
+            CONNECTION.conectar();
+            PreparedStatement ingreso = CONNECTION.getConnection().prepareStatement(consulta);
+            ingreso.setString(1, this.estado);
+            ingreso.setDouble(2, this.costo);
+            ingreso.setInt(3, this.cantidadPedida);
+            ingreso.setDate(4, java.sql.Date.valueOf(LocalDate.now()));
+            ingreso.setTime(5, java.sql.Time.valueOf(LocalTime.now())); //No se guarda de forma correcta
+            ingreso.setString(6, this.lugarEntrega);
+            ingreso.setString(7, this.id_metodoPago);
+            ingreso.setString(8, this.id_comprador);
+            ingreso.setString(9, this.id_vendedor);
+            ingreso.setString(10, this.id_product);
+            ingreso.executeUpdate();
+            return true;
+    }catch (SQLException ex) {
+             Logger.getLogger(Pedido.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+    } finally {
+            CONNECTION.desconectar();
+        }
+}
     
 }

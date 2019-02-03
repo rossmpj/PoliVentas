@@ -33,52 +33,14 @@ public class Usuario {
     private final String insertaRolVend = "insert into db_poliventas.tb_vendedor values (?,?,?) ";
     private final String insertaRolCom = "insert into db_poliventas.tb_comprador values (?,?) ";
 
+    /**
+     * Constructor por defecto
+     */
     public Usuario() {
     }
 
-    public Usuario(String cedula, String nombres, String apellidos, String telefono, String direccion,
-            boolean whatsapp, String matricula, String email) {
-        this.nombres = nombres;
-        this.apellidos = apellidos;
-        this.telefono = telefono;
-        this.whatsapp = whatsapp;
-        this.email = email;
-        this.direccion = direccion;
-        this.cedula = cedula;
-        this.matricula = matricula;
-    }
-
-    public Usuario(String nombres, String apellidos, String telefono, boolean whatsapp, String email, String direccion, String cedula, String matricula, String usuario, String contrasena, boolean estado) {
-        this.nombres = nombres;
-        this.apellidos = apellidos;
-        this.telefono = telefono;
-        this.whatsapp = whatsapp;
-        this.email = email;
-        this.direccion = direccion;
-        this.cedula = cedula;
-        this.matricula = matricula;
-        this.usuario = usuario;
-        this.contrasena = contrasena;
-        this.estado = estado;
-    }
-
-    public Usuario(String cedula, String nombres, String apellidos, String telefono,
-            String direccion, boolean whatsapp, String matricula, String email,
-            String usuario, String contrasena) {
-        this.nombres = nombres;
-        this.apellidos = apellidos;
-        this.telefono = telefono;
-        this.whatsapp = whatsapp;
-        this.email = email;
-        this.direccion = direccion;
-        this.cedula = cedula;
-        this.matricula = matricula;
-        this.usuario = usuario;
-        this.contrasena = contrasena;
-    }
-
     /**
-     *
+     *Constructor utilizado para almacenar en la base de datos
      * @param cedula
      * @param nombres
      * @param apellidos
@@ -197,8 +159,7 @@ public class Usuario {
 
     /**
      * Metodo para registrar nuevo usuario
-     *
-     * @return
+     * @return true si se registró sin inconvenientes, false en caso contrario
      */
     public boolean registrar() {
         try {
@@ -216,7 +177,6 @@ public class Usuario {
             ingreso.setString(10, contrasena.toLowerCase());
             ingreso.setBoolean(11, estado);
             ingreso.executeUpdate();
-            System.out.println("ingreso exitoso usuario...");
             return true;
         } catch (SQLException e) {
             LOGGER.log(Level.SEVERE, e.getMessage());
@@ -301,13 +261,17 @@ public class Usuario {
             sp.close();
             return rol;
         } catch (SQLException ex) {
-            System.out.println("EXCEPCION callProxPedido: " + ex.getMessage());
+           Logger.getLogger(Usuario.class.getName()).log(Level.SEVERE, null, ex);
             return null;
         } finally {
             CONNECTION.desconectar();
         }
     }
 
+     /**
+      * Soobrescritura del metodo toString
+      * @return String con los datos del Usuario
+      */
     @Override
     public String toString() {
         return "Usuario" + " Nombres:" + nombres + ", apellidos:" + apellidos
@@ -316,6 +280,10 @@ public class Usuario {
                 + ", cedula:" + cedula + ", matricula:" + matricula;
     }
 
+    /**
+     * HashCode
+     * @return int
+     */
     @Override
     public int hashCode() {
         int hash = 3;
@@ -330,6 +298,11 @@ public class Usuario {
         return hash;
     }
 
+    /**
+     * Sobreescritura del metodo equals
+     * @param obj
+     * @return 
+     */
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {

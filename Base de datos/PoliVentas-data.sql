@@ -35,7 +35,7 @@ INSERT INTO `db_poliventas`.`tb_administrador` (`id_administrador`, `cedula`) VA
 INSERT INTO `db_poliventas`.`tb_administrador` (`id_administrador`, `cedula`) VALUES ('adm002', '1204306843');
 INSERT INTO `db_poliventas`.`tb_administrador` (`id_administrador`, `cedula`) VALUES ('adm003', '4930608312');
 
-INSERT INTO `db_poliventas`.`tb_comprador` (`id_comprador`, `cedula`) VALUES ('comp001', '0954124764');
+INSERT INTO `db_poliventas`.`tb_comprador` (`id_comprador`,`saldo`,`cedula`) VALUES ('comp001', 100,'0954124764');
 INSERT INTO `db_poliventas`.`tb_comprador` (`id_comprador`, `cedula`) VALUES ('comp002', '0591020194');
 INSERT INTO `db_poliventas`.`tb_comprador` (`id_comprador`, `cedula`) VALUES ('comp003', '0356332466');
 INSERT INTO `db_poliventas`.`tb_comprador` (`id_comprador`, `cedula`) VALUES ('comp004', '1346864456');

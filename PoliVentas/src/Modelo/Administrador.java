@@ -26,9 +26,26 @@ public class Administrador extends Usuario {
     private final String consultarUser = "select * from db_poliventas.tb_usuario where CONCAT(nombres,' ',apellidos) like ? OR ci_usuario=? ";
     private final String consultarP = "select * from db_poliventas.tb_producto p LEFT JOIN db_poliventas.tb_calificacion_producto c on p.id_producto=c.id_producto where p.nombre like ? OR p.id_producto=? ";
 
+    /**
+     * Constructor por defecto
+     */
     public Administrador() {
     }
 
+    /**
+     * Constructor de la clase
+     * @param cedula
+     * @param nombres
+     * @param apellidos
+     * @param telefono
+     * @param direccion
+     * @param whatsapp
+     * @param matricula
+     * @param email
+     * @param usuario
+     * @param contra
+     * @param es, si el usuario está eliminado 
+     */
     public Administrador(String cedula, String nombres, String apellidos, String telefono,
             String direccion, boolean whatsapp, String matricula, String email, String usuario, String contra, boolean es) {
         super(cedula, nombres, apellidos, telefono, direccion, whatsapp, matricula, email, usuario, contra, es);

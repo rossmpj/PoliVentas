@@ -5,15 +5,22 @@
  */
 package Modelo;
 
+import javafx.scene.control.Alert;
+
 /**
  *
  * @author Rosa
  */
-public class PagoEfectivo implements Pago{
+public class PagoEfectivo implements Pago {
 
     @Override
-    public boolean pagar(String ci_cel) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public boolean pagar(String ci_cel,double monto) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Pago en Efectivo");
+        alert.setHeaderText("");
+        alert.setContentText("Se ha efectuado el pago total de $"+monto+" en efectivo");
+        alert.showAndWait();
+        return true;
     }
-    
+
 }
