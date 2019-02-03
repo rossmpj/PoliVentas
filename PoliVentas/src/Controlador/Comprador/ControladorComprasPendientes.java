@@ -53,7 +53,7 @@ public class ControladorComprasPendientes {
     
     private void cargarData() {
         conexion.conectar();  
-        String id = buscarIDComprador(conexion.getConnection());
+        String id = ControladorLogin.comp_id;
         System.out.println("id: "+id);
         buscarPedidosPendientes(id, conexion.getConnection(), this.observableList);
         conexion.desconectar();

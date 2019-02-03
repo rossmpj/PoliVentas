@@ -5,6 +5,7 @@
  */
 package Controlador.Vendedor;
 
+import Controlador.Principal.ControladorLogin;
 import Controlador.Principal.WindowsController;
 import Modelo.Pedido;
 import Vista.Vendedor.VentasPendientes;
@@ -105,10 +106,10 @@ public class ControladorVentasPendientes{
         
     }
     
-    public void refreshView(){
+    private void refreshView(){
         
         TableView<Pedido> table = VistaVentasPendientes.getTablaPedidos();
-        ObservableList<Pedido> list = Pedido.getPedidosPendientesPorVendedor("vend001");
+        ObservableList<Pedido> list = Pedido.getPedidosPendientesPorVendedor(ControladorLogin.vend_id);
         table.setItems(list);
         
     }

@@ -5,6 +5,7 @@
  */
 package Controlador.Vendedor;
 
+import Controlador.Principal.ControladorLogin;
 import Controlador.Principal.WindowsController;
 import Modelo.Producto;
 import Vista.Vendedor.MisProductos;
@@ -118,10 +119,10 @@ public class ControladorMisProductos {
         
     }
     
-    public void refreshView(){
+    private void refreshView(){
         
         TableView<Producto> table = VistaMisProductos.getTablaProductos();
-        ObservableList<Producto> list = Producto.getMisProductos("vend001");
+        ObservableList<Producto> list = Producto.getMisProductos(ControladorLogin.vend_id);
         table.setItems(list);
     }
     

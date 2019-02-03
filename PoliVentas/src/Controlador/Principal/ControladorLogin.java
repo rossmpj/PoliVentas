@@ -13,6 +13,7 @@ import Vista.Administrador.VistaInfoUsuario;
 import Vista.Comprador.CompradorOptions;
 import Vista.Principal.PaneLogin;
 import Vista.Vendedor.VendedorOptions;
+import Vista.Vendedor.VendedorOptions;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -30,6 +31,7 @@ public class ControladorLogin {
          
     private final PaneLogin LoginView;
     public static String ced;
+    public static String vend_id, comp_id, admin_id;
 
     public ControladorLogin(PaneLogin LoginView) {
         this.LoginView = LoginView;        
@@ -52,11 +54,11 @@ public class ControladorLogin {
             System.out.println(ced);
             c.desconectar();
             if (usu != null) {
-                if ( (esComprador && esVendedor) || (esComprador) ) {
-                    mostrarVentanaComprador();
-                } else if (esVendedor) {
+                if(esVendedor) {
                     mostrarVentanaVendedor();
-                } else if (esAdmin){ 
+                } else if (esComprador) {
+                    mostrarVentanaComprador();
+                } else { 
                     mostrarVentanaAdministrador();
                 }
                 limpiarCampos();
@@ -124,10 +126,11 @@ public class ControladorLogin {
     public static boolean isComprador(String code, Connection e) {
         boolean isComprador = false;
         try {
-            String query = "SELECT cedula FROM db_poliventas.tb_comprador WHERE cedula = "+ code;
+            String query = "SELECT cedula, id_comprador FROM db_poliventas.tb_comprador WHERE cedula = "+ code;
             Statement in = e.createStatement();
             ResultSet resultado = in.executeQuery(query);
             if(resultado.next()) {
+                comp_id = resultado.getString("id_comprador");
                 isComprador = true;               
             }
         } catch (SQLException ex) {
@@ -139,10 +142,12 @@ public class ControladorLogin {
     public static boolean isVendedor(String code, Connection e) {
         boolean isVendedor = false;
         try {
-            String query = "SELECT cedula FROM db_poliventas.tb_vendedor WHERE cedula = "+ code;
+            String query = "SELECT cedula, id_comprador, id_vendedor FROM db_poliventas.tb_vendedor WHERE cedula = "+ code;
             Statement in = e.createStatement();
             ResultSet resultado = in.executeQuery(query);
             if(resultado.next()) {
+                comp_id = resultado.getString("id_comprador");
+                vend_id = resultado.getString("id_vendedor");
                 isVendedor = true;                    
             }
         } catch (SQLException ex) {
@@ -154,10 +159,11 @@ public class ControladorLogin {
     public static boolean isAdministrador(String code, Connection e) {
         boolean isAdministrador = false;
         try {
-            String query = "SELECT cedula FROM db_poliventas.tb_administrador WHERE cedula = "+ code;
+            String query = "SELECT cedula, id_administrador FROM db_poliventas.tb_administrador WHERE cedula = "+ code;
             Statement in = e.createStatement();
             ResultSet resultado = in.executeQuery(query);
             if(resultado.next()) {
+                admin_id = resultado.getString("id_administrador");
                 isAdministrador = true;               
             }
         } catch (SQLException ex) {

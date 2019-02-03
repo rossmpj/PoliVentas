@@ -6,6 +6,7 @@
 package Controlador.Vendedor;
 
 import Auxiliares.Validators;
+import Controlador.Principal.ControladorLogin;
 import Controlador.Principal.WindowsController;
 import Modelo.Producto;
 import Vista.Principal.Vista;
@@ -68,7 +69,7 @@ class ControladorNuevoProducto{
             ModeloProducto.setPrecio(precio);
             ModeloProducto.setStock(stock);
             
-            ModeloProducto.setId_vendedor("vend001");
+            ModeloProducto.setId_vendedor(ControladorLogin.vend_id);
             
             ModeloProducto.registrar();
             WindowsController.previous();
