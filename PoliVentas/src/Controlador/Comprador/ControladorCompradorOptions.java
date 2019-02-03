@@ -9,10 +9,6 @@ import Vista.Comprador.VistaBusquedaSencilla;
 import Vista.Comprador.VistaComprasPendientes;
 import Vista.Principal.ArticulosMasBuscados;
 import Vista.Principal.PaneLogin;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 
@@ -24,54 +20,32 @@ public class ControladorCompradorOptions {
     
     private final CompradorOptions CompradorOptionsView;
 
-    public ControladorCompradorOptions(CompradorOptions CompradorOptionsView) {
-        
+    public ControladorCompradorOptions(CompradorOptions CompradorOptionsView) {  
         this.CompradorOptionsView = CompradorOptionsView;
         this.CompradorOptionsView.addCerrarSesionButtonHandler(new CerrarSesionButtonHandler());
         this.CompradorOptionsView.addBusquedaSencillaButtonHandler(new BusquedaSencillaButtonHandler());
         this.CompradorOptionsView.addComprasPendientesButtonHandler(new ComprasPendientesButtonHandler());
-        this.CompradorOptionsView.addArticulosMasBuscadosButtonHandler(new ArticulosMasBuscadosButtonHandler());
-        
-    }
-
-    public static String buscarIDComprador(Connection c) {
-        String id = null;
-        try {
-            Statement in = c.createStatement();
-            ResultSet resultado = in.executeQuery("select id_comprador from tb_comprador where cedula ="+ ControladorLogin.ced+";");
-            while (resultado.next()) {
-                id = resultado.getString("id_comprador");
-            }
-        } catch (SQLException ex) {
-            System.out.println("EXCEPCION: " + ex.getMessage());
-        }
-        return id;
+        this.CompradorOptionsView.addArticulosMasBuscadosButtonHandler(new ArticulosMasBuscadosButtonHandler());  
     }
     
     private class BusquedaSencillaButtonHandler implements EventHandler {
-
         @Override
         public void handle(Event event) {
-            
             Producto producto = new Producto();
             VistaBusquedaSencilla busquedaSencillaView = new VistaBusquedaSencilla();
             ControladorBusquedaSencilla controladorVentasPendientes = new ControladorBusquedaSencilla(producto, busquedaSencillaView);
             WindowsController.next(CompradorOptionsView, busquedaSencillaView);
         }
-        
     }
     
     private class ComprasPendientesButtonHandler implements EventHandler {
-
         @Override
         public void handle(Event event) {
-            
             Pedido pedido = new Pedido();
             VistaComprasPendientes comprasPendientesView = new VistaComprasPendientes();
             ControladorComprasPendientes controladorComprasPendientes = new ControladorComprasPendientes(pedido, comprasPendientesView);  
             WindowsController.next(CompradorOptionsView, comprasPendientesView);
         }
-        
     }
     
     private class ArticulosMasBuscadosButtonHandler implements EventHandler {
@@ -80,9 +54,7 @@ public class ControladorCompradorOptions {
             Producto producto = new Producto();
             ArticulosMasBuscados articulosMasBuscadosView = new ArticulosMasBuscados(true);
             ControladorArticulosMasBuscados controladorArticulosMasBuscados = new ControladorArticulosMasBuscados(producto, articulosMasBuscadosView);
-            
             WindowsController.next(CompradorOptionsView, articulosMasBuscadosView);
-            //CompradorOptionsView.getRoot().getScene().setRoot(articulosMasBuscadosView.getRoot());
         }   
     }
     

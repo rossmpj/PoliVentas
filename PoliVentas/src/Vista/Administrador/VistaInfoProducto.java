@@ -69,7 +69,7 @@ public class VistaInfoProducto implements Vista {
             categoria.setText(p.getCategoria());
             precio.setText(String.valueOf(p.getPrecio()));
             cantidad.setText(String.valueOf(p.getStock()));
-            vendedor.setText(p.getId_vendedor());
+            vendedor.setText(p.getIdVendedor());
             descripcion.setText(p.getDescripcion());
             eliminado.setSelected(p.isEstado());
         }

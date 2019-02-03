@@ -1,7 +1,6 @@
 package Modelo;
 
 import Auxiliares.DBConnection;
-import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -36,7 +35,7 @@ public class Producto {
     
     protected static final Logger LOGGER = Logger.getLogger("Usuario Logger");
     protected static final DBConnection CONNECTION = DBConnection.getInstance();
-    protected String id_vendedor;
+    protected String idVendedor;
     private final String eliminarP = "update db_poliventas.tb_producto set estado=? where id_producto=?";
     private final String modificarP = "update db_poliventas.tb_producto set nombre=?,descripcion=?,precio=?,categoria=?,stock=?, estado=?"
             + " where id_producto=?";
@@ -44,7 +43,7 @@ public class Producto {
             + "precio, categoria, stock, estado, id_vendedor) values(?,?,?,?,?,?,?,?)";
     private final String modifNumBusquedas = "UPDATE tb_producto SET num_busquedas = ? WHERE id_producto = ?";
     private final String buscarXNombreYDescripcion = "SELECT distinct p.id_producto, p.nombre, p.num_busquedas, p.descripcion, p.categoria, p.precio, "
-                    + "cp.calificacion_producto, cv.calificacion_vendedor, "
+                    + "cp.calificacion_producto, cv.calificacion_vendedor, cv.id_vendedor, cp.id_producto, "
                     + "e.fecha_entrega FROM tb_producto p, tb_calificacion_producto cp, "
                     + "tb_vendedor v, tb_calificacion_vendedor cv, tb_pedido e "
                     + "where p.id_producto = cp.id_producto and "
@@ -56,7 +55,7 @@ public class Producto {
     }
 
     public Producto(String idProducto, String nombre, String descripcion, String categoria, double precio,
-            Date tiempoMaxEntrega, CalificacionProducto calificacionP, CalificacionVendedor calificacionV, int n) {
+            Date tiempoMaxEntrega, CalificacionProducto calificacionP, Vendedor vendedor, int n) {
         this.idProducto = idProducto;
         this.nombre = nombre;
         this.descripcion = descripcion;
@@ -64,7 +63,7 @@ public class Producto {
         this.precio = precio;
         this.tiempoMaxEntrega = tiempoMaxEntrega;
         this.calificacionP = calificacionP;
-        this.calificacionV = calificacionV;
+        this.vendedor = vendedor;
         this.numBusquedas = n;
     }
 
@@ -91,7 +90,7 @@ public class Producto {
         this.stock = stock;
         this.estado = estado;
         this.calificacion = calificacion;
-        this.id_vendedor = vendedor;
+        this.idVendedor = vendedor;
     }
 
     public Producto(String idProducto, String nombre, String descripcion, double precio, String categoria, int stock) {
@@ -207,12 +206,12 @@ public class Producto {
         this.calificacionV = calificacionV;
     }
 
-    public String getId_vendedor() {
-        return id_vendedor;
+    public String getIdVendedor() {
+        return idVendedor;
     }
 
-    public void setId_vendedor(String id_vendedor) {
-        this.id_vendedor = id_vendedor;
+    public void setIdVendedor(String idVendedor) {
+        this.idVendedor = idVendedor;
     }
 
     @Override
@@ -246,9 +245,9 @@ public class Producto {
 
     @Override
     public String toString() {
-        return "DETALLES DE PRODUCTO: " + "\nID Producto: " + idProducto + "\nNombre: "
+        return "DETALLES DE PRODUCTO: " + "\nNombre: "
                 + nombre + "\nDescripcion: " + descripcion + "\nCategoria: " + categoria
-                + "\nPrecio: " + precio + "\nCalificacion: " + calificacionP + "\nNBusquedas: " + this.numBusquedas;
+                + "\nPrecio: " + precio + "\nCalificacion: " + calificacionP ;
     }
 
     public boolean eliminarProducto() {
@@ -299,7 +298,7 @@ public class Producto {
             ingreso.setString(5, categoria);
             ingreso.setInt(6, stock);
             ingreso.setBoolean(7, false);
-            ingreso.setString(8, id_vendedor);
+            ingreso.setString(8, idVendedor);
             ingreso.executeUpdate();
             return true;
         } catch (SQLException e) {
@@ -350,23 +349,26 @@ public class Producto {
             buscar.setString(1, '%'+nom+'%');
             buscar.setString(2, '%'+desc+'%');
             ResultSet resultado = buscar.executeQuery();
-           System.out.println("si");
             while(resultado.next()){
                 SimpleDateFormat t = new SimpleDateFormat("yyyy-MM-dd");
                 java.util.Date date = t.parse(resultado.getString("e.fecha_entrega"));
-                java.sql.Date sqlDate = new java.sql.Date(date.getTime()); 
                 CalificacionVendedor vend = new CalificacionVendedor();
                 CalificacionProducto prod = new CalificacionProducto();
-                vend.setCalificacionV(Integer.parseInt(resultado.getString("cp.calificacion_producto")));
-                prod.setCalificacionP(Integer.parseInt(resultado.getString("cv.calificacion_vendedor")));
+                Vendedor v = new Vendedor();
+                vend.setCalificacionV(Integer.parseInt(resultado.getString("cv.calificacion_vendedor")));
+                vend.setIdCalificacionV(resultado.getString("cv.id_vendedor"));
+                v.setIdVendedor(resultado.getString("cv.id_vendedor"));
+                v.setCalificacionV(vend);
+                prod.setIdProducto(resultado.getString("cp.id_producto"));
+                prod.setIdCalificacionP("p.id_calificacion_producto");
+                prod.setCalificacionP(Integer.parseInt(resultado.getString("cp.calificacion_producto")));
                 lista.add(
                     new Producto( 
-                            resultado.getString("p.id_producto"),
-                    resultado.getString("p.nombre"), 
-                    resultado.getString("p.descripcion"), 
-                    resultado.getString("p.categoria"), 
-                    Double.parseDouble(resultado.getString("p.precio")), sqlDate,
-                    prod, vend,Integer.parseInt(resultado.getString("p.num_busquedas")))
+                        resultado.getString("p.id_producto"), resultado.getString("p.nombre"), 
+                        resultado.getString("p.descripcion"), resultado.getString("p.categoria"), 
+                        Double.parseDouble(resultado.getString("p.precio")), new Date(date.getTime()),
+                        prod, v, Integer.parseInt(resultado.getString("p.num_busquedas"))
+                    )
                 );
             }
         } catch (SQLException ex) {

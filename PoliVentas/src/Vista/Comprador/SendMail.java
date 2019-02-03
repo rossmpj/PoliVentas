@@ -1,7 +1,6 @@
 package Vista.Comprador;
 
 import Auxiliares.MensajesAcciones;
-import Vista.Principal.Vista;
 import java.util.Properties;
 import javax.mail.Message;
 import javax.mail.MessagingException;

@@ -96,7 +96,7 @@ public class ControladorBusquedaSencilla {
                     hb1.setSpacing(100);
                     hb.getChildren().addAll(nameLbl,VistaBusquedaSencilla.getComprar());
                     hb1.getChildren().addAll(VistaBusquedaSencilla.crearEstrellas(p.getCalificacionP().getCalificacionP(), "Producto"),
-                            VistaBusquedaSencilla.crearEstrellas(p.getCalificacionV().getCalificacionV(),"Vendedor"));
+                            VistaBusquedaSencilla.crearEstrellas(p.getVendedor().getCalificacionV().getCalificacionV(),"Vendedor"));
                     hb.setPadding(new Insets(7, 0, 7, 5));
                     VistaBusquedaSencilla.getVBoxProductosEncontrados().setPadding(new Insets(7, 70, 0, 70));
                     VistaBusquedaSencilla.getVBoxProductosEncontrados().getChildren().addAll(hb,categoryNameLbl,desc,VistaBusquedaSencilla.precioProducto(p.getPrecio()),

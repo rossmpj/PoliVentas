@@ -34,7 +34,7 @@ public class VistaComprar implements Vista {
     public VistaComprar(Producto p){
         root = new BorderPane();
         product = p;
-        nota = new Label("Usted está a punto de comprar un@: "+ p.getNombre());//hay que establecer cantidad
+        nota = new Label("Usted está a punto de comprar un@: "+ p.getNombre()+p.getVendedor().getIdVendedor());//hay que establecer cantidad
         crearSeccionTituloComprador();
         createContent();
     }

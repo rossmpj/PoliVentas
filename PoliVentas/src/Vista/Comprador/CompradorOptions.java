@@ -1,10 +1,8 @@
 package Vista.Comprador;
 
-import Vista.Principal.PaneLogin;
 import Auxiliares.CONSTANTES;
 import Vista.Principal.Vista;
 import static Auxiliares.PatronVistaTitulos.crearTituloMenuPrincipal;
-import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;

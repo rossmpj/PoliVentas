@@ -69,7 +69,7 @@ class ControladorNuevoProducto{
             ModeloProducto.setPrecio(precio);
             ModeloProducto.setStock(stock);
             
-            ModeloProducto.setId_vendedor(ControladorLogin.vend_id);
+            ModeloProducto.setIdVendedor(ControladorLogin.vend_id);
             
             ModeloProducto.registrar();
             WindowsController.previous();

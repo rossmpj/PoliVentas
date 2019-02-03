@@ -8,7 +8,6 @@ import java.sql.SQLException;
 import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.collections.FXCollections;
@@ -40,49 +39,6 @@ public class Pedido {
 
     public Pedido(){}
     
-    public Pedido(String codPedido, String estado, double costo, Date fechaPedido, Time horaPedido, Date fechaEntrega, Time horaEntrega, String lugarEntrega, Pago metodoPago) {
-        this.idPedido = codPedido;
-        this.estado = estado;
-        this.costo = costo;
-        this.fechaPedido = fechaPedido;
-        this.horaPedido = horaPedido;
-        this.fechaEntrega = fechaEntrega;
-        this.horaEntrega = horaEntrega;
-        this.lugarEntrega = lugarEntrega;
-        this.metodoPago = metodoPago;
-    }
-
-    public Pedido(String idPedido, String estado, double costo, int cantidadPedida, Date fechaPedido, Time horaPedido, Date fechaEntrega, Time horaEntrega, String lugarEntrega, Pago metodoPago, Comprador comprador, Vendedor vendedor, Producto product) {
-        this.idPedido = idPedido;
-        this.estado = estado;
-        this.costo = costo;
-        this.cantidadPedida = cantidadPedida;
-        this.fechaPedido = fechaPedido;
-        this.horaPedido = horaPedido;
-        this.fechaEntrega = fechaEntrega;
-        this.horaEntrega = horaEntrega;
-        this.lugarEntrega = lugarEntrega;
-        this.metodoPago = metodoPago;
-        this.comprador = comprador;
-        this.vendedor = vendedor;
-        this.product = product;
-    }
-    
-    public Pedido(String idPedido, String estado, double costo, int cantidadPedida, Date fechaPedido, Time horaPedido, Date fechaEntrega, Time horaEntrega, String lugarEntrega, Comprador comprador, Vendedor vendedor, Producto product) {
-        this.idPedido = idPedido;
-        this.estado = estado;
-        this.costo = costo;
-        this.cantidadPedida = cantidadPedida;
-        this.fechaPedido = fechaPedido;
-        this.horaPedido = horaPedido;
-        this.fechaEntrega = fechaEntrega;
-        this.horaEntrega = horaEntrega;
-        this.lugarEntrega = lugarEntrega;
-        this.comprador = comprador;
-        this.vendedor = vendedor;
-        this.product = product;
-    }
-
     public Pedido(String idPedido, String estado, 
             double costo, int cantidadPedida, Date
             fechaPedido, String horaP, Date fechaEntrega, String horaE, String lugarEntrega, Comprador co, Vendedor vendedor, Producto product) {
@@ -160,8 +116,22 @@ public class Pedido {
     public void setId_product(String id_product) {
         this.id_product = id_product;
     }
-    
-    
+
+    public String getHoraP() {
+        return horaP;
+    }
+
+    public void setHoraP(String horaP) {
+        this.horaP = horaP;
+    }
+
+    public String getHoraE() {
+        return horaE;
+    }
+
+    public void setHoraE(String horaE) {
+        this.horaE = horaE;
+    }
 
     public void setCosto(double costo) {
         this.costo = costo;
@@ -223,66 +193,6 @@ public class Pedido {
         this.metodoPago = metodoPago;
     }
     
-    public static ObservableList<Pedido> getPedidosPendientesPorVendedor(String id){
-        
-        DBConnection conexion = DBConnection.getInstance();
-        conexion.conectar();
-        
-        ObservableList<Pedido> pedidos = FXCollections.observableArrayList();
-        
-        try {
-            String consulta = "select * from tb_pedido p where p.estado = 'pendiente' and p.id_vendedor_ped = ?;";
-            PreparedStatement buscar = conexion.getConnection().prepareStatement(consulta);
-            buscar.setString(1, id);
-            ResultSet resultado = buscar.executeQuery();
-            
-            while(resultado.next()){
-                SimpleDateFormat t = new SimpleDateFormat("yyyy-MM-dd");
-                java.util.Date datePedido = t.parse(resultado.getString("fecha_pedido"));
-                java.util.Date dateEntrega = t.parse(resultado.getString("fecha_entrega"));
-                java.sql.Date sqlDateP = new java.sql.Date(datePedido.getTime()); 
-                java.sql.Date sqlDateE = new java.sql.Date(dateEntrega.getTime());
-                pedidos.add(new Pedido( 
-                    resultado.getString("p.id_pedido"),
-                    resultado.getString("p.estado"), 
-                    Double.parseDouble(resultado.getString("p.costo")),
-                    Integer.parseInt(resultado.getString("p.cantidad_pedida")),
-                    sqlDateP, resultado.getString("hora_pedido"),
-                    sqlDateE, resultado.getString("hora_entrega"),
-                    resultado.getString("p.lugar_entrega"), 
-                    resultado.getString("p.id_comprador_ped"), 
-                resultado.getString("p.id_producto_ped")));
-            }
-        } catch (SQLException ex) {
-            System.out.println("EXCEPCION: " + ex.getMessage());
-        } catch (ParseException ex) {
-            Logger.getLogger(Producto.class.getName()).log(Level.SEVERE, null, ex);
-        } finally{
-            conexion.desconectar();
-        }
-        
-        return pedidos;
-    }
-    
-    public boolean anular(){
-        
-        DBConnection conexion = DBConnection.getInstance();
-        conexion.conectar();
-        
-        try {
-            String query = "update db_poliventas.tb_pedido set estado='anulado' where id_pedido=?";
-            PreparedStatement ingreso = conexion.getConnection().prepareStatement(query);
-            ingreso.setString(1, this.getIdPedido());
-            ingreso.executeUpdate();
-        } catch (SQLException e) {
-            return false;
-        } finally {
-            conexion.desconectar();
-        }
-        
-        return true;
-    }
-
     public Comprador getComprador() {
         return comprador;
     }
@@ -317,5 +227,137 @@ public class Pedido {
                 + metodoPago + "\nComprador: " + comprador + ""+ "Vendedor: " 
                 + vendedor + "\nProducto: " + product;
     }
+    
+    public static ObservableList<Pedido> getPedidosPendientesPorVendedor(String id){
+        
+        DBConnection conexion = DBConnection.getInstance();
+        conexion.conectar();
+        
+        ObservableList<Pedido> pedidos = FXCollections.observableArrayList();
+        
+        try {
+            String consulta = "select * from tb_pedido p where p.estado = 'pendiente' and p.id_vendedor_ped = ?;";
+            PreparedStatement buscar = conexion.getConnection().prepareStatement(consulta);
+            buscar.setString(1, id);
+            ResultSet resultado = buscar.executeQuery();
+            
+            while(resultado.next()){
+                SimpleDateFormat t = new SimpleDateFormat("yyyy-MM-dd");
+                java.util.Date datePedido = t.parse(resultado.getString("fecha_pedido"));
+                java.util.Date dateEntrega = t.parse(resultado.getString("fecha_entrega"));
+                Date sqlDateP = new java.sql.Date(datePedido.getTime()); 
+                Date sqlDateE = new java.sql.Date(dateEntrega.getTime());
+                pedidos.add(new Pedido( 
+                    resultado.getString("p.id_pedido"),
+                    resultado.getString("p.estado"), 
+                    Double.parseDouble(resultado.getString("p.costo")),
+                    Integer.parseInt(resultado.getString("p.cantidad_pedida")),
+                    sqlDateP, resultado.getString("hora_pedido"),
+                    sqlDateE, resultado.getString("hora_entrega"),
+                    resultado.getString("p.lugar_entrega"), 
+                    resultado.getString("p.id_comprador_ped"), 
+                    resultado.getString("p.id_producto_ped")));
+            }
+        } catch (SQLException ex) {
+            System.out.println("EXCEPCION: " + ex.getMessage());
+        } catch (ParseException ex) {
+            Logger.getLogger(Producto.class.getName()).log(Level.SEVERE, null, ex);
+        } finally{
+            conexion.desconectar();
+        }
+        
+        return pedidos;
+    }
+    
+    public boolean anular(){
+        DBConnection conexion = DBConnection.getInstance();
+        conexion.conectar();
+        try {
+            String query = "update db_poliventas.tb_pedido set estado='anulado' where id_pedido=?";
+            PreparedStatement ingreso = conexion.getConnection().prepareStatement(query);
+            ingreso.setString(1, this.getIdPedido());
+            ingreso.executeUpdate();
+        } catch (SQLException e) {
+            return false;
+        } finally {
+            conexion.desconectar();
+        }
+        return true;
+    }
+
+    public boolean pedidoExitoso() {
+        DBConnection conexion = DBConnection.getInstance();
+        conexion.conectar();
+        try {
+            String consulta = "UPDATE tb_pedido SET estado = 'entregado' WHERE id_pedido = ?";
+            PreparedStatement modifica = conexion.getConnection().prepareStatement(consulta);
+            modifica.setString(1, this.getIdPedido());
+            modifica.executeUpdate();
+            return true;            
+        } catch (SQLException ex) {
+            return false;
+        } finally {
+            conexion.desconectar();
+        }
+    }
+    
+    public void buscarPedidosPendientes(ObservableList<Pedido> lista){
+        DBConnection conexion = DBConnection.getInstance();
+        conexion.conectar();
+        try {
+            String consulta = "select * from tb_pedido p, (select * from tb_producto) pr ,"
+                    + "(select * from tb_vendedor) ve ,(select * from tb_calificacion_producto) cal, "
+                    + "(select * from tb_comprador) co , (select * from tb_calificacion_vendedor) ca,"
+                    + "(select * from tb_usuario) us where p.estado = 'pendiente' "
+                    + "and pr.id_producto = p.id_producto_ped and ve.id_vendedor = p.id_vendedor_ped "
+                    + "and co.id_comprador = p.id_comprador_ped and co.cedula = us.ci_usuario and ca.id_vendedor = ve.id_vendedor "
+                    + "and ve.cedula = us.ci_usuario and ve.id_comprador = co.id_comprador and cal.id_producto = pr.id_producto "
+                    + "and ve.id_comprador = p.id_comprador_ped and id_comprador_ped = ?";
+            PreparedStatement buscar = conexion.getConnection().prepareStatement(consulta);
+            buscar.setString(1, this.getId_comprador());
+            ResultSet resultado = buscar.executeQuery();
+            while(resultado.next()){
+                SimpleDateFormat t = new SimpleDateFormat("yyyy-MM-dd");
+                java.util.Date datePedido = t.parse(resultado.getString("fecha_pedido"));
+                java.util.Date dateEntrega = t.parse(resultado.getString("fecha_entrega"));
+                java.sql.Date sqlDateP = new java.sql.Date(datePedido.getTime()); 
+                java.sql.Date sqlDateE = new java.sql.Date(dateEntrega.getTime()); 
+                Comprador co = new Comprador();
+                Vendedor ve = new Vendedor (); 
+                Producto pr = new Producto();
+                CalificacionVendedor cv = new CalificacionVendedor();
+                pr.setNombre(resultado.getString("pr.nombre"));
+                pr.setDescripcion(resultado.getString("pr.descripcion"));
+                pr.setCategoria(resultado.getString("pr.categoria"));
+                pr.setPrecio(Double.parseDouble(resultado.getString("pr.precio")));
+                pr.setNumBusquedas(Integer.parseInt(resultado.getString("pr.num_busquedas")));
+                pr.setCalificacion(Integer.parseInt(resultado.getString("cal.calificacion_producto")));
+                co.setId_comprador(resultado.getString("id_comprador_ped"));
+                ve.setIdVendedor(resultado.getString("id_vendedor_ped"));
+                ve.setNombres(resultado.getString("us.nombres"));
+                cv.setCalificacionV(Integer.parseInt(resultado.getString("ca.calificacion_vendedor")));
+                cv.setIdCalificacionV(resultado.getString("ca.id_calificacion_vend"));
+                ve.setCalificacionV(cv);               
+                ve.setApellidos(resultado.getString("us.apellidos"));
+                pr.setIdProducto(resultado.getString("id_producto_ped"));
+                lista.add(new Pedido( 
+                    resultado.getString("p.id_pedido"),
+                    resultado.getString("p.estado"), 
+                    Double.parseDouble(resultado.getString("p.costo")),
+                    Integer.parseInt(resultado.getString("p.cantidad_pedida")),
+                    sqlDateP, resultado.getString("hora_pedido"),
+                    sqlDateE, resultado.getString("hora_entrega"),
+                    resultado.getString("p.lugar_entrega"), 
+                    co, ve, pr )
+                );
+            }
+        } catch (SQLException ex) {
+            System.out.println("EXCEPCION: " + ex.getMessage());
+        } catch (ParseException ex) {
+            Logger.getLogger(Producto.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            conexion.desconectar();
+        }
+    }    
     
 }

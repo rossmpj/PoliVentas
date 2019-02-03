@@ -1,5 +1,10 @@
 package Modelo;
 
+import Auxiliares.DBConnection;
+import Auxiliares.MensajesAcciones;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
 /**
  *
  * @author Rosy
@@ -7,15 +12,15 @@ package Modelo;
 public class CalificacionProducto {
     private String idCalificacionP;
     private int calificacionP;
-    private Producto product;
-    private Comprador comprador;
+    private String idProducto;
+    private String idcomprador;
 
     public CalificacionProducto(String idCalificacionP, int calificacionP, 
-            Producto product, Comprador comprador) {
+            String product, String comprador) {
         this.idCalificacionP = idCalificacionP;
         this.calificacionP = calificacionP;
-        this.product = product;
-        this.comprador = comprador;
+        this.idProducto = product;
+        this.idcomprador = comprador;
     }
     
     public CalificacionProducto() {
@@ -37,25 +42,48 @@ public class CalificacionProducto {
         this.calificacionP = calificacionP;
     }
 
-    public Producto getProduct() {
-        return product;
+    public String getIdProducto() {
+        return idProducto;
     }
 
-    public void setProduct(Producto product) {
-        this.product = product;
+    public void setIdProducto(String idProducto) {
+        this.idProducto = idProducto;
     }
 
-    public Comprador getComprador() {
-        return comprador;
+    public String getIdcomprador() {
+        return idcomprador;
     }
 
-    public void setComprador(Comprador comprador) {
-        this.comprador = comprador;
+    public void setIdcomprador(String idcomprador) {
+        this.idcomprador = idcomprador;
     }
 
     @Override
     public String toString() {
-        return "CalificacionProducto{" + "idCalificacionP=" + idCalificacionP + ", calificacionP=" + calificacionP + ", product=" + product + ", comprador=" + comprador + '}';
+        return "CalificacionProducto{" + "idCalificacionP=" + idCalificacionP + ", calificacionP=" + calificacionP + ", product=" + idProducto + ", comprador=" + idcomprador + '}';
+    }
+
+        public boolean modificarCalificacionProducto(int calif) {
+        DBConnection conexion = DBConnection.getInstance();
+        conexion.conectar();
+        try {
+            String consulta = "UPDATE tb_calificacion_producto SET calificacion_producto = ? WHERE id_producto = ?";
+            PreparedStatement modifica = conexion.getConnection().prepareStatement(consulta);
+            modifica.setString(1, String.valueOf(calif));
+            modifica.setString(2, this.getIdCalificacionP());
+            int m = modifica.executeUpdate();
+            return true;
+        } catch (SQLException ex) {
+            MensajesAcciones.CalificacionProductoNo();
+            System.out.println("EXCEPCION: " + ex.getMessage());
+            return false;
+        } finally {
+            conexion.desconectar();
+        }
+    }
+    
+    public int getPromedioP(int c1, int c2){
+        return (int) ((c1+c2)/2);
     }
 
 }
