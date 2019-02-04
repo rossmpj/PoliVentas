@@ -5,7 +5,7 @@
  */
 package UnitTest;
 
-import Modelo.Usuario;
+import ec.edu.espol.Modelo.Usuario;
 import java.util.ArrayList;
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
