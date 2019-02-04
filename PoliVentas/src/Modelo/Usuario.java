@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Types;
+import java.util.List;
 import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -417,6 +418,19 @@ public class Usuario {
             return false;
         }
         return Objects.equals(this.matricula, other.matricula);
+    }
+    
+     /**
+     * Para Junit Test
+     * Simulacion de inserción de nuevo usuario
+     * @return true si se logró insertar el nuevo usuario, false en caso contrario
+     */
+    public boolean resgistrar(List<Usuario> user) {
+        if (!user.stream().noneMatch((kun) -> (this.getCedula().equals(kun.getCedula())))) {
+            return false;
+        }
+        user.add(this);
+        return true;
     }
     
 }

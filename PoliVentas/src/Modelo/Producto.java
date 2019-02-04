@@ -8,6 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -514,5 +515,46 @@ public class Producto {
         } finally {
             CONNECTION.desconectar();
         }
+    }
+    
+     /**
+     * Para Junit Test, obtener vendedor del producto
+     */
+    public Vendedor vendedorDeProductoBuscadoJ(ArrayList<Vendedor> v, ArrayList<Producto> p) {
+
+        for (Producto g : p) {
+            for (Vendedor c : v) {
+                if (g.getIdVendedor().equals(c.getIdVendedor())) {
+                    return c;
+                }
+
+            }
+        }
+        return null;
+    }
+    
+    /**
+     * Para Junit Test, simulacion de descontar stock
+     *
+     * @param cantidad
+     * @return
+     */
+    public boolean descontarStockJ(int cantidad) {
+        if (this.getStock() > cantidad) {
+            this.setStock(this.getStock() - cantidad);
+            return true;
+        }
+        return false;
+    }
+
+      /**
+     * Para Junit test, simulación de registro
+     */
+    public boolean registrar(ArrayList<Producto> c) {
+        if (!c.stream().noneMatch((p) -> (p.getIdProducto().equals(this.getIdProducto())))) {
+            return false;
+        }
+        c.add(this);
+        return true;
     }
 }

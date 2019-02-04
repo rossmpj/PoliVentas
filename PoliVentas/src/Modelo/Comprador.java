@@ -14,6 +14,7 @@ public class Comprador extends Usuario {
 
     protected CalificacionVendedor calificacionV;
     protected String id_comprador;
+    protected double saldo;
 
     /**
      * Constructor por defecto para el comprador
@@ -25,7 +26,7 @@ public class Comprador extends Usuario {
      * Constructor con parametros para el comprador
      */
     public Comprador(String cedula, String nombres, String apellidos, String telefono,
-            String direccion, boolean whatsapp, String matricula, String email,String usuario, String contra,boolean es) {
+            String direccion, boolean whatsapp, String matricula, String email, String usuario, String contra, boolean es) {
         super(cedula, nombres, apellidos, telefono, direccion, whatsapp, matricula, email, usuario, contra, es);
         this.id_comprador = "c" + cedula;
     }
@@ -49,6 +50,7 @@ public class Comprador extends Usuario {
     /**
      * Método que permite obtener el saldo actual del Comprador para realizar
      * compras
+     *
      * @param ci_cel, numero de identificacion del comprador
      * @return valor del saldo virtual
      */
@@ -72,4 +74,12 @@ public class Comprador extends Usuario {
         }
     }
 
+    public void setSaldo(double saldo) {
+        this.saldo = saldo;
     }
+
+    public double getSaldo() {
+        return saldo;
+    }
+
+}
