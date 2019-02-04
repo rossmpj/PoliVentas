@@ -10,9 +10,14 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Spinner;
+import javafx.scene.control.SpinnerValueFactory;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
@@ -25,6 +30,8 @@ public class VistaComprar implements Vista {
     private Button PagoEfectivo, PagoVirtual, back;
     private final Label nota;
     private final Producto product;
+    private Spinner<Integer> spinner;
+    private TextField lugar;
     
     @Override
     public BorderPane getRoot(){
@@ -34,7 +41,8 @@ public class VistaComprar implements Vista {
     public VistaComprar(Producto p){
         root = new BorderPane();
         product = p;
-        nota = new Label("Usted está a punto de comprar un@: "+ p.getNombre()+p.getVendedor().getIdVendedor());//hay que establecer cantidad
+        nota = new Label("Usted está a punto de comprar un@: " + p.getNombre()
+                + "\nCódigo vendedor: " + p.getVendedor().getIdVendedor());
         crearSeccionTituloComprador();
         createContent();
     }
@@ -43,7 +51,20 @@ public class VistaComprar implements Vista {
         inicializarBotones();
         HBox contentMenuComprador = new HBox();
         VBox content = new VBox();
-        this.estiloLabels(nota, "E5FDA5");
+        VBox grandprix = new VBox();
+        GridPane gp = new GridPane();
+        this.estiloLabels(nota, "D2F378");
+        Label descripcion = new Label();
+        descripcion.setText("Lugar de entrega");
+        Label cantidad = new Label("Cantidad ");
+        gp.addColumn(0, descripcion, cantidad);
+        gp.addColumn(1, lugar, spinner);
+        gp.setStyle("-fx-base:EEFEC2");
+        gp.setHgap(25);
+        gp.setVgap(5);
+        gp.setAlignment(Pos.CENTER);
+        grandprix.getChildren().addAll(nota, gp);
+        grandprix.setAlignment(Pos.CENTER);
         contentMenuComprador.setAlignment(Pos.CENTER); 
         content.setAlignment(Pos.CENTER); 
         contentMenuComprador.setSpacing(25);
@@ -51,7 +72,7 @@ public class VistaComprar implements Vista {
         contentMenuComprador.setPadding(new Insets(10, 10, 10, 10));
         content.setPadding(new Insets(10, 10, 10, 10));
         contentMenuComprador.getChildren().addAll(this.PagoEfectivo, this.PagoVirtual);
-        content.getChildren().addAll(nota, contentMenuComprador);
+        content.getChildren().addAll(grandprix, contentMenuComprador);
         root.setCenter(content);  
         root.setBottom(back);
     }
@@ -61,6 +82,11 @@ public class VistaComprar implements Vista {
         PagoVirtual = new Button("Pago\nVirtual");
         back = PatronVistaTitulos.botonRegresarMenu();
         back.setAlignment(Pos.CENTER);
+         spinner = new Spinner();
+        SpinnerValueFactory<Integer> valueFactory
+                = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, Integer.MAX_VALUE, 1);
+        spinner.setValueFactory(valueFactory);
+        lugar= new TextField();
         llamarBotones();        
     }
     
@@ -109,4 +135,14 @@ public class VistaComprar implements Vista {
     public Producto getProduct() {
         return product;
     }
+    
+     public int getCantidadElegida() {
+            return Integer.parseInt(spinner.getEditor().getText());
+
+    }
+
+    public TextField getLugar() {
+        return lugar;
+    }
+     
 }
