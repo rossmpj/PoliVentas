@@ -3,7 +3,9 @@ package Modelo;
 import Auxiliares.DBConnection;
 import java.sql.CallableStatement;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.sql.Types;
 import java.util.Objects;
 import java.util.logging.Level;
@@ -225,6 +227,84 @@ public class Usuario {
             CONNECTION.desconectar();
         }
 
+    }
+    
+    public static String validarUser(String user, String pass){
+        CONNECTION.conectar();
+        String cedula = null;
+        try {
+            String consulta = "{call login(?,?,?)}"; 
+            try (CallableStatement sp = CONNECTION.getConnection().prepareCall(consulta)) {
+                sp.setString(1, user);
+                sp.setString(2, pass);
+                sp.registerOutParameter(3, Types.VARCHAR);
+                sp.execute();
+                cedula = sp.getString(3);
+            }
+        } catch (SQLException ex) {
+            LOGGER.log(Level.SEVERE, ex.getMessage());
+        } finally{
+            CONNECTION.desconectar();
+        }
+        return cedula ;
+    }
+    
+    public static String isComprador(String code) {
+        CONNECTION.conectar();
+        String comp_id = null;
+        try {
+            String query = "SELECT cedula, id_comprador FROM db_poliventas.tb_comprador WHERE cedula = "+ code;
+            Statement statement = CONNECTION.getConnection().createStatement();
+            ResultSet resultado = statement.executeQuery(query);
+            
+            if(resultado.next()) {
+                comp_id = resultado.getString("id_comprador");          
+            }
+            
+        } catch (SQLException ex) {
+            LOGGER.log(Level.SEVERE, ex.getMessage());
+        } finally{
+            CONNECTION.desconectar();
+        }
+        return comp_id;
+    }
+    
+    public static String isVendedor(String code) {
+        CONNECTION.conectar();
+        String vend_id = null;
+        try {
+            String query = "SELECT cedula, id_comprador, id_vendedor FROM db_poliventas.tb_vendedor WHERE cedula = "+ code;
+            Statement statement = CONNECTION.getConnection().createStatement();
+            ResultSet resultado = statement.executeQuery(query);
+            
+            if(resultado.next()) {
+                vend_id = resultado.getString("id_vendedor");
+            }
+            
+        } catch (SQLException ex) {
+            LOGGER.log(Level.SEVERE, ex.getMessage());
+        } finally{
+            CONNECTION.desconectar();
+        }
+        return vend_id;
+    }
+    
+    public static String isAdministrador(String code) {
+        CONNECTION.conectar();
+        String admin_id = null;
+        try {
+            String query = "SELECT cedula, id_administrador FROM db_poliventas.tb_administrador WHERE cedula = "+ code;
+            Statement statement = CONNECTION.getConnection().createStatement();
+            ResultSet resultado = statement.executeQuery(query);
+            if(resultado.next()) {
+                admin_id = resultado.getString("id_administrador");           
+            }
+        } catch (SQLException ex) {
+            LOGGER.log(Level.SEVERE, ex.getMessage());
+        } finally {
+            CONNECTION.desconectar();
+        }
+        return admin_id;
     }
 
     /**

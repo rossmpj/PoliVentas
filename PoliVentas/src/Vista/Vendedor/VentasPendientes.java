@@ -25,13 +25,11 @@ import javafx.scene.layout.VBox;
  */
 public class VentasPendientes implements Vista{
     private final BorderPane root;
-    private Button FechaEntrega, AnularVenta, VerMapa, Regresar;
+    private Button FechaEntrega;
+    private Button AnularVenta;
+    private Button VerMapa;
+    private Button Regresar;
     private TableView<Pedido> pedidos;
-    
-    @Override
-    public BorderPane getRoot(){
-        return root;
-    }
     
     public VentasPendientes(){
         root = new BorderPane();
@@ -130,11 +128,12 @@ public class VentasPendientes implements Vista{
         Regresar.setOnAction(agregarProductoButtonHandler);
     }
     
-    public void estiloBotones(Button btn){
-        btn.setStyle("-fx-font: 17 Verdana;");
-    }
-    
     public TableView<Pedido> getTablaPedidos(){
         return pedidos;
+    }
+    
+    @Override
+    public BorderPane getRoot(){
+        return root;
     }
 }

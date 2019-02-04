@@ -1,7 +1,7 @@
 package Controlador.Principal;
 
-import Auxiliares.DBConnection;
 import Auxiliares.MensajesAcciones;
+import Auxiliares.Validators;
 import Controlador.Administrador.ControladorAdministradorOptions;
 import Controlador.Administrador.ControladorInfoUsuario;
 import Controlador.Comprador.ControladorCompradorOptions;
@@ -13,12 +13,6 @@ import Vista.Administrador.VistaInfoUsuario;
 import Vista.Comprador.CompradorOptions;
 import Vista.Principal.PaneLogin;
 import Vista.Vendedor.VendedorOptions;
-import java.sql.CallableStatement;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.sql.Types;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 
@@ -30,7 +24,9 @@ public class ControladorLogin {
          
     private final PaneLogin LoginView;
     public static String ced;
-    public static String vend_id, comp_id, admin_id;
+    public static String vend_id;
+    public static String comp_id;
+    public static String admin_id;
 
     public ControladorLogin(PaneLogin LoginView) {
         this.LoginView = LoginView;        
@@ -39,36 +35,34 @@ public class ControladorLogin {
     }
 
     private class LoginButtonHandler implements EventHandler {
+        
         @Override
         public void handle(Event event) {
-        if (!LoginView.getUser().equals("") && !LoginView.getContra().equals("")) {
-            DBConnection c = DBConnection.getInstance();
-            c.conectar();
-            String usu = validarUser(LoginView.getUser(), LoginView.getContra(), c.getConnection());
-            final boolean esComprador = isComprador(usu, c.getConnection());
-            final boolean esVendedor = isVendedor(usu, c.getConnection());
-            final boolean esAdmin = isAdministrador(usu, c.getConnection());
-            System.out.println("ci: "+usu);
-            ced = usu;
-            System.out.println(ced);
-            c.desconectar();
-            if (usu != null) {
-                if(esVendedor) {
-                    mostrarVentanaVendedor();
-                } else if (esComprador) {
-                    mostrarVentanaComprador();
-                } else { 
-                    mostrarVentanaAdministrador();
+            
+            if (Validators.fieldNotEmpty(LoginView.getUser()) && Validators.fieldNotEmpty(LoginView.getContra())) {
+                
+                ced = Usuario.validarUser(LoginView.getUser(), LoginView.getContra());
+                
+                if(ced == null){
+                    
+                    MensajesAcciones.validarIngreso();
+                    limpiarCampos();
+                    
+                } else{
+                    
+                    vend_id = Usuario.isVendedor(ced);
+                    comp_id = Usuario.isComprador(ced);
+                    admin_id = Usuario.isAdministrador(ced);
+                    
+                    if(vend_id != null) mostrarVentanaVendedor();
+                    else if (comp_id != null)   mostrarVentanaComprador();
+                    else    mostrarVentanaAdministrador();
+                    
+                    limpiarCampos();
                 }
-                limpiarCampos();
-            } else {
-                MensajesAcciones.validarIngreso();
-                limpiarCampos();
-            }
-        } else {
-            MensajesAcciones.camposVacios();
-        }
-    }  
+                
+            } else  MensajesAcciones.camposVacios();
+        }  
     }
     
     private void limpiarCampos(){
@@ -95,6 +89,7 @@ public class ControladorLogin {
     }
     
     private class SignInButtonHandler implements EventHandler {
+        
         @Override
         public void handle(Event event) {
             Administrador a = new Administrador();
@@ -103,71 +98,5 @@ public class ControladorLogin {
             ControladorInfoUsuario controladorU = new ControladorInfoUsuario(usuario, a, nuevoUsuarioView);
             WindowsController.next(LoginView, nuevoUsuarioView);
         }   
-    } 
-   
-    public static String validarUser(String user, String pass, Connection c){
-        String ci = null;
-        try {
-            String consulta = "{call login(?,?,?)}"; 
-            try (CallableStatement sp = c.prepareCall(consulta)) {
-                sp.setString(1, user);
-                sp.setString(2, pass);
-                sp.registerOutParameter(3, Types.VARCHAR);
-                sp.execute();
-                ci= sp.getString(3);
-            }
-        } catch (SQLException ex) {
-            System.out.println("EXCEPCION user: " + ex.getMessage());
-        }      
-        return ci;
-    }
-    
-    public static boolean isComprador(String code, Connection e) {
-        boolean isComprador = false;
-        try {
-            String query = "SELECT cedula, id_comprador FROM db_poliventas.tb_comprador WHERE cedula = "+ code;
-            Statement in = e.createStatement();
-            ResultSet resultado = in.executeQuery(query);
-            if(resultado.next()) {
-                comp_id = resultado.getString("id_comprador");
-                isComprador = true;               
-            }
-        } catch (SQLException ex) {
-            System.out.println("EXCEPCION: " + ex.getMessage());
-        }
-        return isComprador;
-    }
-    
-    public static boolean isVendedor(String code, Connection e) {
-        boolean isVendedor = false;
-        try {
-            String query = "SELECT cedula, id_comprador, id_vendedor FROM db_poliventas.tb_vendedor WHERE cedula = "+ code;
-            Statement in = e.createStatement();
-            ResultSet resultado = in.executeQuery(query);
-            if(resultado.next()) {
-                comp_id = resultado.getString("id_comprador");
-                vend_id = resultado.getString("id_vendedor");
-                isVendedor = true;                    
-            }
-        } catch (SQLException ex) {
-            System.out.println("EXCEPCION: " + ex.getMessage());
-        }
-        return isVendedor;
-    }
-    
-    public static boolean isAdministrador(String code, Connection e) {
-        boolean isAdministrador = false;
-        try {
-            String query = "SELECT cedula, id_administrador FROM db_poliventas.tb_administrador WHERE cedula = "+ code;
-            Statement in = e.createStatement();
-            ResultSet resultado = in.executeQuery(query);
-            if(resultado.next()) {
-                admin_id = resultado.getString("id_administrador");
-                isAdministrador = true;               
-            }
-        } catch (SQLException ex) {
-            System.out.println("EXCEPCION: " + ex.getMessage());
-        }
-        return isAdministrador;
     }
 }

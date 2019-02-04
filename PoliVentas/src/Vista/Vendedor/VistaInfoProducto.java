@@ -29,25 +29,22 @@ import javafx.scene.layout.VBox;
 public class VistaInfoProducto implements Vista {
 
     private final BorderPane root;
-    private final String color, titulo;
-    private Button guardar, back;
-    private TextField id, nombre, categoria, precio, cantidad;
+    private final String color;
+    private final String titulo;
+    private Button guardar;
+    private Button back;
+    private TextField id;
+    private TextField nombre;
+    private TextField categoria;
+    private TextField precio;
+    private TextField cantidad;
     private TextArea descripcion;
     
     public VistaInfoProducto() {
         root = new BorderPane();
         this.color = "f0f0f0";
         this.titulo = "Agregue su producto nuevo";
-        crearSeccionTitulo();
-        inicializarObjetos();
-        construccion();
-    }
-
-    public VistaInfoProducto(String color, String titulo) {
-        root = new BorderPane();
-        this.color = color;
-        this.titulo = titulo;
-        crearSeccionTitulo();
+        root.setTop(crearTituloSubMenu(titulo, color));
         inicializarObjetos();
         construccion();
     }
@@ -75,18 +72,6 @@ public class VistaInfoProducto implements Vista {
         sa.getChildren().add(guardar);
         return sa;
     }
-    
-    public void addCreateButtonHandler(EventHandler createButtonHandler){
-        guardar.setOnAction(createButtonHandler);
-    }
-    
-    public void addUpdateButtonHandler(EventHandler updateButtonHandler){
-        guardar.setOnAction(updateButtonHandler);
-    }
-    
-    public void addBackButtonHandler(EventHandler backButtonHandler){
-        back.setOnAction(backButtonHandler);
-    }
 
     private void construccion() {
         HBox hb = new HBox();
@@ -102,29 +87,17 @@ public class VistaInfoProducto implements Vista {
     private VBox formulario() {
         VBox scawflone = new VBox();
         GridPane grandPrix = new GridPane();
-        Label idl = new Label("ID");
-        Label nom = new Label("Nombre");
-        Label des = new Label("Descripción");
-        Label pre = new Label("Precio");
-        Label cant = new Label("Cantidad");
-        Label cat = new Label("Categoría");
-        grandPrix.addColumn(0, idl, nom, des, pre, cant, cat);
+        
+        grandPrix.addColumn(0, new Label("ID"), new Label("Nombre"), new Label("Descripción"), new Label("Precio"), new Label("Cantidad"), new Label("Categoría"));
         grandPrix.addColumn(1, id, nombre, descripcion, precio, cantidad, categoria);
         grandPrix.setHgap(15);
         grandPrix.setVgap(15);
-        scawflone.setPadding(new Insets(30, 10, 0, 20));//top,derecha,abajo,izquierda
+        
+        scawflone.setPadding(new Insets(30, 10, 0, 20));
         scawflone.setAlignment(Pos.TOP_CENTER);
         scawflone.getChildren().add(grandPrix);
+        
         return scawflone;
-    }
-
-    private void crearSeccionTitulo() {
-        root.setTop(crearTituloSubMenu(titulo, color));
-    }
-
-    @Override
-    public BorderPane getRoot() {
-        return root;
     }
 
     private void estiloBotones(Button btn, String base, String path) {
@@ -135,8 +108,7 @@ public class VistaInfoProducto implements Vista {
         btn.setAlignment(Pos.CENTER);
     }
     
-     
-     private VBox seccionAvatar() {
+    private VBox seccionAvatar() {
         VBox k = new VBox();
         Image image = new Image(getClass().getResourceAsStream(CONSTANTES.PATH_IMG+"/cesta.png"));
         Label myLabel = new Label();
@@ -144,6 +116,23 @@ public class VistaInfoProducto implements Vista {
         k.setPadding(new Insets(30, 0, 0, 5));
         k.getChildren().add(myLabel);
         return k;
+    }
+    
+    public void addCreateButtonHandler(EventHandler createButtonHandler){
+        guardar.setOnAction(createButtonHandler);
+    }
+    
+    public void addUpdateButtonHandler(EventHandler updateButtonHandler){
+        guardar.setOnAction(updateButtonHandler);
+    }
+    
+    public void addBackButtonHandler(EventHandler backButtonHandler){
+        back.setOnAction(backButtonHandler);
+    }
+    
+    @Override
+    public BorderPane getRoot() {
+        return root;
     }
      
     public TextField getID() {
@@ -169,6 +158,4 @@ public class VistaInfoProducto implements Vista {
     public TextArea getDescripcion() {
         return descripcion;
     }
-     
-    
 }

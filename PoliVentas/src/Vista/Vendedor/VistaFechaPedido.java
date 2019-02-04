@@ -33,8 +33,10 @@ import javafx.scene.layout.VBox;
 public class VistaFechaPedido implements Vista {
 
     private final BorderPane root;
-    private final String color, titulo;
-    private Button guardar, back;
+    private final String color;
+    private final String titulo;
+    private Button guardar;
+    private Button back;
     private ComboBox horaEntrega;
     private DatePicker datePicker;
     
@@ -42,16 +44,7 @@ public class VistaFechaPedido implements Vista {
         root = new BorderPane();
         this.color = "f0f0f0";
         this.titulo = "Modificar fecha de entrega";
-        crearSeccionTitulo();
-        inicializarObjetos();
-        construccion();
-    }
-
-    public VistaFechaPedido(String color, String titulo) {
-        root = new BorderPane();
-        this.color = color;
-        this.titulo = titulo;
-        crearSeccionTitulo();
+        root.setTop(crearTituloSubMenu(titulo, color));
         inicializarObjetos();
         construccion();
     }
@@ -73,14 +66,6 @@ public class VistaFechaPedido implements Vista {
         sa.getChildren().add(guardar);
         return sa;
     }
-    
-    public void addSaveButtonHandler(EventHandler saveButtonHandler){
-        guardar.setOnAction(saveButtonHandler);
-    }
-    
-    public void addBackButtonHandler(EventHandler backButtonHandler){
-        back.setOnAction(backButtonHandler);
-    }
 
     private void construccion() {
         HBox hb = new HBox();
@@ -97,25 +82,17 @@ public class VistaFechaPedido implements Vista {
     private VBox formulario() {
         VBox scawflone = new VBox();
         GridPane grandPrix = new GridPane();
-        Label fec = new Label("Fecha de entrega");
-        Label hor = new Label("Hora de entrega");
-        grandPrix.addColumn(0, fec, hor);
+        
+        grandPrix.addColumn(0, new Label("Fecha de entrega"), new Label("Hora de entrega"));
         grandPrix.addColumn(1, datePicker, horaEntrega);
         grandPrix.setHgap(15);
         grandPrix.setVgap(15);
-        scawflone.setPadding(new Insets(30, 10, 0, 20));//top,derecha,abajo,izquierda
+        
+        scawflone.setPadding(new Insets(30, 10, 0, 20));
         scawflone.setAlignment(Pos.CENTER);
         scawflone.getChildren().add(grandPrix);
+        
         return scawflone;
-    }
-
-    private void crearSeccionTitulo() {
-        root.setTop(crearTituloSubMenu(titulo, color));
-    }
-
-    @Override
-    public BorderPane getRoot() {
-        return root;
     }
 
     private void estiloBotones(Button btn, String base, String path) {
@@ -152,15 +129,20 @@ public class VistaFechaPedido implements Vista {
                 for(int j = 0; j < 60/period; j++) {
 
                     String minute = String.format("%02d", period*j);
-                    
                     timeOptionsList.add(hour + ":" + minute);
                 }
                 
             } else  timeOptionsList.add(hour + ":00");
-            
         }
-        
         return FXCollections.observableList(timeOptionsList);
+    }
+    
+    public void addSaveButtonHandler(EventHandler saveButtonHandler){
+        guardar.setOnAction(saveButtonHandler);
+    }
+    
+    public void addBackButtonHandler(EventHandler backButtonHandler){
+        back.setOnAction(backButtonHandler);
     }
 
     public DatePicker getDatePicker() {
@@ -169,5 +151,10 @@ public class VistaFechaPedido implements Vista {
 
     public ComboBox getHoraEntrega() {
         return horaEntrega;
+    }
+
+    @Override
+    public BorderPane getRoot() {
+        return root;
     }
 }

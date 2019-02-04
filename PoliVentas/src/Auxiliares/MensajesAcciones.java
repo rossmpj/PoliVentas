@@ -1,6 +1,7 @@
 package Auxiliares;
 
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.stage.StageStyle;
 
 /**
@@ -241,6 +242,35 @@ public class MensajesAcciones {
         alert.setTitle("Sin productos disponibles :( ");
         alert.setHeaderText("");
         alert.setContentText("Lo sentimos, no hay productos disponibles");
+        alert.showAndWait();
+    }
+    
+    /**
+    * Método que muestra un cuadro de diálogo indicando que se debe seleccinar un registro para proceder con la acción solicitada
+    */
+    public static void registroSinSeleccionar(){
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Información");
+        alert.setHeaderText("Noy hay nada seleccionado");
+        alert.setContentText("Debes seleccionar en la tabla el registro sobre el cual quieres realizar la acción solicitada");
+        alert.showAndWait();
+    }
+    
+    public static ButtonType confirmacion(String body){
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Mensaje de confirmación");
+        alert.setHeaderText("¿Estás seguro de proseguir con la acción solicitada?");
+        alert.setContentText(body);
+        alert.showAndWait();
+        
+        return alert.getResult();
+    }
+    
+    public static void camposNumericosIncorrectos(){
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Información");
+        alert.setHeaderText("Valor ingresado incorrecto");
+        alert.setContentText("Todos los campos son obligatorios.\nEn los campos numéricos, recuerda ingresar números positivos.");
         alert.showAndWait();
     }
 }

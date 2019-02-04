@@ -26,7 +26,8 @@ import javafx.scene.text.Font;
 public class PaneLogin implements Vista {
 
     private final BorderPane root;
-    private Button login, signIn;
+    private Button login;
+    private Button signIn;
     private TextField user;
     private PasswordField contra;
       
@@ -41,6 +42,57 @@ public class PaneLogin implements Vista {
         root.setBackground(new Background(myBF));
         inicializarObjetos();
         pantallaLogin();
+    }
+    
+    private void inicializarObjetos() {
+        login = new Button("Ingresar");
+        signIn = new Button("Registrarse");
+        estiloBotones(login, "0B93FE");
+        estiloBotones(signIn, "0059A0");
+        user = new TextField();
+        user.setPrefWidth(300);
+        user.setPrefHeight(50);
+        contra = new PasswordField();
+        contra.setPrefWidth(300);
+        contra.setPrefHeight(50);
+    }
+    
+
+    private void pantallaLogin() {
+        VBox mainContainer = new VBox();
+        VBox formContainer = new VBox();
+        
+        GridPane fieldsContainer = getLoginFields();
+        
+        formContainer.setPadding(new Insets(30, 0, 30, 0));
+        formContainer.setAlignment(Pos.CENTER);
+        formContainer.getChildren().add(fieldsContainer);
+        
+        mainContainer.setPadding(new Insets(40, 0, 40, 0));
+        mainContainer.setAlignment(Pos.CENTER);
+        mainContainer.setSpacing(10);
+        mainContainer.getChildren().addAll(encabezado(), formContainer, boton());
+        
+        root.setTop(mainContainer);
+    }
+    
+    private GridPane getLoginFields(){
+        
+        GridPane fieldsContainer = new GridPane();
+        
+        Label l2 = new Label("Usuario");
+        l2.setFont(new Font("Verdana", 17));
+        
+        Label l = new Label("Contraseña");
+        l.setFont(new Font("Verdana", 17));
+        
+        fieldsContainer.addColumn(0, l2, l);
+        fieldsContainer.addColumn(1, user, contra);
+        fieldsContainer.setHgap(10);
+        fieldsContainer.setVgap(20);
+        fieldsContainer.setAlignment(Pos.CENTER);
+        
+        return fieldsContainer;
     }
 
     private VBox encabezado() {
@@ -60,42 +112,6 @@ public class PaneLogin implements Vista {
         encabezados.setSpacing(10);
         encabezados.getChildren().addAll(lblWelcome, iv2);
         return encabezados;
-    }
-
-    private void pantallaLogin() {
-        VBox vb = new VBox();
-        VBox v2 = new VBox();
-        GridPane gp = new GridPane();
-        Label l2 = new Label("Usuario");
-        l2.setFont(new Font("Verdana", 17));
-        Label l = new Label("Contraseña");
-        l.setFont(new Font("Verdana", 17));
-        gp.addColumn(0, l2, l);
-        gp.addColumn(1, user, contra);
-        gp.setHgap(10);
-        gp.setVgap(20);
-        gp.setAlignment(Pos.CENTER);
-        v2.setPadding(new Insets(30, 0, 30, 0));
-        v2.setAlignment(Pos.CENTER);
-        v2.getChildren().add(gp);
-        vb.setPadding(new Insets(40, 0, 40, 0));//top,derecha,abajo,izquierda
-        vb.setAlignment(Pos.CENTER);
-        vb.setSpacing(10);
-        vb.getChildren().addAll(encabezado(), v2, boton());
-        root.setTop(vb);
-    }
-
-    private void inicializarObjetos() {
-        login = new Button("Ingresar");
-        signIn = new Button("Registrarse");
-        estiloBotones(login, "0B93FE");
-        estiloBotones(signIn, "0059A0");
-        user = new TextField();
-        user.setPrefWidth(300);
-        user.setPrefHeight(50);
-        contra = new PasswordField();
-        contra.setPrefWidth(300);
-        contra.setPrefHeight(50);
     }
 
     private VBox boton() {

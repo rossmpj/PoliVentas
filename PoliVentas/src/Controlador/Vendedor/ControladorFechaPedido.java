@@ -5,23 +5,16 @@
  */
 package Controlador.Vendedor;
 
-import Auxiliares.Validators;
-import Controlador.Principal.ControladorLogin;
+import Auxiliares.MensajesAcciones;
 import Controlador.Principal.WindowsController;
 import Modelo.Pedido;
-import Modelo.Producto;
-import Vista.Principal.Vista;
 import Vista.Vendedor.VistaFechaPedido;
-import Vista.Vendedor.VistaInfoProducto;
 import java.sql.Date;
 import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import javafx.event.Event;
 import javafx.event.EventHandler;
-import javafx.scene.control.Alert;
-import javafx.scene.control.DatePicker;
 
 /**
  *
@@ -29,7 +22,7 @@ import javafx.scene.control.DatePicker;
  */
 class ControladorFechaPedido{
     
-    private Pedido ModeloPedido;
+    private final Pedido ModeloPedido;
     private final VistaFechaPedido VistaFechaPedido;
 
     public ControladorFechaPedido(Pedido ModeloPedido, VistaFechaPedido VistaFechaPedido) {
@@ -39,7 +32,6 @@ class ControladorFechaPedido{
         
         this.VistaFechaPedido.addBackButtonHandler(event -> WindowsController.previous());
         this.VistaFechaPedido.addSaveButtonHandler(new SaveButtonHandler());
-        
     }
     
     private class SaveButtonHandler implements EventHandler{
@@ -50,28 +42,19 @@ class ControladorFechaPedido{
             LocalDate ld = VistaFechaPedido.getDatePicker().getValue();
             String stringHour = (String) VistaFechaPedido.getHoraEntrega().getValue();
             
-            if(ld == null || stringHour == null){
-                
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Información");
-                alert.setHeaderText("Existe algún campo sin llenar");
-                alert.setContentText("Todos los campos son obligatorios. Debe seleccionar una fecha y una hora de entrega.");
-                alert.showAndWait();
-                
-                return;
+            if(ld == null || stringHour == null)    MensajesAcciones.camposVacios();
+            
+            else{
+            
+                Date date = Date.valueOf(LocalDate.parse(ld.toString()));
+                Time hour = Time.valueOf(LocalTime.parse(stringHour));
+
+                ModeloPedido.setFechaEntrega(date);
+                ModeloPedido.setHoraEntrega(hour);
+                ModeloPedido.update();
+
+                WindowsController.previous();
             }
-            
-            Date date = Date.valueOf(LocalDate.parse(ld.toString()));
-            Time hour = Time.valueOf(LocalTime.parse(stringHour));
-            
-            ModeloPedido.setFechaEntrega(date);
-            ModeloPedido.setHoraEntrega(hour);
-            
-            ModeloPedido.update();
-            
-            WindowsController.previous();
         }
-        
     }
-    
 }

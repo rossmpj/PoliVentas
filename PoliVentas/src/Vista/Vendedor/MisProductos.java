@@ -25,13 +25,11 @@ import javafx.scene.layout.VBox;
  */
 public class MisProductos implements Vista{
     private final BorderPane root;
-    private Button AgregarProducto, ModificarProducto, EliminarProducto, Regresar;
+    private Button AgregarProducto;
+    private Button ModificarProducto;
+    private Button EliminarProducto;
+    private Button Regresar;
     private TableView<Producto> productos;
-    
-    @Override
-    public BorderPane getRoot(){
-        return root;
-    }
     
     public MisProductos(){
         root = new BorderPane();
@@ -127,11 +125,12 @@ public class MisProductos implements Vista{
         Regresar.setOnAction(agregarProductoButtonHandler);
     }
     
-    public void estiloBotones(Button btn){
-        btn.setStyle("-fx-font: 17 Verdana;");
-    }
-    
     public TableView getTablaProductos(){
         return productos;
+    }
+    
+    @Override
+    public BorderPane getRoot(){
+        return root;
     }
 }

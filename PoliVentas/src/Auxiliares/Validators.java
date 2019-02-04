@@ -16,14 +16,9 @@ public final class Validators {
         Float parsed;
         
         try{
-            
             parsed = Float.parseFloat(number);
             
-        } catch(NumberFormatException | NullPointerException e1){
-            
-            return null;
-            
-        }
+        } catch(NumberFormatException | NullPointerException e1){   return null;    }
         
         return parsed;
     }
@@ -36,11 +31,7 @@ public final class Validators {
             
             parsed = Integer.parseInt(number);
             
-        } catch(NumberFormatException | NullPointerException e1){
-            
-            return null;
-            
-        }
+        } catch(NumberFormatException | NullPointerException e1){   return null;    }
         
         return parsed;
     }

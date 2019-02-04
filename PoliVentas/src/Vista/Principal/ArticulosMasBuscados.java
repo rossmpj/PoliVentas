@@ -25,61 +25,19 @@ import javafx.scene.paint.Color;
 public class ArticulosMasBuscados implements Vista {
     private TableView<Producto> tabla;
     private TableColumn<Producto, Void> colBtn;
-    private TableColumn<Producto, String> colNombre, colDescripcion, colPrecio, colCateg,
-            colStock,colNB, colCalif;
+    private TableColumn<Producto, String> colNombre;
+    private TableColumn<Producto, String> colDescripcion;
+    private TableColumn<Producto, String> colPrecio;
+    private TableColumn<Producto, String> colCateg;
+    private TableColumn<Producto, String> colStock;
+    private TableColumn<Producto, String> colNB;
+    private TableColumn<Producto, String> colCalif;
     private final BorderPane root;
     private boolean ingreso;
-    private Button iniciarSesionBtn,registrarseBtn, back;
-    private Label title;
-
-    @Override
-    public BorderPane getRoot() {
-        return root;
-    }
-
-    public TableColumn<Producto, Void> getColBtn() {
-        return colBtn;
-    }
-
-    public TableColumn<Producto, String> getColNombre() {
-        return colNombre;
-    }
-
-    public TableColumn<Producto, String> getColDescripcion() {
-        return colDescripcion;
-    }
-
-    public TableColumn<Producto, String> getColPrecio() {
-        return colPrecio;
-    }
-
-    public TableColumn<Producto, String> getColCateg() {
-        return colCateg;
-    }
-
-    public TableColumn<Producto, String> getColStock() {
-        return colStock;
-    }
-
-    public TableColumn<Producto, String> getColNB() {
-        return colNB;
-    }
-
-    public TableColumn<Producto, String> getColCalif() {
-        return colCalif;
-    }
-    
-    public void addRegistrarseBtnHandler(EventHandler registrarseBtnHandler){
-        this.registrarseBtn.setOnAction(registrarseBtnHandler);
-    }
-    
-    public void addIniciarSesionBtnHandler(EventHandler iniciarSesionBtnHandler){
-        this.iniciarSesionBtn.setOnAction(iniciarSesionBtnHandler);
-    }
-    
-    public TableView<Producto> getTabla(){
-        return this.tabla;
-    }  
+    private Button iniciarSesionBtn;
+    private Button registrarseBtn;
+    private Button back;
+    private Label title;  
     
     public ArticulosMasBuscados(boolean ingreso) {
         root = new BorderPane();
@@ -129,7 +87,6 @@ public class ArticulosMasBuscados implements Vista {
     
     private void addButtonToTable() {
         colBtn = new TableColumn("Accion");
-        
         tabla.getColumns().add(colBtn);
     }
     
@@ -171,6 +128,22 @@ public class ArticulosMasBuscados implements Vista {
     public void estiloBotones(Button btn, String colorHEX){
         btn.setStyle("-fx-font: 15 Verdana; -fx-base: #"+colorHEX+";");
         btn.setPrefSize(130, 35);
+    }   
+
+    public void addBackButtonHandler(EventHandler addBackButtonHandler){
+        this.back.setOnAction(addBackButtonHandler);
+    }
+    
+    public void addRegistrarseBtnHandler(EventHandler registrarseBtnHandler){
+        this.registrarseBtn.setOnAction(registrarseBtnHandler);
+    }
+    
+    public void addIniciarSesionBtnHandler(EventHandler iniciarSesionBtnHandler){
+        this.iniciarSesionBtn.setOnAction(iniciarSesionBtnHandler);
+    }
+    
+    public TableView<Producto> getTabla(){
+        return this.tabla;
     }
 
     public boolean isIngreso() {
@@ -179,9 +152,42 @@ public class ArticulosMasBuscados implements Vista {
 
     public void setIngreso(boolean ingreso) {
         this.ingreso = ingreso;
-    }   
+    }
 
-    public void addBackButtonHandler(EventHandler addBackButtonHandler){
-        this.back.setOnAction(addBackButtonHandler);
+    public TableColumn<Producto, Void> getColBtn() {
+        return colBtn;
+    }
+
+    public TableColumn<Producto, String> getColNombre() {
+        return colNombre;
+    }
+
+    public TableColumn<Producto, String> getColDescripcion() {
+        return colDescripcion;
+    }
+
+    public TableColumn<Producto, String> getColPrecio() {
+        return colPrecio;
+    }
+
+    public TableColumn<Producto, String> getColCateg() {
+        return colCateg;
+    }
+
+    public TableColumn<Producto, String> getColStock() {
+        return colStock;
+    }
+
+    public TableColumn<Producto, String> getColNB() {
+        return colNB;
+    }
+
+    public TableColumn<Producto, String> getColCalif() {
+        return colCalif;
+    }
+
+    @Override
+    public BorderPane getRoot() {
+        return root;
     }
 }

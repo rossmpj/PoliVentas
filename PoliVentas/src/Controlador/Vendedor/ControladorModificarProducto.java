@@ -5,13 +5,13 @@
  */
 package Controlador.Vendedor;
 
+import Auxiliares.MensajesAcciones;
 import Auxiliares.Validators;
 import Controlador.Principal.WindowsController;
 import Modelo.Producto;
 import Vista.Vendedor.VistaInfoProducto;
 import javafx.event.Event;
 import javafx.event.EventHandler;
-import javafx.scene.control.Alert;
 
 /**
  *
@@ -59,24 +59,20 @@ public class ControladorModificarProducto {
             boolean fieldsOK = Validators.fieldNotEmpty(nombre) && Validators.fieldNotEmpty(descripcion) && 
                     Validators.fieldNotEmpty(categoria) && stock != null && precio != null;
             
-            if(!fieldsOK){
-                
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Información");
-                alert.setHeaderText("Valor ingresado incorrecto");
-                alert.setContentText("Todos los campos son obligatorios.\nEn los campos numéricos, recuerda ingresar números positivos.");
-                alert.showAndWait();
-                return;
+            if(!fieldsOK)   MensajesAcciones.camposNumericosIncorrectos();
+            
+            else{
+            
+                ModeloProducto.setNombre(nombre);
+                ModeloProducto.setDescripcion(descripcion);
+                ModeloProducto.setCategoria(categoria);
+                ModeloProducto.setPrecio(precio);
+                ModeloProducto.setStock(stock);
+
+                ModeloProducto.modificarProducto();
+                MensajesAcciones.almacenamientoExitoso();
+                WindowsController.previous();
             }
-            
-            ModeloProducto.setNombre(nombre);
-            ModeloProducto.setDescripcion(descripcion);
-            ModeloProducto.setCategoria(categoria);
-            ModeloProducto.setPrecio(precio);
-            ModeloProducto.setStock(stock);
-            
-            ModeloProducto.modificarProducto();
-            WindowsController.previous();
         }
         
     }

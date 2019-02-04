@@ -5,6 +5,7 @@
  */
 package Controlador.Vendedor;
 
+import Auxiliares.MensajesAcciones;
 import Controlador.Principal.ControladorLogin;
 import Controlador.Principal.WindowsController;
 import Modelo.Pedido;
@@ -48,20 +49,13 @@ public class ControladorVentasPendientes{
             
             Alert alert;
             
-            if(ModeloPedido == null){
-                
-                alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Información");
-                alert.setHeaderText("Noy hay nada que cambiar");
-                alert.setContentText("Debes seleccionar en la tabla el pedido que quieres modificar.");
-                alert.showAndWait();
-                return;
+            if(ModeloPedido == null)    MensajesAcciones.registroSinSeleccionar();
             
+            else{
+                VistaFechaPedido fechaPedidoView = new VistaFechaPedido();
+                ControladorFechaPedido controladorFechaPedido = new ControladorFechaPedido(ModeloPedido, fechaPedidoView);
+                WindowsController.next(VistaVentasPendientes, fechaPedidoView);
             }
-            
-            VistaFechaPedido fechaPedidoView = new VistaFechaPedido();
-            ControladorFechaPedido controladorFechaPedido = new ControladorFechaPedido(ModeloPedido, fechaPedidoView);
-            WindowsController.next(VistaVentasPendientes, fechaPedidoView);
             
         }
     }
@@ -72,39 +66,21 @@ public class ControladorVentasPendientes{
         public void handle(Event event) {
             
             TableView<Pedido> pedidos = VistaVentasPendientes.getTablaPedidos();
-            
             Pedido ModeloPedido = pedidos.getSelectionModel().getSelectedItem();
             
-            Alert alert;
+            if(ModeloPedido == null)    MensajesAcciones.registroSinSeleccionar();
             
-            if(ModeloPedido == null){
+            else{
                 
-                alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Información");
-                alert.setHeaderText("Noy hay nada que anular");
-                alert.setContentText("Debes seleccionar en la tabla el pedido que quieres anular.");
-                alert.showAndWait();
-                return;
-            
+                ButtonType result = MensajesAcciones.confirmacion("Se eliminará " + ModeloPedido.toString());
+
+                if(result == ButtonType.OK || result == ButtonType.YES){
+
+                    ModeloPedido.anular();
+                    refreshView();
+                }
             }
-            
-            alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle("Mensaje de confirmación");
-            alert.setHeaderText("¿Estás seguro de anular el pedido seleccionado?");
-            alert.setContentText(ModeloPedido.toString());
-            alert.showAndWait();
-            
-            ButtonType result = alert.getResult();
-            
-            if(result == ButtonType.OK || result == ButtonType.YES){
-                
-                ModeloPedido.anular();
-                refreshView();
-                
-            }
-        
         }
-        
     }
     
     private class VerMapaButtonHandler implements EventHandler{
@@ -113,28 +89,17 @@ public class ControladorVentasPendientes{
         public void handle(Event event) {
             
             TableView<Pedido> pedidos = VistaVentasPendientes.getTablaPedidos();
-            
             Pedido ModeloPedido = pedidos.getSelectionModel().getSelectedItem();
             
+            if(ModeloPedido == null)    MensajesAcciones.registroSinSeleccionar();
             
-            if(ModeloPedido == null){
-                
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Información");
-                alert.setHeaderText("Noy hay nada que mostrar");
-                alert.setContentText("Debes seleccionar en la tabla el pedido que quieres ver en el mapa.");
-                alert.showAndWait();
-                return;
-            
+            else{
+                VistaMapa mapaView = new VistaMapa();
+                ControladorMapa controladorMapa = new ControladorMapa(ModeloPedido, mapaView);
+
+                WindowsController.next(VistaVentasPendientes, mapaView);
             }
-            
-            VistaMapa mapaView = new VistaMapa();
-            ControladorMapa controladorMapa = new ControladorMapa(ModeloPedido, mapaView);
-            
-            WindowsController.next(VistaVentasPendientes, mapaView);
-        
         }
-        
     }
     
     private void refreshView(){

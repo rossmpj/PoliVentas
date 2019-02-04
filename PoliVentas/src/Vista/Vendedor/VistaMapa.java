@@ -22,31 +22,24 @@ import javafx.scene.layout.BorderPane;
 public class VistaMapa implements Vista {
 
     private final BorderPane root;
-    private final String color, titulo;
-    private Button back;
+    private final String color;
+    private final String titulo;
+    private final Button back;
     
     public VistaMapa() {
+        
         root = new BorderPane();
         this.color = "A8EFFA";
         this.titulo = "Ubicación de entrega";
-        crearSeccionTitulo();
-        inicializarObjetos();
-    }
-
-    public VistaMapa(String color, String titulo) {
-        root = new BorderPane();
-        this.color = color;
-        this.titulo = titulo;
-        crearSeccionTitulo();
-        inicializarObjetos();
-    }
-
-    private void inicializarObjetos() {
+        
         back = new Button("        Volver        ");
         back.setStyle("-fx-font: 17 Verdana; ");
         back.setAlignment(Pos.CENTER);
+        
+        root.setTop(crearTituloSubMenu(titulo,color));
         root.setBottom(back);
     }
+    
     public void addBackButtonHandler(EventHandler backButtonHandler){
         back.setOnAction(backButtonHandler);
     }
@@ -65,10 +58,6 @@ public class VistaMapa implements Vista {
         ImageView mapa = new ImageView(image);
         
         root.setCenter(mapa);
-    }
-
-    private void crearSeccionTitulo() {
-        root.setTop(crearTituloSubMenu(titulo,color));
     }
 
     @Override

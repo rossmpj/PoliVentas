@@ -18,27 +18,30 @@ import javafx.scene.layout.*;
  */
 public class VendedorOptions implements Vista{   
     private final BorderPane root;
-    private Button VentasPendientes, ResumenVentas, MisProductos, BusquedaSencilla, BusquedaAvanzada, ComprasPendientes,
-     Historial, ArticulosMasBuscados, NuevosArticulos, CerrarSesion;
-    
-    @Override
-    public BorderPane getRoot(){
-        return root;
-    }
+    private Button VentasPendientes;
+    private Button ResumenVentas;
+    private Button MisProductos;
+    private Button BusquedaSencilla;
+    private Button BusquedaAvanzada;
+    private Button ComprasPendientes;
+    private Button Historial;
+    private Button ArticulosMasBuscados;
+    private Button NuevosArticulos;
+    private Button CerrarSesion;
     
     public VendedorOptions(){
         root = new BorderPane();
-        crearSeccionTituloComprador();
+        root.setTop(crearTituloMenuPrincipal("Menú Vendedor", "9C47DE"));
         createContent();
     }
 
     private void createContent(){
         inicializarBotones();
-        VBox contentMenuComprador = new VBox();
-        contentMenuComprador.setAlignment(Pos.CENTER); 
-        contentMenuComprador.setPadding(new Insets(10, 10, 10, 10));
-        contentMenuComprador.getChildren().addAll(GridPaneSeccion1(),GridPaneSeccion2());
-        root.setCenter(contentMenuComprador);  
+        VBox contentMenuVendedor = new VBox();
+        contentMenuVendedor.setAlignment(Pos.CENTER); 
+        contentMenuVendedor.setPadding(new Insets(10, 10, 10, 10));
+        contentMenuVendedor.getChildren().addAll(crearSeccionSuperior(),crearSeccionInferior());
+        root.setCenter(contentMenuVendedor);  
     }
     
     private void inicializarBotones(){
@@ -68,7 +71,7 @@ public class VendedorOptions implements Vista{
         estiloBotones(CerrarSesion, "FAFAA8","/logout.png");
     }
     
-    private GridPane GridPaneSeccion1(){
+    private GridPane crearSeccionSuperior(){
         GridPane gp = new GridPane();
         gp.add(crearSeccionBusquedas(), 0, 0);
         gp.add(crearSeccionPedidos(), 3, 0);
@@ -78,7 +81,7 @@ public class VendedorOptions implements Vista{
         return gp;
     }
     
-    private GridPane GridPaneSeccion2(){
+    private GridPane crearSeccionInferior(){
         GridPane gp1 = new GridPane();
         gp1.add(crearSeccionVentas(), 0, 2, 1, 2);
         gp1.add(ArticulosMasBuscados, 1, 2);
@@ -89,10 +92,6 @@ public class VendedorOptions implements Vista{
         gp1.setVgap(10);
         gp1.setAlignment(Pos.CENTER);
         return gp1;
-    }
-    
-    private void crearSeccionTituloComprador(){
-        root.setTop(crearTituloMenuPrincipal("Menú Vendedor", "9C47DE"));
     }
     
     private VBox crearSeccionBusquedas(){
@@ -125,6 +124,19 @@ public class VendedorOptions implements Vista{
         ventas.setAlignment(Pos.CENTER);
         return ventas;
     }
+    
+    public void estiloBotones(Button btn, String base, String path){
+        btn.setStyle("-fx-font: 12 Verdana; -fx-base: #"+base+";");
+        Image image = new Image(getClass().getResourceAsStream(CONSTANTES.PATH_IMG+path));
+        btn.setGraphic(new ImageView(image));
+        btn.setPrefSize(170,120);
+    }
+    
+    public void estiloLabels(Label lbl, String base){
+        lbl.setPrefSize(340, 80);
+        lbl.setStyle("-fx-font: 17 Verdana; -fx-text-fill: #FFFFFF; -fx-background-color: #"+base+"; ");
+        lbl.setAlignment(Pos.CENTER);
+    }
 
     public void addMisProductosButtonHandler(EventHandler misProductosButtonHandler){
         MisProductos.setOnAction(misProductosButtonHandler); 
@@ -150,16 +162,8 @@ public class VendedorOptions implements Vista{
         CerrarSesion.setOnAction(cerrarSesionButtonHandler);
     }
     
-    public void estiloBotones(Button btn, String base, String path){
-        btn.setStyle("-fx-font: 12 Verdana; -fx-base: #"+base+";");
-        Image image = new Image(getClass().getResourceAsStream(CONSTANTES.PATH_IMG+path));
-        btn.setGraphic(new ImageView(image));
-        btn.setPrefSize(170,120);
-    }
-    
-    public void estiloLabels(Label lbl, String base){
-        lbl.setPrefSize(340, 80);
-        lbl.setStyle("-fx-font: 17 Verdana; -fx-text-fill: #FFFFFF; -fx-background-color: #"+base+"; ");
-        lbl.setAlignment(Pos.CENTER);
+    @Override
+    public BorderPane getRoot(){
+        return root;
     }
 }

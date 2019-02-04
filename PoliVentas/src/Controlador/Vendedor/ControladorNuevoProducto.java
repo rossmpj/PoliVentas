@@ -5,15 +5,14 @@
  */
 package Controlador.Vendedor;
 
+import Auxiliares.MensajesAcciones;
 import Auxiliares.Validators;
 import Controlador.Principal.ControladorLogin;
 import Controlador.Principal.WindowsController;
 import Modelo.Producto;
-import Vista.Principal.Vista;
 import Vista.Vendedor.VistaInfoProducto;
 import javafx.event.Event;
 import javafx.event.EventHandler;
-import javafx.scene.control.Alert;
 
 /**
  *
@@ -21,12 +20,10 @@ import javafx.scene.control.Alert;
  */
 class ControladorNuevoProducto{
     
-    private Producto ModeloProducto;
     private final VistaInfoProducto VistaNuevoProducto;
 
-    public ControladorNuevoProducto(Producto ModeloProducto, VistaInfoProducto VistaNuevoProducto) {
+    public ControladorNuevoProducto(VistaInfoProducto VistaNuevoProducto) {
         
-        this.ModeloProducto = ModeloProducto;
         this.VistaNuevoProducto = VistaNuevoProducto;
         
         this.VistaNuevoProducto.addBackButtonHandler(event -> WindowsController.previous());
@@ -52,27 +49,23 @@ class ControladorNuevoProducto{
                     Validators.fieldNotEmpty(descripcion) && Validators.fieldNotEmpty(categoria) && 
                     stock != null && precio != null;
             
-            if(!fieldsOK){
+            if(!fieldsOK)   MensajesAcciones.camposNumericosIncorrectos();
+            
+            else{
                 
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Información");
-                alert.setHeaderText("Valor ingresado incorrecto");
-                alert.setContentText("Todos los campos son obligatorios.\nEn los campos numéricos, recuerda ingresar números positivos.");
-                alert.showAndWait();
-                return;
+                Producto ModeloProducto = new Producto();
+                ModeloProducto.setIdProducto(id);
+                ModeloProducto.setNombre(nombre);
+                ModeloProducto.setDescripcion(descripcion);
+                ModeloProducto.setCategoria(categoria);
+                ModeloProducto.setPrecio(precio);
+                ModeloProducto.setStock(stock);
+
+                ModeloProducto.setIdVendedor(ControladorLogin.vend_id);
+
+                ModeloProducto.registrar();
+                WindowsController.previous();
             }
-            
-            ModeloProducto.setIdProducto(id);
-            ModeloProducto.setNombre(nombre);
-            ModeloProducto.setDescripcion(descripcion);
-            ModeloProducto.setCategoria(categoria);
-            ModeloProducto.setPrecio(precio);
-            ModeloProducto.setStock(stock);
-            
-            ModeloProducto.setIdVendedor(ControladorLogin.vend_id);
-            
-            ModeloProducto.registrar();
-            WindowsController.previous();
         }
         
     }

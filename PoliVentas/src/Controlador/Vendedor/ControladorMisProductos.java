@@ -5,6 +5,7 @@
  */
 package Controlador.Vendedor;
 
+import Auxiliares.MensajesAcciones;
 import Controlador.Principal.ControladorLogin;
 import Controlador.Principal.WindowsController;
 import Modelo.Producto;
@@ -13,8 +14,6 @@ import Vista.Vendedor.VistaInfoProducto;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.event.EventHandler;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableView;
 
@@ -41,12 +40,10 @@ public class ControladorMisProductos {
         @Override
         public void handle(Event event) {
             
-            Producto ModeloProducto = new Producto();
             VistaInfoProducto nuevoProductoView = new VistaInfoProducto();
-            ControladorNuevoProducto controladorNuevoProducto = new ControladorNuevoProducto(ModeloProducto, nuevoProductoView);
+            ControladorNuevoProducto controladorNuevoProducto = new ControladorNuevoProducto(nuevoProductoView);
             
             WindowsController.next(VistaMisProductos, nuevoProductoView);
-            
         }
         
     }
@@ -59,21 +56,14 @@ public class ControladorMisProductos {
             TableView<Producto> productos = VistaMisProductos.getTablaProductos();
             Producto ModeloProducto = productos.getSelectionModel().getSelectedItem();
             
-            if(ModeloProducto == null){
-                
-                Alert alert = new Alert(AlertType.INFORMATION);
-                alert.setTitle("Información");
-                alert.setHeaderText("Noy hay nada que modificar");
-                alert.setContentText("Debes seleccionar en la tabla el producto que quieres modificar.");
-                alert.showAndWait();
-                return;
+            if(ModeloProducto == null)  MensajesAcciones.registroSinSeleccionar();
             
+            else{
+            
+                VistaInfoProducto modificarProductoView = new VistaInfoProducto();
+                ControladorModificarProducto controladorModificarProducto = new ControladorModificarProducto(ModeloProducto, modificarProductoView);
+                WindowsController.next(VistaMisProductos, modificarProductoView);
             }
-            
-            VistaInfoProducto modificarProductoView = new VistaInfoProducto();
-            ControladorModificarProducto controladorModificarProducto = new ControladorModificarProducto(ModeloProducto, modificarProductoView);
-            
-            WindowsController.next(VistaMisProductos, modificarProductoView);
             
         }
         
@@ -85,35 +75,19 @@ public class ControladorMisProductos {
         public void handle(Event event) {
             
             TableView<Producto> productos = VistaMisProductos.getTablaProductos();
-            
             Producto ModeloProducto = productos.getSelectionModel().getSelectedItem();
             
-            Alert alert;
+            if(ModeloProducto == null) MensajesAcciones.registroSinSeleccionar();
             
-            if(ModeloProducto == null){
-                
-                alert = new Alert(AlertType.INFORMATION);
-                alert.setTitle("Información");
-                alert.setHeaderText("Noy hay nada que eliminar");
-                alert.setContentText("Debes seleccionar en la tabla el producto que quieres eliminar.");
-                alert.showAndWait();
-                return;
-            
-            }
-            
-            alert = new Alert(AlertType.CONFIRMATION);
-            alert.setTitle("Mensaje de confirmación");
-            alert.setHeaderText("¿Estás seguro de eliminar el producto seleccionado?");
-            alert.setContentText(ModeloProducto.toString());
-            alert.showAndWait();
-            
-            ButtonType result = alert.getResult();
-            
-            if(result == ButtonType.OK || result == ButtonType.YES){
-                
-                ModeloProducto.eliminarProducto();
-                refreshView();
-                
+            else{
+
+                ButtonType result = MensajesAcciones.confirmacion("Se eliminará " + ModeloProducto.toString());
+
+                if(result == ButtonType.OK || result == ButtonType.YES){
+                    
+                    ModeloProducto.eliminarProducto();
+                    refreshView();
+                }
             }
         }
         
