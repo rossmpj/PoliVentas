@@ -12,7 +12,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -42,7 +41,7 @@ public class VistaComprar implements Vista {
         root = new BorderPane();
         product = p;
         nota = new Label("Usted está a punto de comprar un@: " + p.getNombre()
-                + "\nCódigo vendedor: " + p.getVendedor().getIdVendedor());
+                + "\nCódigo vendedor: " + p.getCalificacionV().getIdVendedor());
         crearSeccionTituloComprador();
         createContent();
     }

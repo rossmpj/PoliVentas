@@ -228,6 +228,49 @@ public class Usuario {
         }
 
     }
+
+    /**
+     * Almacena las referencias del usuario en la tabla Comprador
+     */
+    public void almacenarRolComprador() {
+        try {
+            CONNECTION.conectar();
+            PreparedStatement ingreso = CONNECTION.getConnection().prepareStatement(insertaRolCom);
+            ingreso.setString(1, "c" + this.cedula);
+            ingreso.setString(2, this.cedula);
+            ingreso.executeUpdate();
+        } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, e.getMessage());
+        } finally {
+            CONNECTION.desconectar();
+        }
+
+    }
+    
+    /**
+     * Método que permite mostrar el rol al que pertenece el usuario
+     * @return 
+     */
+     public String mostrarRol() {
+        try {
+            CONNECTION.conectar();
+            String consulta = "{call  encontraRol (?,?)}";
+            CallableStatement sp = CONNECTION.getConnection().prepareCall(consulta);
+            sp.setString(1, this.getCedula());
+            sp.registerOutParameter(2, Types.VARCHAR);
+            sp.execute();
+            String rol = sp.getString(2);
+            sp.close();
+            return rol;
+        } catch (SQLException ex) {
+           Logger.getLogger(Usuario.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        } finally {
+            CONNECTION.desconectar();
+        }
+    }
+     
+    
     
     public static String validarUser(String user, String pass){
         CONNECTION.conectar();
@@ -307,46 +350,6 @@ public class Usuario {
         return admin_id;
     }
 
-    /**
-     * Almacena las referencias del usuario en la tabla Comprador
-     */
-    public void almacenarRolComprador() {
-        try {
-            CONNECTION.conectar();
-            PreparedStatement ingreso = CONNECTION.getConnection().prepareStatement(insertaRolCom);
-            ingreso.setString(1, "c" + this.cedula);
-            ingreso.setString(2, this.cedula);
-            ingreso.executeUpdate();
-        } catch (SQLException e) {
-            LOGGER.log(Level.SEVERE, e.getMessage());
-        } finally {
-            CONNECTION.desconectar();
-        }
-
-    }
-    
-    /**
-     * Método que permite mostrar el rol al que pertenece el usuario
-     * @return 
-     */
-     public String mostrarRol() {
-        try {
-            CONNECTION.conectar();
-            String consulta = "{call  encontraRol (?,?)}";
-            CallableStatement sp = CONNECTION.getConnection().prepareCall(consulta);
-            sp.setString(1, this.getCedula());
-            sp.registerOutParameter(2, Types.VARCHAR);
-            sp.execute();
-            String rol = sp.getString(2);
-            sp.close();
-            return rol;
-        } catch (SQLException ex) {
-           Logger.getLogger(Usuario.class.getName()).log(Level.SEVERE, null, ex);
-            return null;
-        } finally {
-            CONNECTION.desconectar();
-        }
-    }
 
      /**
       * Soobrescritura del metodo toString
@@ -354,10 +357,7 @@ public class Usuario {
       */
     @Override
     public String toString() {
-        return "Usuario" + " Nombres:" + nombres + ", apellidos:" + apellidos
-                + ", telefono:" + telefono + ", whatsapp:" + whatsapp
-                + ", email:" + email + ", direccion:" + direccion
-                + ", cedula:" + cedula + ", matricula:" + matricula;
+        return nombres + " " + apellidos;
     }
 
     /**
@@ -421,4 +421,5 @@ public class Usuario {
         }
         return true;
     }
+    
 }

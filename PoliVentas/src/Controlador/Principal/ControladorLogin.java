@@ -45,7 +45,7 @@ public class ControladorLogin {
                 
                 if(ced == null){
                     
-                    MensajesAcciones.validarIngreso();
+                    MensajesAcciones.validarLogin();
                     limpiarCampos();
                     
                 } else{

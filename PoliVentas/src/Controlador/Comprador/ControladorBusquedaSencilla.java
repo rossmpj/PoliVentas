@@ -51,8 +51,7 @@ public class ControladorBusquedaSencilla {
         }
     }
     
-    private class BuscarButtonHandler implements EventHandler{
-                            
+    private class BuscarButtonHandler implements EventHandler{                    
         @Override
         public void handle(Event event) {
             VistaBusquedaSencilla.getVBoxProductosEncontrados().getChildren().clear();
@@ -63,8 +62,11 @@ public class ControladorBusquedaSencilla {
         private boolean cargarLista(){
             String campo = VistaBusquedaSencilla.cleanString(VistaBusquedaSencilla.getBusquedaTextField());
             boolean isVacio= campo.equals("");
-            boolean isGreaterThan3=campo.length()<3;
-            if ((!isVacio || !isGreaterThan3)) {
+            boolean esMenorA3=campo.length()<3;
+            if ( isVacio  || esMenorA3) {
+                MensajesAcciones.camposVacios();
+                return false;
+            } else {
                 ModeloProducto.buscarProducto(campo, campo, l_articulos);
                 if (!l_articulos.isEmpty()) {
                     return true;
@@ -72,15 +74,13 @@ public class ControladorBusquedaSencilla {
                     MensajesAcciones.productoNoEncontrado();
                     return false;
                 }
-            } else {
-                MensajesAcciones.camposVacios();
-                return false;
             }
         }
         
         private void cargarContenido() {
             if (cargarLista()) {
                 for (Producto p : l_articulos){            
+                    ModeloProducto.modificarBusquedasArticulo(p.getNumBusquedas()+1,p.getIdProducto());
                     HBox hb = new HBox();
                     HBox hb1 = new HBox();
                     Label categoryNameLbl = new Label();
@@ -96,7 +96,7 @@ public class ControladorBusquedaSencilla {
                     hb1.setSpacing(100);
                     hb.getChildren().addAll(nameLbl,VistaBusquedaSencilla.getComprar());
                     hb1.getChildren().addAll(VistaBusquedaSencilla.crearEstrellas(p.getCalificacionP().getCalificacionP(), "Producto"),
-                            VistaBusquedaSencilla.crearEstrellas(p.getVendedor().getCalificacionV().getCalificacionV(),"Vendedor"));
+                            VistaBusquedaSencilla.crearEstrellas(p.getCalificacionV().getCalificacionV(),"Vendedor"));
                     hb.setPadding(new Insets(7, 0, 7, 5));
                     VistaBusquedaSencilla.getVBoxProductosEncontrados().setPadding(new Insets(7, 70, 0, 70));
                     VistaBusquedaSencilla.getVBoxProductosEncontrados().getChildren().addAll(hb,categoryNameLbl,desc,VistaBusquedaSencilla.precioProducto(p.getPrecio()),

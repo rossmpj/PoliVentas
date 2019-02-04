@@ -1,23 +1,13 @@
 package Controlador.Comprador;
 
-import Auxiliares.DBConnection;
 import Auxiliares.MensajesAcciones;
 import Controlador.Principal.ControladorLogin;
 import Controlador.Principal.WindowsController;
 import Modelo.CalificacionProducto;
 import Modelo.CalificacionVendedor;
-import Modelo.Comprador;
 import Modelo.Pedido;
 import Modelo.Producto;
 import Vista.Comprador.VistaComprasPendientes;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -68,62 +58,89 @@ public class ControladorComprasPendientes {
     }
      
     private class AnularPedidoButtonHandler implements EventHandler{
-        
         @Override
         public void handle(Event event) {
-            Pedido pedido = VistaComprasPendientes.getPed();
-            ModeloPedido.anular();
+            if (VistaComprasPendientes.validarSeleccion()){
+                MensajesAcciones.nadaQueAnular(); 
+            }else if (observableList.isEmpty()){
+                MensajesAcciones.accionEnTablaPedidosVacia();
+            }else{
+                if(MensajesAcciones.confirmacionAnularPedido()){
+                    ModeloPedido.anular(); 
+                }else{
+                    MensajesAcciones.PedidoFallido("anulado");
+                }
+            }
         }        
     }
     
     private class CalificarProductoButtonHandler implements EventHandler{
         @Override
         public void handle(Event event) {
-            Pedido pedido = VistaComprasPendientes.getPed();
-            Producto p = pedido.getProduct();
-            CalificacionProducto cp = new CalificacionProducto();
-            p.setCalificacion(p.getCalificacion());
-            String s = VistaComprasPendientes.getLblCalifP();
-            System.out.println(s);       
-            System.out.println(p.getCalificacion());
-            System.out.println(cp);
-            int prom = cp.getPromedioP((int)(Double.parseDouble(s)), p.getCalificacion());
-            System.out.println(prom);
-            System.out.println(p.getIdProducto());
-            cp.modificarCalificacionProducto(prom);
+            if (VistaComprasPendientes.validarSeleccion() || observableList.isEmpty()){
+                MensajesAcciones.accionEnTablaPedidosVacia();
+            }else{
+                Pedido pedido = VistaComprasPendientes.getPed();
+                Producto p = pedido.getProduct();
+                CalificacionProducto cp = new CalificacionProducto();
+                p.setCalificacion(p.getCalificacion());
+                String s = VistaComprasPendientes.getLblCalifP();
+                System.out.println(s);       
+                System.out.println(p.getCalificacion());
+                System.out.println(cp);
+                int prom = cp.getPromedioP((int)(Double.parseDouble(s)), p.getCalificacion());
+                System.out.println(prom);
+                System.out.println(p.getIdProducto());
+                cp.modificarCalificacionProducto(prom);
+            }
         }
     }
     
     private class CalificarVendedorButtonHandler implements EventHandler{
         @Override
         public void handle(Event event) {
-            Pedido pedido = VistaComprasPendientes.getPed();
-            Vendedor v = pedido.getVendedor();
-            CalificacionVendedor cv = v.getCalificacionV();
-            String s = VistaComprasPendientes.getLblCalifV();
-            System.out.println(s);       
-            System.out.println(cv.getCalificacionV());
-            int prom = cv.getPromedioV((int)(Double.parseDouble(s)), cv.getCalificacionV());
-            System.out.println(prom);
-            
-            System.out.println("idv:"+v.getIdVendedor());
-            cv.modificarCalificacionVendedor(prom);
+            if (VistaComprasPendientes.validarSeleccion() || observableList.isEmpty()){
+                MensajesAcciones.accionEnTablaPedidosVacia();
+            }else{//validar seleccion de calificacion
+                Pedido pedido = VistaComprasPendientes.getPed();
+                Vendedor v = pedido.getVendedor();
+                CalificacionVendedor cv = v.getCalificacionV();
+                String s = VistaComprasPendientes.getLblCalifV();
+                System.out.println(s);       
+                System.out.println(cv.getCalificacionV());
+                int prom = cv.getPromedioV((int)(Double.parseDouble(s)), cv.getCalificacionV());
+                System.out.println(prom);
+
+                System.out.println("idv:"+v.getIdVendedor());
+                cv.modificarCalificacionVendedor(prom);
+            }
         }
     }
     
     private class HabilitarSiHandler implements EventHandler{
         @Override
         public void handle(Event event) {
-            Pedido pedido = VistaComprasPendientes.getPed();
-            ModeloPedido.pedidoExitoso();
+            if (VistaComprasPendientes.validarSeleccion() || observableList.isEmpty()){
+                MensajesAcciones.accionEnTablaPedidosVacia();
+            }else{
+                MensajesAcciones.estadoPedidoCambiado("entregado");
+                ModeloPedido.pedidoExitoso();
+            }
         }
     }
     
     private class HabilitarNoHandler implements EventHandler{
         @Override
         public void handle(Event event) {
-            Pedido pedido = VistaComprasPendientes.getPed();
-            ModeloPedido.anular();
+            if (VistaComprasPendientes.validarSeleccion() || observableList.isEmpty()){
+                MensajesAcciones.accionEnTablaPedidosVacia();
+            }else{
+                if (MensajesAcciones.confirmacionAnularPedido()){
+                    ModeloPedido.anular();
+                }else{
+                    MensajesAcciones.PedidoFallido("anulado");
+                }
+            }
         }
     }
 }

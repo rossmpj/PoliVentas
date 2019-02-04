@@ -7,8 +7,6 @@
 package Vista.Administrador;
 
 import Auxiliares.CONSTANTES;
-import Vista.Principal.PaneLogin;
-import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;

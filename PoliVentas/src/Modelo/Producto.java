@@ -28,6 +28,7 @@ public class Producto {
     protected int stock;
     protected boolean estado;
     protected int numBusquedas;
+    protected String idVendedor;
     protected int calificacion;
     protected CalificacionProducto calificacionP;
     protected CalificacionVendedor calificacionV;
@@ -36,16 +37,16 @@ public class Producto {
 
     protected static final Logger LOGGER = Logger.getLogger("Usuario Logger");
     protected static final DBConnection CONNECTION = DBConnection.getInstance();
-    protected String idVendedor;
+    
     private final String eliminarP = "update db_poliventas.tb_producto set estado=? where id_producto=?";
     private final String modificarP = "update db_poliventas.tb_producto set nombre=?,descripcion=?,precio=?,categoria=?,stock=?, estado=?"
-            + " where id_producto=?";
+            + " where id_producto=?";         
     private final String extraer = "select distinct ci_usuario,nombres,apellidos,telefono,direccion, whatsapp,matricula,email,username,contrasena,u.estado "
             + "from tb_usuario u join tb_vendedor  v on ci_usuario=v.cedula join tb_producto p on p.id_vendedor=v.id_vendedor where p.id_producto=?";
     private final String insert = "insert into db_poliventas.tb_producto(id_producto, nombre, descripcion, "
             + "precio, categoria, stock, estado, id_vendedor) values(?,?,?,?,?,?,?,?)";
     private final String modifNumBusquedas = "UPDATE tb_producto SET num_busquedas = ? WHERE id_producto = ?";
-    private final String buscarXNombreYDescripcion = "SELECT distinct p.id_producto, p.nombre, p.num_busquedas, p.descripcion, p.categoria, p.precio, "
+    private final String buscarXNombreYDescripcion = "SELECT distinct p.id_producto, p.stock, p.nombre, p.num_busquedas, p.descripcion, p.categoria, p.precio, "
             + "cp.calificacion_producto, cv.calificacion_vendedor, cv.id_vendedor, cp.id_producto, "
             + "e.fecha_entrega FROM tb_producto p, tb_calificacion_producto cp, "
             + "tb_vendedor v, tb_calificacion_vendedor cv, tb_pedido e "
@@ -79,6 +80,20 @@ public class Producto {
         this.stock = stock;
         this.numBusquedas = numBusquedas;
         this.calificacion = calificacion;
+    }
+    
+    public Producto(String idProducto, String nombre, String descripcion, String categoria, double precio,
+            Date tiempoMaxEntrega, CalificacionProducto calificacionP, CalificacionVendedor calificacionV, int n, int stock) {
+        this.idProducto = idProducto;
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+        this.categoria = categoria;
+        this.precio = precio;
+        this.tiempoMaxEntrega = tiempoMaxEntrega;
+        this.calificacionP = calificacionP;
+        this.calificacionV = calificacionV;
+        this.numBusquedas = n;
+        this.stock = stock;
     }
 
     /**
@@ -264,7 +279,7 @@ public class Producto {
     public String toString() {
         return "DETALLES DE PRODUCTO: " + "\nNombre: "
                 + nombre + "\nDescripcion: " + descripcion + "\nCategoria: " + categoria
-                + "\nPrecio: " + precio + "\nCalificacion: " + calificacionP;
+                + "\nPrecio: " + precio ;
     }
 
     /**
@@ -383,11 +398,8 @@ public class Producto {
                 java.util.Date date = t.parse(resultado.getString("e.fecha_entrega"));
                 CalificacionVendedor vend = new CalificacionVendedor();
                 CalificacionProducto prod = new CalificacionProducto();
-                Vendedor v = new Vendedor();
                 vend.setCalificacionV(Integer.parseInt(resultado.getString("cv.calificacion_vendedor")));
-                vend.setIdCalificacionV(resultado.getString("cv.id_vendedor"));
-                v.setIdVendedor(resultado.getString("cv.id_vendedor"));
-                v.setCalificacionV(vend);
+                vend.setIdVendedor(resultado.getString("cv.id_vendedor"));
                 prod.setIdProducto(resultado.getString("cp.id_producto"));
                 prod.setIdCalificacionP("p.id_calificacion_producto");
                 prod.setCalificacionP(Integer.parseInt(resultado.getString("cp.calificacion_producto")));
@@ -396,8 +408,8 @@ public class Producto {
                                 resultado.getString("p.id_producto"), resultado.getString("p.nombre"),
                                 resultado.getString("p.descripcion"), resultado.getString("p.categoria"),
                                 Double.parseDouble(resultado.getString("p.precio")), new Date(date.getTime()),
-                                prod, v, Integer.parseInt(resultado.getString("p.num_busquedas"))
-                        )
+                                prod, vend, Integer.parseInt(resultado.getString("p.num_busquedas")),
+                                Integer.parseInt(resultado.getString("p.stock")))
                 );
             }
         } catch (SQLException ex) {
@@ -409,12 +421,12 @@ public class Producto {
         }
     }
 
-    public boolean modificarBusquedasArticulo() {
+    public boolean modificarBusquedasArticulo(int num, String idProducto) {
         try {
             CONNECTION.conectar();
             PreparedStatement modifica = CONNECTION.getConnection().prepareStatement(modifNumBusquedas);
-            modifica.setString(1, String.valueOf(this.getCalificacion() + 1));
-            modifica.setString(2, this.getIdProducto());
+            modifica.setString(1, String.valueOf(num));
+            modifica.setString(2, idProducto);
             modifica.executeUpdate();
             return true;
         } catch (SQLException ex) {
@@ -469,5 +481,38 @@ public class Producto {
             CONNECTION.desconectar();
         }
 
+    }
+    
+    /**
+     * Método que permite obtener un objeto de tipo Vendedor dado un idProducto
+     * @return Vendedor
+     */
+    public Vendedor getVendedorDeProductoBuscado() {
+        try {
+            CONNECTION.conectar();
+            PreparedStatement ingreso = CONNECTION.getConnection().prepareStatement(extraer);
+            ingreso.setString(1, this.getIdProducto());
+            ResultSet resultado = ingreso.executeQuery();
+            Vendedor v = new Vendedor();
+            while (resultado.next()) {
+                v.setCedula(resultado.getString("ci_usuario"));
+                v.setNombres(resultado.getString("nombres"));
+                v.setApellidos(resultado.getString("apellidos"));
+                v.setTelefono(resultado.getString("telefono"));
+                v.setDireccion(resultado.getString("direccion"));
+                v.setWhatsapp(resultado.getBoolean("whatsapp"));
+                v.setMatricula(resultado.getString("matricula"));
+                v.setEmail(resultado.getString("email"));
+                v.setUsuario(resultado.getString("username"));
+                v.setContrasena(resultado.getString("contrasena"));
+                v.setEstado(resultado.getBoolean("u.estado"));
+            }
+            return v;
+        } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, e.getMessage());
+            return null;
+        } finally {
+            CONNECTION.desconectar();
+        }
     }
 }
