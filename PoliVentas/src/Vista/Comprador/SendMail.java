@@ -2,6 +2,8 @@ package Vista.Comprador;
 
 import Auxiliares.MensajesAcciones;
 import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.PasswordAuthentication;
@@ -18,6 +20,7 @@ public class SendMail {
     private final static String GMAIL_HOST = "smtp.gmail.com";
     public static String Username = "poliventasespol@gmail.com";
     public static String PassWord = "srxkPVpar1";
+    protected static final Logger LOGGER = Logger.getLogger("Mail Logger");
 
     public void SendMail(String To, String msg) {
         Properties props = new Properties();
@@ -46,7 +49,7 @@ public class SendMail {
             }
             MensajesAcciones.notificarVendedor();
         } catch (MessagingException e) {
-            System.err.println(e.getMessage());
+            LOGGER.log(Level.SEVERE, e.getMessage());
             MensajesAcciones.notificarVendedorFailed();
         }
     }    

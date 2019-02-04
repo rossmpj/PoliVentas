@@ -66,19 +66,19 @@ public class CalificacionProducto {
         return "CalificacionProducto{" + "idCalificacionP=" + idCalificacionP + ", calificacionP=" + calificacionP + ", product=" + idProducto + ", comprador=" + idcomprador + '}';
     }
 
-        /**
-         * Método que permite modificar la calificacion de un producto
-         * @param calif
-         * @return 
-         */
-        public boolean modificarCalificacionProducto(int calif) {
+    /**
+     * Método que permite modificar la calificacion de un producto
+     * @param calif
+     * @return 
+     */
+    public boolean modificarCalificacionProducto(int calif, String id) {
         DBConnection conexion = DBConnection.getInstance();
         conexion.conectar();
         try {
             String consulta = "UPDATE tb_calificacion_producto SET calificacion_producto = ? WHERE id_producto = ?";
             PreparedStatement modifica = conexion.getConnection().prepareStatement(consulta);
             modifica.setString(1, String.valueOf(calif));
-            modifica.setString(2, this.getIdCalificacionP());
+            modifica.setString(2, id);
             modifica.executeUpdate();
             return true;
         } catch (SQLException ex) {

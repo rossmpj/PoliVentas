@@ -26,10 +26,14 @@ public class PagoVirtual implements Pago {
         d = new Comprador();
     }
 
+    /**
+     * Método pagar para la forma de pago virtual
+     * @param ci_cel idComprador
+     * @param monto valor a pagar total
+     * @return 
+     */
     @Override
     public boolean pagar(String ci_cel, double monto) {
-        System.out.println("Saldo disp: "+d.obtenerSaldo(ci_cel));
-        System.out.println();
         if ((d.obtenerSaldo(ci_cel) > -1) && (d.obtenerSaldo(ci_cel) > monto)) {
             this.descontarSaldo(ci_cel, monto);
             return true;

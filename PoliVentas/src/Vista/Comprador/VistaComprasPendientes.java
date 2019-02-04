@@ -235,6 +235,6 @@ public class VistaComprasPendientes implements Vista {
     }
     
     public boolean validarSeleccion(){
-        return (this.getPed() == null);
+        return ((this.getPed() == null) );
     }
 }

@@ -379,7 +379,7 @@ public class Producto {
                 );
             }
         } catch (SQLException ex) {
-             Logger.getLogger(Producto.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Producto.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             conexion.desconectar();
         }
@@ -413,7 +413,7 @@ public class Producto {
                 );
             }
         } catch (SQLException ex) {
-            System.out.println("EXCEPCION: " + ex.getMessage());
+            LOGGER.log(Level.SEVERE, ex.getMessage());
         } catch (ParseException ex) {
             Logger.getLogger(Producto.class.getName()).log(Level.SEVERE, null, ex);
         } finally {

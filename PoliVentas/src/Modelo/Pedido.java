@@ -99,8 +99,20 @@ public class Pedido {
     }
 
     
-    /***
+    /**
      * Constructor para Insertar nuevo Pedido en la base de datos
+     * @param estado
+     * @param costo
+     * @param cantidadPedida
+     * @param fechaPedido
+     * @param horaPedido
+     * @param fechaEntrega
+     * @param horaEntrega
+     * @param lugarEntrega
+     * @param pago
+     * @param comprador
+     * @param vendedor
+     * @param product
      */
      public Pedido(String estado, double costo, int cantidadPedida, Date fechaPedido, Time horaPedido, Date fechaEntrega, Time horaEntrega, String lugarEntrega,String pago ,String comprador, String vendedor, String product) {
         this.estado = estado;
@@ -283,7 +295,8 @@ public class Pedido {
     
     /**
      * Método que permite obtener los pedidos pendientes por vendedor
-     * @param id
+     * @param id vendedor
+     * @return ObservableList a ser cargada en table view
      */
     public static ObservableList<Pedido> getPedidosPendientesPorVendedor(String id){
         
@@ -357,6 +370,10 @@ public class Pedido {
         return true;
     }
 
+    /**
+     * Método que guarda en la base de datos un pedido con el estado de entregado
+     * @return true si se actualizó con éxito, false en caso de error
+     */
     public boolean pedidoExitoso() {
         DBConnection conexion = DBConnection.getInstance();
         conexion.conectar();
@@ -374,54 +391,54 @@ public class Pedido {
         }
     }
     
-    public void buscarPedidosPendientes(ObservableList<Pedido> lista){
+    /**
+     * Método usado para cargar los pedidos por vendedor
+     * @param idComprador
+     * @param lista 
+     */
+    public void buscarPedidosPendientes(String idComprador, ObservableList<Pedido> lista){
         DBConnection conexion = DBConnection.getInstance();
         conexion.conectar();
-        try {
-            String c = "select * from tb_pedido p, (select * from tb_producto) pr ,"
-                    + "(select * from tb_vendedor) ve ,(select * from tb_calificacion_producto) cal, "
-                    + "(select * from tb_comprador) co , (select * from tb_calificacion_vendedor) ca,"
-                    + "(select * from tb_usuario) us where p.estado = 'pendiente' "
-                    + "and pr.id_producto = p.id_producto_ped and ve.id_vendedor = p.id_vendedor_ped "
-                    + "and co.id_comprador = p.id_comprador_ped and co.cedula = us.ci_usuario and ca.id_vendedor = ve.id_vendedor "
-                    + "and ve.cedula = us.ci_usuario and ve.id_comprador = co.id_comprador and cal.id_producto = pr.id_producto "
-                    + "and ve.id_comprador = p.id_comprador_ped and id_comprador_ped = ?";
+        try {           
+            String c = "select p.id_pedido, p.id_producto_ped,p.estado,p.costo, p.cantidad_pedida, p.fecha_pedido, p.fecha_entrega, "+
+            "p.lugar_entrega, l.categoria, l.nombre, cv.calificacion_vendedor, l.precio,p.hora_entrega, l.descripcion, u.nombres, u.apellidos, p.id_comprador_ped, p.id_vendedor_ped, "+
+            "cp.calificacion_producto, p.hora_pedido from tb_pedido p join tb_producto l on p.id_producto_ped="+
+            "l.id_producto join tb_calificacion_producto cp on cp.id_producto=l.id_producto join "+
+            "tb_vendedor v on v.id_vendedor=p.id_vendedor_ped join tb_calificacion_vendedor cv on cv.id_vendedor = p.id_vendedor_ped "
+                    + "join tb_usuario u on u.ci_usuario=v.cedula "+
+            "where p.estado='pendiente' and  p.id_comprador_ped = ?" ;
             PreparedStatement buscar = conexion.getConnection().prepareStatement(c);
-            buscar.setString(1, this.getId_comprador());
+            buscar.setString(1, idComprador);
             ResultSet resultado = buscar.executeQuery();
             while(resultado.next()){
                 SimpleDateFormat t = new SimpleDateFormat("yyyy-MM-dd");
-                java.util.Date datePedido = t.parse(resultado.getString("fecha_pedido"));
-                java.util.Date dateEntrega = t.parse(resultado.getString("fecha_entrega"));
-                java.sql.Date sqlDateP = new java.sql.Date(datePedido.getTime()); 
-                java.sql.Date sqlDateE = new java.sql.Date(dateEntrega.getTime()); 
+                java.util.Date datePedido = t.parse(resultado.getString("p.fecha_pedido"));
+                java.util.Date dateEntrega = t.parse(resultado.getString("p.fecha_entrega"));
                 Comprador co = new Comprador();
-                Vendedor ve = new Vendedor (); 
+                Vendedor ve = new Vendedor(); 
                 Producto pr = new Producto();
                 CalificacionVendedor cv = new CalificacionVendedor();
-                pr.setNombre(resultado.getString("pr.nombre"));
-                pr.setDescripcion(resultado.getString("pr.descripcion"));
-                pr.setCategoria(resultado.getString("pr.categoria"));
-                pr.setPrecio(Double.parseDouble(resultado.getString("pr.precio")));
-                pr.setNumBusquedas(Integer.parseInt(resultado.getString("pr.num_busquedas")));
-                pr.setCalificacion(Integer.parseInt(resultado.getString("cal.calificacion_producto")));
-                co.setId_comprador(resultado.getString("id_comprador_ped"));
-                ve.setIdVendedor(resultado.getString("id_vendedor_ped"));
-                ve.setNombres(resultado.getString("us.nombres"));
-                cv.setCalificacionV(Integer.parseInt(resultado.getString("ca.calificacion_vendedor")));
-                cv.setIdCalificacionV(resultado.getString("ca.id_calificacion_vend"));
-                ve.setCalificacionV(cv);               
-                ve.setApellidos(resultado.getString("us.apellidos"));
-                pr.setIdProducto(resultado.getString("id_producto_ped"));
+                pr.setNombre(resultado.getString("l.nombre"));
+                pr.setDescripcion(resultado.getString("l.descripcion"));
+                pr.setCategoria(resultado.getString("l.categoria"));
+                pr.setPrecio(Double.parseDouble(resultado.getString("l.precio")));
+                pr.setCalificacion(Integer.parseInt(resultado.getString("cp.calificacion_producto")));
+                co.setId_comprador(resultado.getString("p.id_comprador_ped"));
+                ve.setIdVendedor(resultado.getString("p.id_vendedor_ped"));
+                cv.setIdVendedor(resultado.getString("p.id_vendedor_ped"));
+                cv.setIdComprador(resultado.getString("p.id_comprador_ped"));
+                cv.setCalificacionV(Integer.valueOf(resultado.getString("cv.calificacion_vendedor")));
+                ve.setCalificacionV(cv);
+                ve.setNombres(resultado.getString("u.nombres"));              
+                ve.setApellidos(resultado.getString("u.apellidos"));
+                pr.setIdProducto(resultado.getString("p.id_producto_ped"));
                 lista.add(new Pedido( 
-                    resultado.getString("p.id_pedido"),
-                    resultado.getString("p.estado"), 
+                    resultado.getString("p.id_pedido"), resultado.getString("p.estado"), 
                     Double.parseDouble(resultado.getString("p.costo")),
                     Integer.parseInt(resultado.getString("p.cantidad_pedida")),
-                    sqlDateP, resultado.getString("hora_pedido"),
-                    sqlDateE, resultado.getString("hora_entrega"),
-                    resultado.getString("p.lugar_entrega"), 
-                    co, ve, pr )
+                    new Date(datePedido.getTime()), resultado.getString("p.hora_pedido"),
+                    new Date(dateEntrega.getTime()), resultado.getString("p.hora_entrega"),
+                    resultado.getString("p.lugar_entrega"), co, ve, pr )
                 );
             }
         } catch (SQLException | ParseException ex) {
@@ -443,7 +460,7 @@ public class Pedido {
             ingreso.setDouble(2, this.costo);
             ingreso.setInt(3, this.cantidadPedida);
             ingreso.setDate(4, java.sql.Date.valueOf(LocalDate.now()));
-            ingreso.setTime(5, java.sql.Time.valueOf(LocalTime.now())); //No se guarda de forma correcta
+            ingreso.setTime(5, java.sql.Time.valueOf(LocalTime.now()));
             ingreso.setString(6, this.lugarEntrega);
             ingreso.setString(7, this.id_metodoPago);
             ingreso.setString(8, this.id_comprador);
@@ -490,13 +507,22 @@ public class Pedido {
         }
     }
     
-     @Override
+    /**
+     * Sobrescritura de hashCode
+     * @return 
+     */
+    @Override
     public int hashCode() {
         int hash = 3;
         hash = 53 * hash + Objects.hashCode(this.idPedido);
         return hash;
     }
 
+    /**
+     * Sobrescritura de método equals
+     * @param obj objeto a ser comparado
+     * @return true si es igual, false caso contrario
+     */
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {

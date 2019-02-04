@@ -6,9 +6,7 @@ import Controlador.Principal.ControladorLogin;
 import Controlador.Principal.WindowsController;
 import Modelo.Administrador;
 import Modelo.Producto;
-import Modelo.Usuario;
 import Vista.Administrador.VistaInfoUsuario;
-import Vista.Comprador.CompradorOptions;
 import Vista.Comprador.VistaBusquedaSencilla;
 import Vista.Principal.ArticulosMasBuscados;
 import Vista.Principal.PaneLogin;
@@ -16,6 +14,8 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -35,7 +35,8 @@ public class ControladorArticulosMasBuscados {
 
     private final Producto ModeloProducto;
     private final ArticulosMasBuscados VistaArticulosMasBuscados;
-    private final ObservableList<Producto> observableList;
+    private final ObservableList<Producto> observableList;    
+    private static final Logger LOGGER = Logger.getLogger("Logger");
 
     public ControladorArticulosMasBuscados(Producto ModeloProducto, ArticulosMasBuscados VistaArticulosMasBuscados) {
         this.ModeloProducto = ModeloProducto;
@@ -85,7 +86,7 @@ public class ControladorArticulosMasBuscados {
                 );
             }
         } catch (SQLException ex) {
-            System.out.println("EXCEPCION: " + ex.getMessage());
+            LOGGER.log(Level.SEVERE, ex.getMessage());
         }
     }
 

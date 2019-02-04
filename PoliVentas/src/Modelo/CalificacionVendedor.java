@@ -17,6 +17,10 @@ public class CalificacionVendedor {
     
     /**
      * Constructor de la clase
+     * @param idCalificacionV
+     * @param calificacionV
+     * @param vendedor
+     * @param comprador
      */
     public CalificacionVendedor(String idCalificacionV, int calificacionV, 
             String vendedor, String comprador) {
@@ -67,15 +71,17 @@ public class CalificacionVendedor {
     
     /**
      * Método que permite modificar la calificacion del vendedor
+     * @param calif
+     * @return 
      */
-    public boolean modificarCalificacionVendedor(int calif) {
+    public boolean modificarCalificacionVendedor(int calif, String id) {
         DBConnection conexion = DBConnection.getInstance();
         conexion.conectar();
         try {
             String consulta = "UPDATE tb_calificacion_vendedor SET calificacion_vendedor = ? WHERE id_vendedor = ?";
             PreparedStatement modifica = conexion.getConnection().prepareStatement(consulta);
             modifica.setString(1, String.valueOf(calif));
-            modifica.setString(2, this.getIdVendedor());
+            modifica.setString(2, id);
             modifica.executeUpdate();
             return true;
         } catch (SQLException ex) {
@@ -108,11 +114,7 @@ public class CalificacionVendedor {
             return false;
         }
         final CalificacionVendedor other = (CalificacionVendedor) obj;
-        if (!Objects.equals(this.idCalificacionV, other.idCalificacionV)) {
-            return false;
-        }
-        return true;
+        return Objects.equals(this.idCalificacionV, other.idCalificacionV);
     }
-    
     
 }

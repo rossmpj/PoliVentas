@@ -40,9 +40,7 @@ public class ControladorComprasPendientes {
     }
     
     private void cargarData() {
-        String id = ControladorLogin.comp_id;
-        System.out.println("id: "+id);
-        ModeloPedido.buscarPedidosPendientes(this.observableList);
+        ModeloPedido.buscarPedidosPendientes(ControladorLogin.comp_id, this.observableList);
     }
     
     private void actualizarTabla(){
@@ -77,7 +75,10 @@ public class ControladorComprasPendientes {
     private class CalificarProductoButtonHandler implements EventHandler{
         @Override
         public void handle(Event event) {
-            if (VistaComprasPendientes.validarSeleccion() || observableList.isEmpty()){
+            boolean noSeleccionaCalificacion = VistaComprasPendientes.getLblCalifV().equals("");
+            boolean hayPedidosPendientes = observableList.isEmpty();
+            boolean isSelectedItem = VistaComprasPendientes.validarSeleccion();
+            if (isSelectedItem || hayPedidosPendientes || noSeleccionaCalificacion){
                 MensajesAcciones.accionEnTablaPedidosVacia();
             }else{
                 Pedido pedido = VistaComprasPendientes.getPed();
@@ -85,13 +86,12 @@ public class ControladorComprasPendientes {
                 CalificacionProducto cp = new CalificacionProducto();
                 p.setCalificacion(p.getCalificacion());
                 String s = VistaComprasPendientes.getLblCalifP();
-                System.out.println(s);       
-                System.out.println(p.getCalificacion());
-                System.out.println(cp);
                 int prom = cp.getPromedioP((int)(Double.parseDouble(s)), p.getCalificacion());
-                System.out.println(prom);
-                System.out.println(p.getIdProducto());
-                cp.modificarCalificacionProducto(prom);
+                if (cp.modificarCalificacionProducto(prom, p.getIdProducto())){
+                    MensajesAcciones.calificacionExitosa("producto");
+                }else{
+                    MensajesAcciones.calificacionFallida("producto");
+                }
             }
         }
     }
@@ -99,20 +99,22 @@ public class ControladorComprasPendientes {
     private class CalificarVendedorButtonHandler implements EventHandler{
         @Override
         public void handle(Event event) {
-            if (VistaComprasPendientes.validarSeleccion() || observableList.isEmpty()){
+            boolean noSeleccionaCalificacion = VistaComprasPendientes.getLblCalifV().equals("");
+            boolean hayPedidosPendientes = observableList.isEmpty();
+            boolean isSelectedItem = VistaComprasPendientes.validarSeleccion();
+            if (isSelectedItem || hayPedidosPendientes || noSeleccionaCalificacion){
                 MensajesAcciones.accionEnTablaPedidosVacia();
-            }else{//validar seleccion de calificacion
+            }else{
                 Pedido pedido = VistaComprasPendientes.getPed();
                 Vendedor v = pedido.getVendedor();
                 CalificacionVendedor cv = v.getCalificacionV();
                 String s = VistaComprasPendientes.getLblCalifV();
-                System.out.println(s);       
-                System.out.println(cv.getCalificacionV());
                 int prom = cv.getPromedioV((int)(Double.parseDouble(s)), cv.getCalificacionV());
-                System.out.println(prom);
-
-                System.out.println("idv:"+v.getIdVendedor());
-                cv.modificarCalificacionVendedor(prom);
+                if (cv.modificarCalificacionVendedor(prom,v.getIdVendedor())){
+                    MensajesAcciones.calificacionExitosa("vendedor");
+                }else{
+                    MensajesAcciones.calificacionFallida("vendedor");
+                }
             }
         }
     }
