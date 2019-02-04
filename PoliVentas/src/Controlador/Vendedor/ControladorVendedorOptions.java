@@ -96,7 +96,6 @@ public class ControladorVendedorOptions{
             ControladorArticulosMasBuscados controladorArticulosMasBuscados = new ControladorArticulosMasBuscados(producto, articulosMasBuscadosView);
             
             WindowsController.next(VistaVendedorOptions, articulosMasBuscadosView);
-            //CompradorOptionsView.getRoot().getScene().setRoot(articulosMasBuscadosView.getRoot());
         }   
     }
     

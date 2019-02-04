@@ -9,6 +9,7 @@ import Controlador.Principal.ControladorLogin;
 import Controlador.Principal.WindowsController;
 import Modelo.Pedido;
 import Vista.Vendedor.VentasPendientes;
+import Vista.Vendedor.VistaFechaPedido;
 import Vista.Vendedor.VistaMapa;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
@@ -30,9 +31,39 @@ public class ControladorVentasPendientes{
         this.VistaVentasPendientes = VistaVentasPendientes;
         
         this.VistaVentasPendientes.addBackButtonHandler((event -> WindowsController.previous()));
+        this.VistaVentasPendientes.addFechaEntregaButtonHandler(new FechaEntregaButtonHandler());
         this.VistaVentasPendientes.addAnularVentaButtonHandler(new AnularVentaButtonHandler());
         this.VistaVentasPendientes.addVerMapaButtonHandler(new VerMapaButtonHandler());
         refreshView();
+    }
+
+    private class FechaEntregaButtonHandler implements EventHandler{
+
+        @Override
+        public void handle(Event event) {
+            
+            TableView<Pedido> pedidos = VistaVentasPendientes.getTablaPedidos();
+            
+            Pedido ModeloPedido = pedidos.getSelectionModel().getSelectedItem();
+            
+            Alert alert;
+            
+            if(ModeloPedido == null){
+                
+                alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Información");
+                alert.setHeaderText("Noy hay nada que cambiar");
+                alert.setContentText("Debes seleccionar en la tabla el pedido que quieres modificar.");
+                alert.showAndWait();
+                return;
+            
+            }
+            
+            VistaFechaPedido fechaPedidoView = new VistaFechaPedido();
+            ControladorFechaPedido controladorFechaPedido = new ControladorFechaPedido(ModeloPedido, fechaPedidoView);
+            WindowsController.next(VistaVentasPendientes, fechaPedidoView);
+            
+        }
     }
     
     private class AnularVentaButtonHandler implements EventHandler{

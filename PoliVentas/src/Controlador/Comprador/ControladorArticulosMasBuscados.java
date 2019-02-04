@@ -43,7 +43,7 @@ public class ControladorArticulosMasBuscados {
         this.observableList = FXCollections.observableArrayList();
         this.VistaArticulosMasBuscados.addIniciarSesionBtnHandler(new IniciarSesionBtnHandler());
         this.VistaArticulosMasBuscados.addRegistrarseBtnHandler(new RegistrarseBtnHandler());
-        this.VistaArticulosMasBuscados.addBackButtonHandler(new AddBackButtonHandler());
+        this.VistaArticulosMasBuscados.addBackButtonHandler((e) -> WindowsController.previous());
         cargarData();
         actualizarTabla();
     }
@@ -106,15 +106,6 @@ public class ControladorArticulosMasBuscados {
             PaneLogin loginView = new PaneLogin();
             ControladorLogin loginController = new ControladorLogin(loginView);
             WindowsController.next(VistaArticulosMasBuscados, loginView);
-        }
-    }
-    
-    private class AddBackButtonHandler implements EventHandler {
-        @Override
-        public void handle(Event event) {
-            CompradorOptions compView = new CompradorOptions();
-            ControladorCompradorOptions loginController = new ControladorCompradorOptions(compView);
-            WindowsController.next(VistaArticulosMasBuscados, compView);
         }
     }
     

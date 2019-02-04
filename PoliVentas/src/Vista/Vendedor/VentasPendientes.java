@@ -25,7 +25,7 @@ import javafx.scene.layout.VBox;
  */
 public class VentasPendientes implements Vista{
     private final BorderPane root;
-    private Button AnularVenta, VerMapa, Regresar;
+    private Button FechaEntrega, AnularVenta, VerMapa, Regresar;
     private TableView<Pedido> pedidos;
     
     @Override
@@ -42,6 +42,9 @@ public class VentasPendientes implements Vista{
     }
     
     private void inicializarBotones(){   
+        
+        FechaEntrega = new Button("Fecha de entrega");
+        FechaEntrega.setStyle("-fx-font: 17 Verdana; ");
         
         AnularVenta = new Button("Anular venta");
         AnularVenta.setStyle("-fx-font: 17 Verdana; ");
@@ -61,7 +64,7 @@ public class VentasPendientes implements Vista{
         
         vBoxCalif.setPadding(new Insets(8, 8, 8, 8));
         
-        vBoxCalif.getChildren().addAll(AnularVenta, VerMapa, Regresar);
+        vBoxCalif.getChildren().addAll(FechaEntrega, AnularVenta, VerMapa, Regresar);
         root.setLeft(vBoxCalif);
     } 
     
@@ -109,6 +112,10 @@ public class VentasPendientes implements Vista{
         lugarCOL.setCellValueFactory(new PropertyValueFactory<>("lugarEntrega"));
         
         pedidos.getColumns().addAll(idCOL, productoCOL, compradorCOL, cantidadCOL, costoCOL, fechaPedidoCOL, fechaEntregaCOL, lugarCOL);
+    }
+    
+    public void addFechaEntregaButtonHandler(EventHandler fechaEntregaButtonHandler){
+        FechaEntrega.setOnAction(fechaEntregaButtonHandler);
     }
     
     public void addAnularVentaButtonHandler(EventHandler anularVentaButtonHandler){
