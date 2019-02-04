@@ -62,7 +62,7 @@ public class ControladorLogin {
                 }
                 limpiarCampos();
             } else {
-                MensajesAcciones.validarIngreso();
+                MensajesAcciones.validarLogin();
                 limpiarCampos();
             }
         } else {

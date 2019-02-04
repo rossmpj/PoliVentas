@@ -99,7 +99,7 @@ public class Pedido {
 
     
     /***
-     * Construnctor para Insertar nuevo Pedido en la base de datos
+     * Constructor para Insertar nuevo Pedido en la base de datos
      * @param estado
      * @param costo
      * @param cantidadPedida
@@ -126,8 +126,8 @@ public class Pedido {
         this.id_metodoPago= pago;
         this.id_vendedor = vendedor;
         this.id_product = product;
-    }
-    
+    } 
+
 
     public String getIdPedido() {
         return idPedido;
@@ -283,13 +283,9 @@ public class Pedido {
 
     @Override
     public String toString() {
-        return ">>> DETALLES DE PEDIDO:" + "\nID Pedido: " + idPedido + 
-                "\nEstado: " + estado + "\nCosto: " + costo + "\nFecha Pedido: " 
-                +"\nCantidad pedida: " + cantidadPedida + fechaPedido + "\nHora Pedido: " 
-                + horaPedido + "\nFecha Entrega: " + fechaEntrega + "\nHora Entrega=" 
-                + horaEntrega + "\nLugar Entrega: "  + lugarEntrega + "Método Pago: " 
-                + metodoPago + "\nComprador: " + comprador + ""+ "Vendedor: " 
-                + vendedor + "\nProducto: " + product;
+        return ">>> DETALLES DE PEDIDO:" + "\nEstado: " + estado + "\nCosto: " + costo + "\nFecha Pedido: " 
+                +"\nCantidad pedida: " + cantidadPedida + "\nFecha Pedido: "+fechaPedido + "\nHora Pedido: " 
+                + horaPedido + "\nLugar Entrega: "  + lugarEntrega ; 
     }
     
     public static ObservableList<Pedido> getPedidosPendientesPorVendedor(String id){

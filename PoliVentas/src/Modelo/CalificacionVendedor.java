@@ -1,7 +1,6 @@
 package Modelo;
 
 import Auxiliares.DBConnection;
-import Auxiliares.MensajesAcciones;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
@@ -70,20 +69,15 @@ public class CalificacionVendedor {
             PreparedStatement modifica = conexion.getConnection().prepareStatement(consulta);
             modifica.setString(1, String.valueOf(calif));
             modifica.setString(2, this.getIdVendedor());
-            int m = modifica.executeUpdate();
-            if( m > 0){ 
-                MensajesAcciones.CalificacionVendedorSi();
-                System.out.println("modificación exitosa ...");
-            }
+            modifica.executeUpdate();
             return true;
         } catch (SQLException ex) {
-            MensajesAcciones.CalificacionVendedorNo();
-            System.out.println("EXCEPCION: " + ex.getMessage());
             return false;
         } finally {
             conexion.desconectar();
         }
     }
+    
     public int getPromedioV(int c1, int c2){
         return (int) ((c1+c2)/2);
     }

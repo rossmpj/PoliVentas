@@ -44,11 +44,10 @@ public class SendMail {
                 t.connect(GMAIL_HOST,Username, PassWord);
                 t.sendMessage(message, message.getAllRecipients());
             }
-            System.out.println("sended");
-            MensajesAcciones.NotificarVendedor();
+            MensajesAcciones.notificarVendedor();
         } catch (MessagingException e) {
             System.err.println(e.getMessage());
-            MensajesAcciones.NotificarVendedorFailed();
+            MensajesAcciones.notificarVendedorFailed();
         }
     }    
 }

@@ -17,7 +17,7 @@ import java.util.logging.Level;
  */
 public class PagoVirtual implements Pago {
 
-    private Comprador d;
+    private final Comprador d;
 
     public PagoVirtual() {
         d = new Comprador();
@@ -27,12 +27,15 @@ public class PagoVirtual implements Pago {
     }
 
     @Override
-    public boolean pagar(String ci_cel,double monto) {
+    public boolean pagar(String ci_cel, double monto) {
+        System.out.println("Saldo disp: "+d.obtenerSaldo(ci_cel));
+        System.out.println();
         if ((d.obtenerSaldo(ci_cel) > -1) && (d.obtenerSaldo(ci_cel) > monto)) {
             this.descontarSaldo(ci_cel, monto);
             return true;
+        }else{
+            return false;
         }
-        return false;
     }
     
     /**
@@ -44,11 +47,11 @@ public class PagoVirtual implements Pago {
         try {
             CONNECT.conectar();
             String consulta = "{call  descontarSaldo (?,?)}";
-            CallableStatement sp = CONNECT.getConnection().prepareCall(consulta);
-            sp.setString(1, ci_cel);
-            sp.setDouble(2, monto);
-            sp.execute();
-            sp.close();
+            try (CallableStatement sp = CONNECT.getConnection().prepareCall(consulta)) {
+                sp.setString(1, ci_cel);
+                sp.setDouble(2, monto);
+                sp.execute();
+            }
         } catch (SQLException e) {
             LOG.log(Level.SEVERE, e.getMessage());
         } finally {

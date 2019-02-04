@@ -274,10 +274,7 @@ public class Usuario {
       */
     @Override
     public String toString() {
-        return "Usuario" + " Nombres:" + nombres + ", apellidos:" + apellidos
-                + ", telefono:" + telefono + ", whatsapp:" + whatsapp
-                + ", email:" + email + ", direccion:" + direccion
-                + ", cedula:" + cedula + ", matricula:" + matricula;
+        return nombres + " " + apellidos;
     }
 
     /**

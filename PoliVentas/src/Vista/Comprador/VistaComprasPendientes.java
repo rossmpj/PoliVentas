@@ -233,4 +233,8 @@ public class VistaComprasPendientes implements Vista {
     public void estiloBotones(Button btn){
         btn.setStyle("-fx-font: 17 Verdana;");
     }
+    
+    public boolean validarSeleccion(){
+        return (this.getPed() == null);
+    }
 }

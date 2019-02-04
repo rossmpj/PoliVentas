@@ -1,7 +1,6 @@
 package Modelo;
 
 import Auxiliares.DBConnection;
-import Auxiliares.MensajesAcciones;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
@@ -71,11 +70,9 @@ public class CalificacionProducto {
             PreparedStatement modifica = conexion.getConnection().prepareStatement(consulta);
             modifica.setString(1, String.valueOf(calif));
             modifica.setString(2, this.getIdCalificacionP());
-            int m = modifica.executeUpdate();
+            modifica.executeUpdate();
             return true;
         } catch (SQLException ex) {
-            MensajesAcciones.CalificacionProductoNo();
-            System.out.println("EXCEPCION: " + ex.getMessage());
             return false;
         } finally {
             conexion.desconectar();
