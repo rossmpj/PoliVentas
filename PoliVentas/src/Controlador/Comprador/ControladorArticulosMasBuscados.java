@@ -92,10 +92,9 @@ public class ControladorArticulosMasBuscados {
     private class RegistrarseBtnHandler implements EventHandler {
         @Override
         public void handle(Event event) {
-            Usuario user = new Usuario();
             Administrador d = new Administrador();
-            VistaInfoUsuario vistaInfoUsuario = new VistaInfoUsuario(true, "FADCA8", "Formulario de Registro");
-            ControladorInfoUsuario controladorArticulosMasBuscados = new ControladorInfoUsuario(user, d, vistaInfoUsuario);
+            VistaInfoUsuario vistaInfoUsuario = new VistaInfoUsuario(true, "FADCA8", "Formulario de Registro",null);
+            ControladorInfoUsuario controladorArticulosMasBuscados = new ControladorInfoUsuario( d, vistaInfoUsuario);
             WindowsController.next(VistaArticulosMasBuscados, vistaInfoUsuario);
         }
     }
@@ -114,10 +113,9 @@ public class ControladorArticulosMasBuscados {
             final TableCell<Producto, Void> cell = new TableCell<Producto, Void>() {
                 private final Button btn = new Button("Ver"); {
                 btn.setOnAction((ActionEvent event) -> {
-                    Usuario user = new Usuario();
                     Administrador d = new Administrador();
-                    VistaInfoUsuario vistaInfoUsuario = new VistaInfoUsuario(true, "FADCA8", "Formulario de Registro");
-                    ControladorInfoUsuario controladorArticulosMasBuscados = new ControladorInfoUsuario(user, d, vistaInfoUsuario);
+                    VistaInfoUsuario vistaInfoUsuario = new VistaInfoUsuario(true, "FADCA8", "Formulario de Registro",null);
+                    ControladorInfoUsuario controladorArticulosMasBuscados = new ControladorInfoUsuario(d, vistaInfoUsuario);
                     Producto ModeloProducto = new Producto();
                     VistaBusquedaSencilla busqueda = new VistaBusquedaSencilla();
                     ControladorBusquedaSencilla controllerBusqueda = new ControladorBusquedaSencilla(ModeloProducto, busqueda);

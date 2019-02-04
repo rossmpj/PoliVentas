@@ -116,9 +116,8 @@ public class ControladorBuscarUsuario {
         
         @Override
         public void handle(Event event) {
-            Usuario y = new Usuario();
             VistaInfoUsuario v = new VistaInfoUsuario(false, "A8ECDD", "Modificar usuario", ModeloUsuario);
-            ControladorInfoUsuario controladorInfoUsuario = new ControladorInfoUsuario(y, a, v);
+            ControladorInfoUsuario controladorInfoUsuario = new ControladorInfoUsuario(a, v);
             WindowsController.next(VistaBuscarUsuario, v);
         }
         

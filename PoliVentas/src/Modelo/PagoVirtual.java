@@ -19,11 +19,11 @@ public class PagoVirtual implements Pago {
 
     private final Comprador d;
 
+    /**
+     * Constructor de la clase
+     */
     public PagoVirtual() {
         d = new Comprador();
-    }
-
-    public void adquirirSaldo() {
     }
 
     @Override

@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package Vista.Administrador;
 
 import Auxiliares.CONSTANTES;
@@ -35,11 +34,15 @@ import javafx.scene.layout.VBox;
 public class VistaBuscarProducto implements Vista {
 
     private final BorderPane root;
-    private Button back, buscar, herramientas, ver,clean;
+    private Button back;
+    private Button buscar;
+    private Button herramientas;
+    private Button ver;
+    private Button clean;
     private final String color;
     private TextField campo;
     private MenuBar menu;
-    VBox efectoMenu;
+    private VBox efectoMenu;
     private VBox vbox;
     private ScrollPane busquedaScrollPane;
 
@@ -58,13 +61,21 @@ public class VistaBuscarProducto implements Vista {
     }
 
     private void inicializarObjetos() {
+        inicializarA();
+        inicializarB();
+    }
+
+    private void inicializarA() {
         back = botonRegresarMenu();
         root.setBottom(back);
         buscar = new Button();
         clean = new Button();
         herramientas = new Button("Herramientas");
-        estiloBotones(clean, "EAFF26","/eraser.png");
+        estiloBotones(clean, "EAFF26", "/eraser.png");
         estiloBotones(buscar, "51A7C1", "/search.png");
+    }
+
+    private void inicializarB() {
         campo = new TextField();
         campo.setPrefWidth(350);
         campo.setPrefHeight(40);
@@ -113,8 +124,8 @@ public class VistaBuscarProducto implements Vista {
     public void addVerButtonHandler(EventHandler ventanaPButtonHandler) {
         ver.setOnAction(ventanaPButtonHandler);
     }
-    
-    public void addCleanButtonHandler(EventHandler cleanPButtonHandler){
+
+    public void addCleanButtonHandler(EventHandler cleanPButtonHandler) {
         this.clean.setOnAction(cleanPButtonHandler);
     }
 
@@ -152,7 +163,7 @@ public class VistaBuscarProducto implements Vista {
     private void seccionResultadoBusqueda() {
         VBox contenedorTitulos = new VBox();
         VBox v3 = new VBox();
-        contenedorTitulos.setPadding(new Insets(0, 7, 0, 7));//top,derecha,abajo,izquierda
+        contenedorTitulos.setPadding(new Insets(0, 7, 0, 7));
         contenedorTitulos.setAlignment(Pos.TOP_CENTER);
         contenedorTitulos.setSpacing(7);
         busquedaScrollPane = new ScrollPane();

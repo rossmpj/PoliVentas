@@ -44,8 +44,8 @@ public class ControladorAdministradorOptions {
         public void handle(Event event) {
             Administrador a = new Administrador();
             Usuario usuario = new Usuario();
-            VistaInfoUsuario nuevoUsuarioView = new VistaInfoUsuario(true, "C7E7E0", "Ingreso nuevo usuario");
-            ControladorInfoUsuario controladorNuevoUsuario = new ControladorInfoUsuario(usuario, a, nuevoUsuarioView);
+            VistaInfoUsuario nuevoUsuarioView = new VistaInfoUsuario(true, "C7E7E0", "Ingreso nuevo usuario",null);
+            ControladorInfoUsuario controladorNuevoUsuario = new ControladorInfoUsuario(a, nuevoUsuarioView);
 
             WindowsController.next(VistaAdministradorOptions, nuevoUsuarioView);
 
@@ -71,10 +71,9 @@ public class ControladorAdministradorOptions {
 
         @Override
         public void handle(Event event) {
-            Producto producto = new Producto();
             Administrador admin = new Administrador();
-            VistaInfoProducto nuevoProductoView = new VistaInfoProducto(true, "81F7D8", "Ingreso nuevo Producto");
-            ControladorInfoProducto controladorNuevoProducto = new ControladorInfoProducto(producto, admin, nuevoProductoView);
+            VistaInfoProducto nuevoProductoView = new VistaInfoProducto(true, "81F7D8", "Ingreso nuevo Producto",null);
+            ControladorInfoProducto controladorNuevoProducto = new ControladorInfoProducto(admin, nuevoProductoView);
             WindowsController.next(VistaAdministradorOptions, nuevoProductoView);
 
         }

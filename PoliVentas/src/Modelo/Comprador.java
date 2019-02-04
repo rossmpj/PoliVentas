@@ -23,15 +23,6 @@ public class Comprador extends Usuario {
 
     /**
      * Constructor con parametros para el comprador
-     *
-     * @param nombres
-     * @param apellidos
-     * @param telefono
-     * @param whatsapp
-     * @param email
-     * @param direccion
-     * @param cedula
-     * @param matricula
      */
     public Comprador(String cedula, String nombres, String apellidos, String telefono,
             String direccion, boolean whatsapp, String matricula, String email,String usuario, String contra,boolean es) {

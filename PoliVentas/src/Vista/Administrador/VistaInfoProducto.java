@@ -33,22 +33,21 @@ public class VistaInfoProducto implements Vista {
 
     private final BorderPane root;
     private boolean ingreso;
-    private String color, titulo;
-    private Button guardar, actualizar, eliminar, back;
-    private TextField id, nombre, categoria, precio, cantidad, vendedor;
+    private String color;
+    private String titulo;
+    private Button guardar;
+    private Button actualizar;
+    private Button eliminar;
+    private Button back;
+    private TextField id;
+    private TextField nombre;
+    private TextField categoria;
+    private TextField precio;
+    private TextField cantidad;
+    private TextField vendedor;
     private TextArea descripcion;
     private CheckBox eliminado;
     private Producto p;
-
-    public VistaInfoProducto(boolean ingreso, String color, String titulo) {
-        root = new BorderPane();
-        this.ingreso = ingreso;
-        this.color = color;
-        this.titulo = titulo;
-        crearSeccionTitulo();
-        inicializarObjetos();
-        construccion();
-    }
 
     public VistaInfoProducto(boolean ingreso, String color, String titulo, Producto p) {
         root = new BorderPane();
@@ -59,7 +58,9 @@ public class VistaInfoProducto implements Vista {
         crearSeccionTitulo();
         inicializarObjetos();
         construccion();
-        llenarInformacion();
+        if (!this.ingreso) {
+            llenarInformacion();
+        }
     }
 
     private void llenarInformacion() {
@@ -76,13 +77,11 @@ public class VistaInfoProducto implements Vista {
     }
 
     public Producto updateProducto() {
-        Producto nuevo = new Producto(getId().getText(), getNombre().getText(), getDescripcion().getText(),
+        return new Producto(getId().getText(), getNombre().getText(), getDescripcion().getText(),
                 Double.valueOf(getPrecio().getText()), getCategoria().getText(), Integer.valueOf(getCantidad().getText()),
                 getEliminado().isSelected(), 0, getVendedor().getText());
-        return nuevo;
     }
 
-    
     private void inicializarObjetos() {
         back = botonRegresarMenu();
         root.setBottom(back);
@@ -109,18 +108,26 @@ public class VistaInfoProducto implements Vista {
             sa.getChildren().add(guardar);
         } else {
             id.setDisable(true);
-            actualizar = new Button("Actualizar");
-            eliminar = new Button("Eliminar\nProducto");
-            HBox g = new HBox();
-            eliminado = new CheckBox();
-            Label l = new Label("Este producto está eliminado?");
-            g.getChildren().addAll(l, eliminado);
-            g.setSpacing(3);
-            actualizar.setPrefSize(180, 50);
-            eliminar.setPrefSize(180, 50);
-            sa.getChildren().addAll(actualizar, eliminar, g);
+            crearExtraC();
+            sa.getChildren().addAll(actualizar, eliminar, crearExtraB());
         }
         return sa;
+    }
+
+    private HBox crearExtraB() {
+        HBox g = new HBox();
+        eliminado = new CheckBox();
+        Label l = new Label("Este producto está eliminado?");
+        g.getChildren().addAll(l, eliminado);
+        g.setSpacing(3);
+        return g;
+    }
+
+    private void crearExtraC() {
+        actualizar = new Button("Actualizar");
+        eliminar = new Button("Eliminar\nProducto");
+        actualizar.setPrefSize(180, 50);
+        eliminar.setPrefSize(180, 50);
     }
 
     public void addBackButtonHandler(EventHandler agregarProductoButtonHandler) {
@@ -166,7 +173,7 @@ public class VistaInfoProducto implements Vista {
         grandPrix.addColumn(1, id, nombre, descripcion, precio, cantidad, categoria, vendedor);
         grandPrix.setHgap(15);
         grandPrix.setVgap(15);
-        scawflone.setPadding(new Insets(30, 10, 0, 20));//top,derecha,abajo,izquierda
+        scawflone.setPadding(new Insets(30, 10, 0, 20));
         scawflone.setAlignment(Pos.TOP_CENTER);
         scawflone.getChildren().add(grandPrix);
         return scawflone;
@@ -193,6 +200,7 @@ public class VistaInfoProducto implements Vista {
         root.setTop(crearTituloSubMenu(titulo, color));
     }
 
+    @Override
     public BorderPane getRoot() {
         return root;
     }
@@ -212,128 +220,64 @@ public class VistaInfoProducto implements Vista {
         return ingreso;
     }
 
-    public void setIngreso(boolean ingreso) {
-        this.ingreso = ingreso;
-    }
-
     public String getColor() {
         return color;
-    }
-
-    public void setColor(String color) {
-        this.color = color;
     }
 
     public String getTitulo() {
         return titulo;
     }
 
-    public void setTitulo(String titulo) {
-        this.titulo = titulo;
-    }
-
     public Button getGuardar() {
         return guardar;
-    }
-
-    public void setGuardar(Button guardar) {
-        this.guardar = guardar;
     }
 
     public Button getActualizar() {
         return actualizar;
     }
 
-    public void setActualizar(Button actualizar) {
-        this.actualizar = actualizar;
-    }
-
     public Button getEliminar() {
         return eliminar;
-    }
-
-    public void setEliminar(Button eliminar) {
-        this.eliminar = eliminar;
     }
 
     public Button getBack() {
         return back;
     }
 
-    public void setBack(Button back) {
-        this.back = back;
-    }
-
     public TextField getId() {
         return id;
-    }
-
-    public void setId(TextField id) {
-        this.id = id;
     }
 
     public TextField getNombre() {
         return nombre;
     }
 
-    public void setNombre(TextField nombre) {
-        this.nombre = nombre;
-    }
-
     public TextField getCategoria() {
         return categoria;
-    }
-
-    public void setCategoria(TextField categoria) {
-        this.categoria = categoria;
     }
 
     public TextField getPrecio() {
         return precio;
     }
 
-    public void setPrecio(TextField precio) {
-        this.precio = precio;
-    }
-
     public TextField getCantidad() {
         return cantidad;
-    }
-
-    public void setCantidad(TextField cantidad) {
-        this.cantidad = cantidad;
     }
 
     public TextField getVendedor() {
         return vendedor;
     }
 
-    public void setVendedor(TextField vendedor) {
-        this.vendedor = vendedor;
-    }
-
     public TextArea getDescripcion() {
         return descripcion;
-    }
-
-    public void setDescripcion(TextArea descripcion) {
-        this.descripcion = descripcion;
     }
 
     public CheckBox getEliminado() {
         return eliminado;
     }
 
-    public void setEliminado(CheckBox eliminado) {
-        this.eliminado = eliminado;
-    }
-
     public Producto getP() {
         return p;
-    }
-
-    public void setP(Producto p) {
-        this.p = p;
     }
 
 }

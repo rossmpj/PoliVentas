@@ -32,28 +32,30 @@ import javafx.scene.layout.VBox;
  * @author Tiffy
  */
 public class VistaInfoUsuario implements Vista {
-    
+
     private final BorderPane root;
     private boolean ingreso;
-    private String color, titulo;
-    private Button guardar, actualizar, eliminar, back;
-    private TextField ci, nom, ape, tl, mail, mat, user, contra;
+    private String color;
+    private String titulo;
+    private Button guardar;
+    private Button actualizar;
+    private Button eliminar;
+    private Button back;
+    private TextField ci;
+    private TextField nom;
+    private TextField ape;
+    private TextField tl;
+    private TextField mail;
+    private TextField mat;
+    private TextField user;
+    private TextField contra;
     private TextArea dir;
-    public CheckBox wapp, eliminado;
-    private ComboBox<String> rol, nuevoRol;
+    public CheckBox wapp;
+    public CheckBox eliminado;
+    private ComboBox<String> rol;
+    private ComboBox<String> nuevoRol;
     private Usuario u;
-    
-    public VistaInfoUsuario(boolean ingreso, String color, String titulo) {
-        root = new BorderPane();
-        this.ingreso = ingreso;
-        this.color = color;
-        this.titulo = titulo;
-        crearSeccionTitulo();
-        inicializarBotones();
-        construccion();
-        
-    }
-    
+
     public VistaInfoUsuario(boolean ingreso, String color, String titulo, Usuario u) {
         root = new BorderPane();
         this.ingreso = ingreso;
@@ -63,10 +65,19 @@ public class VistaInfoUsuario implements Vista {
         crearSeccionTitulo();
         inicializarBotones();
         construccion();
-        llenarInformacion();
+        if (!this.ingreso) {
+            llenarInformacion();
+        }
     }
-    
+
     private void inicializarBotones() {
+        crearSeccionA();
+        crearSeccionB();
+        cargarCombo();
+        gestionBotones();
+    }
+
+    private void crearSeccionA() {
         back = botonRegresarMenu();
         root.setBottom(back);
         ci = new TextField();
@@ -75,6 +86,9 @@ public class VistaInfoUsuario implements Vista {
         ape = new TextField();
         tl = new TextField();
         wapp = new CheckBox();
+    }
+
+    private void crearSeccionB() {
         mail = new TextField();
         mat = new TextField();
         user = new TextField();
@@ -84,10 +98,8 @@ public class VistaInfoUsuario implements Vista {
         rol = new ComboBox();
         nuevoRol = new ComboBox();
         nuevoRol.setDisable(true);
-        cargarCombo();
-        gestionBotones();
     }
-    
+
     private VBox gestionBotones() {
         VBox sa = new VBox();
         sa.setAlignment(Pos.CENTER);
@@ -98,20 +110,28 @@ public class VistaInfoUsuario implements Vista {
             sa.getChildren().add(guardar);
         } else {
             ci.setDisable(true);
-            actualizar = new Button("Actualizar");
-            eliminar = new Button("Eliminar\nUsuario");
-            HBox g = new HBox();
-            eliminado = new CheckBox();
-            Label l = new Label("Este usuario está eliminado?");
-            g.getChildren().addAll(l, eliminado);
-            g.setSpacing(3);
-            actualizar.setPrefSize(180, 50);
-            eliminar.setPrefSize(180, 50);
-            sa.getChildren().addAll(eliminar, actualizar, g);
+            crearExtraButton();
+            sa.getChildren().addAll(eliminar, actualizar, crearExtra());
         }
         return sa;
     }
-    
+
+    private HBox crearExtra() {
+        HBox g = new HBox();
+        eliminado = new CheckBox();
+        Label l = new Label("Este usuario está eliminado?");
+        g.getChildren().addAll(l, eliminado);
+        g.setSpacing(3);
+        return g;
+    }
+
+    private void crearExtraButton() {
+        actualizar = new Button("Actualizar");
+        eliminar = new Button("Eliminar\nUsuario");
+        actualizar.setPrefSize(180, 50);
+        eliminar.setPrefSize(180, 50);
+    }
+
     public void addBackButtonHandler(EventHandler agregarProductoButtonHandler) {
         back.setOnAction(agregarProductoButtonHandler);
     }
@@ -119,15 +139,15 @@ public class VistaInfoUsuario implements Vista {
     public void addEliminarButtonHandler(EventHandler eliminarUButtonHandler) {
         eliminar.setOnAction(eliminarUButtonHandler);
     }
-    
+
     public void addModificarButtonHandler(EventHandler modificarUButtonHandler) {
         actualizar.setOnAction(modificarUButtonHandler);
     }
-    
+
     public void addAlmacenarButtonHandler(EventHandler almacenarUButtonHandler) {
         guardar.setOnAction(almacenarUButtonHandler);
     }
-    
+
     private void construccion() {
         HBox hb = new HBox();
         VBox contenedor = new VBox();
@@ -140,7 +160,7 @@ public class VistaInfoUsuario implements Vista {
         hb.getChildren().addAll(formulario(), contenedor);
         root.setCenter(hb);
     }
-    
+
     private VBox formulario() {
         VBox scawflone = new VBox();
         GridPane grandPrix = new GridPane();
@@ -157,6 +177,17 @@ public class VistaInfoUsuario implements Vista {
         Label cont = new Label("Contraseña");
         HBox ne = new HBox();
         ne.getChildren().add(rol);
+        extraH(ne);
+        grandPrix.addColumn(0, cedula, nombres, apellidos, tlf, ws, email, direccion, matricula, roll, usser, cont);
+        grandPrix.setHgap(10);
+        grandPrix.setVgap(3);
+        grandPrix.addColumn(1, ci, nom, ape, tl, wapp, mail, dir, mat, ne, user, contra);
+        scawflone.setAlignment(Pos.CENTER);
+        scawflone.getChildren().add(grandPrix);
+        return scawflone;
+    }
+
+    private void extraH(HBox ne) {
         if (!this.ingreso) {
             Button b = new Button("CambiarRol");
             b.setOnAction(e -> {
@@ -165,21 +196,14 @@ public class VistaInfoUsuario implements Vista {
             ne.setSpacing(5);
             ne.getChildren().addAll(b, nuevoRol);
         }
-        grandPrix.addColumn(0, cedula, nombres, apellidos, tlf, ws, email, direccion, matricula, roll, usser, cont);
-        grandPrix.addColumn(1, ci, nom, ape, tl, wapp, mail, dir, mat, ne, user, contra);
-        grandPrix.setHgap(10);
-        grandPrix.setVgap(3);
-        scawflone.setAlignment(Pos.CENTER);
-        scawflone.getChildren().add(grandPrix);
-        return scawflone;
     }
-    
+
     private void crearSeccionTitulo() {
-        root.setTop(crearTituloSubMenu(titulo,color));
+        root.setTop(crearTituloSubMenu(titulo, color));
     }
-    
+
     private void cargarCombo() {
-         String se[] = {"Administrador", "Comprador", "Vendedor"};
+        String se[] = {"Administrador", "Comprador", "Vendedor"};
         if (this.ingreso) {
             rol.setItems(FXCollections.observableArrayList(se));
         } else {
@@ -189,16 +213,16 @@ public class VistaInfoUsuario implements Vista {
             nuevoRol.setItems(FXCollections.observableArrayList(se));
         }
     }
-    
+
     public String seleccion() {
         return rol.getSelectionModel().getSelectedItem();
     }
-    
+
     @Override
     public BorderPane getRoot() {
         return root;
     }
-    
+
     private VBox seccionAvatar() {
         VBox k = new VBox();
         Image image = new Image(getClass().getResourceAsStream(CONSTANTES.PATH_IMG + "/man.png"));
@@ -209,45 +233,46 @@ public class VistaInfoUsuario implements Vista {
         k.getChildren().add(myLabel);
         return k;
     }
-    
+
     public boolean validarCasillas() {
         return !ci.getText().equals("") && !nom.getText().equals("") && !ape.getText().equals("")
                 && !tl.getText().equals("") && !mail.getText().equals("")
                 && !mat.getText().equals("") && !user.getText().equals("") && !contra.getText().equals("")
                 && !dir.getText().equals("") && !seleccion().equals("");
     }
-    
+
     public void llenarInformacion() {
         if (!this.ingreso) {
-            ci.setText(u.getCedula());
-            nom.setText(u.getNombres());
-            ape.setText(u.getApellidos());
-            tl.setText(u.getTelefono());
-            wapp.setSelected(u.isWhatsapp());
-            mail.setText(u.getEmail());
-            mat.setText(u.getMatricula());
-            user.setText(u.getUsuario());
-            contra.setText(u.getContrasena());
-            dir.setText(u.getDireccion());
-            eliminado.setSelected(u.isEstado());
+            llenarInformacionA();
+            llenarInformacionB();
         }
     }
-    
-    
-    public Usuario updateUsuario(){
-    Usuario w= new Usuario(ci.getText(),nom.getText(),ape.getText(),tl.getText(),dir.getText(),wapp.isSelected(),mat.getText(),
-    mail.getText(),user.getText(),contra.getText(), eliminado.isSelected());  
-    return w;
+
+    private void llenarInformacionA() {
+        ci.setText(u.getCedula());
+        nom.setText(u.getNombres());
+        ape.setText(u.getApellidos());
+        tl.setText(u.getTelefono());
+        wapp.setSelected(u.isWhatsapp());
+        mail.setText(u.getEmail());
+
     }
-    
+
+    private void llenarInformacionB() {
+        mat.setText(u.getMatricula());
+        user.setText(u.getUsuario());
+        contra.setText(u.getContrasena());
+        dir.setText(u.getDireccion());
+        eliminado.setSelected(u.isEstado());
+    }
+
+    public Usuario updateUsuario() {
+        return new Usuario(ci.getText(), nom.getText(), ape.getText(), tl.getText(), dir.getText(), wapp.isSelected(), mat.getText(),
+                mail.getText(), user.getText(), contra.getText(), eliminado.isSelected());
+    }
+
     public void limpiarCasillas() {
-        ci.setText(" ");
-        nom.setText(" ");
-        ape.setText(" ");
-        tl.setText(" ");
-        wapp.setSelected(false);
-        mail.setText(" ");
-        mat.setText(" ");
+        limpiarA();
         user.setText(" ");
         contra.setText(" ");
         dir.setText(" ");
@@ -255,141 +280,84 @@ public class VistaInfoUsuario implements Vista {
             eliminado.setSelected(false);
         }
     }
-    
+
+    private void limpiarA() {
+        ci.setText(" ");
+        nom.setText(" ");
+        ape.setText(" ");
+        tl.setText(" ");
+        wapp.setSelected(false);
+        mail.setText(" ");
+        mat.setText(" ");
+
+    }
+
     public boolean isIngreso() {
         return ingreso;
     }
-    
-    public void setIngreso(boolean ingreso) {
-        this.ingreso = ingreso;
-    }
-    
+
     public Button getGuardar() {
         return guardar;
     }
-    
-    public void setGuardar(Button guardar) {
-        this.guardar = guardar;
-    }
-    
+
     public Button getActualizar() {
         return actualizar;
     }
-    
-    public void setActualizar(Button actualizar) {
-        this.actualizar = actualizar;
-    }
-    
+
     public Button getEliminar() {
         return eliminar;
     }
-    
-    public void setEliminar(Button eliminar) {
-        this.eliminar = eliminar;
-    }
-    
+
     public Button getBack() {
         return back;
     }
-    
-    public void setBack(Button back) {
-        this.back = back;
-    }
-    
+
     public TextField getCi() {
         return ci;
     }
-    
-    public void setCi(TextField ci) {
-        this.ci = ci;
-    }
-    
+
     public TextField getNom() {
         return nom;
     }
-    
-    public void setNom(TextField nom) {
-        this.nom = nom;
-    }
-    
+
     public TextField getApe() {
         return ape;
     }
-    
-    public void setApe(TextField ape) {
-        this.ape = ape;
-    }
-    
+
     public TextField getTl() {
         return tl;
     }
-    
-    public void setTl(TextField tl) {
-        this.tl = tl;
-    }
-    
+
     public TextField getMail() {
         return mail;
     }
-    
-    public void setMail(TextField mail) {
-        this.mail = mail;
-    }
-    
+
     public TextField getMat() {
         return mat;
     }
-    
-    public void setMat(TextField mat) {
-        this.mat = mat;
-    }
-    
+
     public TextField getUser() {
         return user;
     }
-    
-    public void setUser(TextField user) {
-        this.user = user;
-    }
-    
+
     public TextField getContra() {
         return contra;
     }
-    
-    public void setContra(TextField contra) {
-        this.contra = contra;
-    }
-    
+
     public TextArea getDir() {
         return dir;
     }
-    
-    public void setDir(TextArea dir) {
-        this.dir = dir;
-    }
-    
+
     public CheckBox getWapp() {
         return wapp;
     }
-    
-    public void setWapp(CheckBox wapp) {
-        this.wapp = wapp;
-    }
-    
+
     public CheckBox getEliminado() {
         return eliminado;
     }
-    
-    public void setEliminado(CheckBox eliminado) {
-        this.eliminado = eliminado;
-    }
-    
+
     public Usuario getU() {
         return u;
     }
-    
-    public void setU(Usuario u) {
-        this.u = u;
-    }
-    
+
 }

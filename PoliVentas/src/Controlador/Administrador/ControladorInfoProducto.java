@@ -19,12 +19,10 @@ import javafx.event.EventHandler;
  */
 public class ControladorInfoProducto {
 
-    private final Producto ModeloProducto;
     private final Administrador ModeloAdmin;
     private final VistaInfoProducto VistaNuevoProducto;
 
-    public ControladorInfoProducto(Producto ModeloProducto, Administrador ModeloAdmin, VistaInfoProducto VistaNuevoProducto) {
-        this.ModeloProducto = ModeloProducto;
+    public ControladorInfoProducto(Administrador ModeloAdmin, VistaInfoProducto VistaNuevoProducto) {
         this.VistaNuevoProducto = VistaNuevoProducto;
         this.ModeloAdmin = ModeloAdmin;
         this.VistaNuevoProducto.addBackButtonHandler((event -> WindowsController.previous()));

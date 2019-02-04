@@ -10,6 +10,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.collections.FXCollections;
@@ -39,7 +40,7 @@ public class Pedido {
     private String id_vendedor;
     private String id_product;
     private String id_metodoPago;
-    private static final Logger LOGGER = Logger.getLogger("Usuario Logger");
+   
     private static final DBConnection CONNECTION = DBConnection.getInstance();
     private final String consulta= "INSERT INTO db_poliventas.tb_pedido (estado,costo,cantidad_pedida,fecha_pedido,hora_pedido,"
             + "lugar_entrega,id_pago,id_comprador_ped, id_vendedor_ped,id_producto_ped) values (?,?,?,?,?,?,?,?,?,?)";
@@ -100,18 +101,6 @@ public class Pedido {
     
     /***
      * Constructor para Insertar nuevo Pedido en la base de datos
-     * @param estado
-     * @param costo
-     * @param cantidadPedida
-     * @param fechaPedido
-     * @param horaPedido
-     * @param fechaEntrega
-     * @param horaEntrega
-     * @param lugarEntrega
-     * @param pago
-     * @param comprador
-     * @param vendedor
-     * @param product 
      */
      public Pedido(String estado, double costo, int cantidadPedida, Date fechaPedido, Time horaPedido, Date fechaEntrega, Time horaEntrega, String lugarEntrega,String pago ,String comprador, String vendedor, String product) {
         this.estado = estado;
@@ -280,7 +269,11 @@ public class Pedido {
     public void setId_metodoPago(String id_metodoPago) {
         this.id_metodoPago = id_metodoPago;
     }
-
+    
+    /**
+     * Sobreescritura del metodo to String
+     * @return datos del pedido
+     */
     @Override
     public String toString() {
         return ">>> DETALLES DE PEDIDO:" + "\nEstado: " + estado + "\nCosto: " + costo + "\nFecha Pedido: " 
@@ -288,6 +281,10 @@ public class Pedido {
                 + horaPedido + "\nLugar Entrega: "  + lugarEntrega ; 
     }
     
+    /**
+     * Método que permite obtener los pedidos pendientes por vendedor
+     * @param id
+     */
     public static ObservableList<Pedido> getPedidosPendientesPorVendedor(String id){
         
         DBConnection conexion = DBConnection.getInstance();
@@ -339,6 +336,10 @@ public class Pedido {
         return pedidos;
     }
     
+    /**
+     * Método que permite anular el pedido
+     * @return true si se pudo anular correctamente, false en caso contrario
+     */
     public boolean anular(){
         DBConnection conexion = DBConnection.getInstance();
         conexion.conectar();
@@ -458,6 +459,10 @@ public class Pedido {
         }
     }
     
+    /**
+     * Método que permite actualizar el pedido
+     * @return true si se realizó correctamente, false en caso contrario
+     */
     public boolean update(){
         try {
                 CONNECTION.conectar();
@@ -483,6 +488,28 @@ public class Pedido {
         } finally {
                 CONNECTION.desconectar();
         }
+    }
+    
+     @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 53 * hash + Objects.hashCode(this.idPedido);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Pedido other = (Pedido) obj;
+        return Objects.equals(this.idPedido, other.idPedido);
     }
     
 }

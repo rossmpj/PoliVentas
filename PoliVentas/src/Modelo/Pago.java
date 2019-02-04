@@ -16,6 +16,5 @@ public interface Pago {
 
     static final DBConnection CONNECT = DBConnection.getInstance();
     static final Logger LOG = Logger.getLogger("Metodo de pago ");
-
     boolean pagar(String ci_cel,double monto);
 }

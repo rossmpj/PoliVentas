@@ -28,8 +28,14 @@ import Vista.Principal.Vista;
 public class AdministradorOptions implements Vista {
 
     private final BorderPane root;
-    private Button nuevoUser, buscarUser, nuevoProducto, buscarProducto,
-            comprasPendientes, comprasAnuladas, comprasExitosas, cerrarSesion;
+    private Button nuevoUser;
+    private Button buscarUser;
+    private Button nuevoProducto;
+    private Button buscarProducto;
+    private Button comprasPendientes;
+    private Button comprasAnuladas;
+    private Button comprasExitosas;
+    private Button cerrarSesion;
 
     public AdministradorOptions() {
         root = new BorderPane();
@@ -43,15 +49,24 @@ public class AdministradorOptions implements Vista {
     }
 
     private void inicializarBotones() {
+        inicializarBotonU();
+        inicializarBotonC();
+        cerrarSesion = new Button("Cerrar\nSesión");
+        llamarBotones();
+    }
+
+    private void inicializarBotonC() {
+        comprasPendientes = new Button("Compras\nPendientes");
+        comprasAnuladas = new Button("Compras\nAnuladas");
+        comprasExitosas = new Button("Compras\nExitosas");
+
+    }
+
+    private void inicializarBotonU() {
         nuevoUser = new Button("Agregar\nUsuario");
         buscarUser = new Button("Buscar\nUsuario");
         nuevoProducto = new Button("Nuevo\nproducto");
         buscarProducto = new Button("Buscar\nProducto");
-        comprasPendientes = new Button("Compras\nPendientes");
-        comprasAnuladas = new Button("Compras\nAnuladas");
-        comprasExitosas = new Button("Compras\nExitosas");
-        cerrarSesion = new Button("Cerrar\nSesión");
-        llamarBotones();
     }
 
     public void estiloBotones(Button btn, String base, String path) {
@@ -76,17 +91,20 @@ public class AdministradorOptions implements Vista {
         root.setCenter(contentMenuAdmin);
     }
 
-    private void llamarBotones() {
-        estiloBotones(nuevoUser, "C7E7E0", "/add-user.png");
-        estiloBotones(buscarUser, "A8ECDD", "/searchu.png");
-        estiloBotones(nuevoProducto, "81F7D8", "/valor.png");
-        estiloBotones(buscarProducto, "51A7C1", "/bolsa.png");
+     private void llamarBotones() {
+        llamarSeccionA();
         estiloBotones(comprasPendientes, "78EDF4", "/cartp.png");
         estiloBotones(comprasAnuladas, "5DC2E1", "/cartc.png");
         estiloBotones(comprasExitosas, "BCFBFF", "/carta.png");
         estiloBotones(cerrarSesion, "FAEDA8", "/logout.png");
     }
 
+    private void llamarSeccionA() {
+        estiloBotones(nuevoUser, "C7E7E0", "/add-user.png");
+        estiloBotones(buscarUser, "A8ECDD", "/searchu.png");
+        estiloBotones(nuevoProducto, "81F7D8", "/valor.png");
+        estiloBotones(buscarProducto, "51A7C1", "/bolsa.png");
+    }
     private VBox crearSeccionUsuarios() {
         VBox usuarios = new VBox();
         HBox usuarios1 = new HBox();

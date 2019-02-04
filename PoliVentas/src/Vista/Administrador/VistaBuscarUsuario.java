@@ -30,8 +30,11 @@ import javafx.scene.layout.VBox;
  */
 public class VistaBuscarUsuario implements Vista {
 
-    private final BorderPane root;
-    private Button back, buscar, ver, clean;
+   private final BorderPane root;
+    private Button back;
+    private Button buscar;
+    private Button ver;
+    private Button clean;
     private String color;
     private TextField campo;
     private ObservableList<Usuario> lusario;
@@ -47,6 +50,7 @@ public class VistaBuscarUsuario implements Vista {
 
     }
 
+   @Override
     public BorderPane getRoot() {
         return root;
     }
@@ -112,7 +116,7 @@ public class VistaBuscarUsuario implements Vista {
         VBox contenedorTitulos = new VBox();
         VBox v3 = new VBox();
         v3.setPadding(new Insets(0, 7, 0, 7));
-        contenedorTitulos.setPadding(new Insets(0, 7, 0, 7));//top,derecha,abajo,izquierda
+        contenedorTitulos.setPadding(new Insets(0, 7, 0, 7));
         contenedorTitulos.setAlignment(Pos.TOP_CENTER);
         contenedorTitulos.setSpacing(7);
         busquedaScrollPane = new ScrollPane();
@@ -133,32 +137,16 @@ public class VistaBuscarUsuario implements Vista {
         return buscar;
     }
 
-    public void setBuscar(Button buscar) {
-        this.buscar = buscar;
-    }
-
     public TextField getCampo() {
         return campo;
-    }
-
-    public void setCampo(TextField campo) {
-        this.campo = campo;
     }
 
     public ObservableList<Usuario> getLusario() {
         return lusario;
     }
 
-    public void setLusario(ObservableList<Usuario> lusario) {
-        this.lusario = lusario;
-    }
-
     public VBox getVbox() {
         return vbox;
-    }
-
-    public void setVbox(VBox vbox) {
-        this.vbox = vbox;
     }
 
     public ScrollPane getBusquedaScrollPane() {
@@ -175,10 +163,6 @@ public class VistaBuscarUsuario implements Vista {
 
     public Button getVer() {
         return ver;
-    }
-
-    public void setVer(Button ver) {
-        this.ver = ver;
     }
 
     public void iniciarVer() {

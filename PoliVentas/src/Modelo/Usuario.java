@@ -33,7 +33,7 @@ public class Usuario {
     private final String insert = "INSERT INTO db_poliventas.tb_usuario values(?,?,?,?,?,?,?,?,?,?,?)";
     private final String insertaRolAdmin = "insert into db_poliventas.tb_administrador values (?,?) ";
     private final String insertaRolVend = "insert into db_poliventas.tb_vendedor values (?,?,?) ";
-    private final String insertaRolCom = "insert into db_poliventas.tb_comprador values (?,?) ";
+    private final String insertaRolCom = "insert into db_poliventas.tb_comprador (id_comprador,cedula) values (?,?) ";
 
     /**
      * Constructor por defecto
@@ -416,10 +416,7 @@ public class Usuario {
         if (!Objects.equals(this.cedula, other.cedula)) {
             return false;
         }
-        if (!Objects.equals(this.matricula, other.matricula)) {
-            return false;
-        }
-        return true;
+        return Objects.equals(this.matricula, other.matricula);
     }
     
 }

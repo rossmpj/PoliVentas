@@ -3,6 +3,7 @@ package Modelo;
 import Auxiliares.DBConnection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.Objects;
 
 /**
  *
@@ -13,7 +14,10 @@ public class CalificacionVendedor {
     private int calificacionV;
     private String idVendedor;
     private String idComprador;
-
+    
+    /**
+     * Constructor de la clase
+     */
     public CalificacionVendedor(String idCalificacionV, int calificacionV, 
             String vendedor, String comprador) {
         this.idCalificacionV = idCalificacionV;
@@ -61,6 +65,9 @@ public class CalificacionVendedor {
         return "CalificacionVendedor{" + "idCalificacionV=" + idCalificacionV + ", calificacionV=" + calificacionV + ", vendedor=" + idVendedor + ", comprador=" + idComprador + '}';
     }
     
+    /**
+     * Método que permite modificar la calificacion del vendedor
+     */
     public boolean modificarCalificacionVendedor(int calif) {
         DBConnection conexion = DBConnection.getInstance();
         conexion.conectar();
@@ -81,4 +88,31 @@ public class CalificacionVendedor {
     public int getPromedioV(int c1, int c2){
         return (int) ((c1+c2)/2);
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 37 * hash + Objects.hashCode(this.idCalificacionV);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final CalificacionVendedor other = (CalificacionVendedor) obj;
+        if (!Objects.equals(this.idCalificacionV, other.idCalificacionV)) {
+            return false;
+        }
+        return true;
+    }
+    
+    
 }

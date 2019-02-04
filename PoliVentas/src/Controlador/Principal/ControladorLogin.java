@@ -93,9 +93,8 @@ public class ControladorLogin {
         @Override
         public void handle(Event event) {
             Administrador a = new Administrador();
-            Usuario usuario = new Usuario();
-            VistaInfoUsuario nuevoUsuarioView = new VistaInfoUsuario(true, "C7E7E0", "Formulario de Registro");
-            ControladorInfoUsuario controladorU = new ControladorInfoUsuario(usuario, a, nuevoUsuarioView);
+            VistaInfoUsuario nuevoUsuarioView = new VistaInfoUsuario(true, "C7E7E0", "Formulario de Registro",null);
+            ControladorInfoUsuario controladorU = new ControladorInfoUsuario(a, nuevoUsuarioView);
             WindowsController.next(LoginView, nuevoUsuarioView);
         }   
     }

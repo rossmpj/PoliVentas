@@ -12,14 +12,11 @@ import javafx.event.EventHandler;
  *
  * @author Galo Xavier Figueroa Villacreses
  */
-public class ControladorInfoUsuario {
-
-    private final Usuario ModeloUsuario;
+public class ControladorInfoUsuario { 
     private final Administrador admin;
     private final VistaInfoUsuario VistaNuevoUsuario;
 
-    public ControladorInfoUsuario(Usuario r, Administrador a, VistaInfoUsuario VistaNuevoUsuario) {
-        this.ModeloUsuario = r;
+    public ControladorInfoUsuario(Administrador a, VistaInfoUsuario VistaNuevoUsuario) {
         this.admin = a;
         this.VistaNuevoUsuario = VistaNuevoUsuario;
         this.VistaNuevoUsuario.addBackButtonHandler((event -> WindowsController.previous()));

@@ -34,17 +34,6 @@ public class Administrador extends Usuario {
 
     /**
      * Constructor de la clase
-     * @param cedula
-     * @param nombres
-     * @param apellidos
-     * @param telefono
-     * @param direccion
-     * @param whatsapp
-     * @param matricula
-     * @param email
-     * @param usuario
-     * @param contra
-     * @param es, si el usuario está eliminado 
      */
     public Administrador(String cedula, String nombres, String apellidos, String telefono,
             String direccion, boolean whatsapp, String matricula, String email, String usuario, String contra, boolean es) {
@@ -56,6 +45,12 @@ public class Administrador extends Usuario {
         return id_administrador;
     }
 
+    /**
+     * Método que permite modificar un usuario
+     *
+     * @param user Usuario
+     * @return true si se modificó correctamente, false en caso contrario
+     */
     public boolean modificarUsuario(Usuario user) {
         try {
             CONNECTION.conectar();
@@ -72,7 +67,6 @@ public class Administrador extends Usuario {
             ingreso.setBoolean(10, user.isEstado());
             ingreso.setString(11, user.getCedula());
             ingreso.executeUpdate();
-            System.out.println("Actualizacion exitosa cliente...");
             return true;
         } catch (SQLException e) {
             LOGGER.log(Level.SEVERE, e.getMessage());
@@ -81,12 +75,12 @@ public class Administrador extends Usuario {
             CONNECTION.desconectar();
         }
     }
-    
+
     /**
-     * Método que permite eliminar el usuario
-     * true: Eliminado
+     * Método que permite eliminar el usuario true: Eliminado
+     *
      * @param user
-     * @return 
+     * @return
      */
     public boolean eliminarUsuario(Usuario user) {
         try {
@@ -104,6 +98,12 @@ public class Administrador extends Usuario {
         }
     }
 
+    /**
+     * Método que permite obtener una lista de usuarios de acuerdo al parámetro
+     *
+     * @param busqueda, string
+     * @param lista de objeto Usuario
+     */
     public void consultarUsuario(String busqueda, List<Usuario> lista) {
         try {
             CONNECTION.conectar();
@@ -133,14 +133,29 @@ public class Administrador extends Usuario {
         }
     }
 
+     /**
+     * Método para eliminar un producto
+     * @param p Producto
+     * @return true si se eliminó correctamente, false en caso contrario
+     */
     public boolean eliminarProducto(Producto p) {
         return p.eliminarProducto();
     }
 
+    /**
+     * Metodo para modificar un producto
+     * @param p Producto
+     * @return true si se eliminó correctamente, false en caso contrario
+     */
     public boolean modificarProducto(Producto p) {
         return p.modificarProducto();
     }
 
+    /**
+     * Método que permite buscar un producto en la base de datos
+     * @param campo, String
+     * @param lista, de Productos 
+     */
     public void consultarProducto(String campo, List<Producto> lista) {
         try {
             CONNECTION.conectar();

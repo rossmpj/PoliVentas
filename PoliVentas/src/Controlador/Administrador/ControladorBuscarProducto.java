@@ -95,7 +95,7 @@ public class ControladorBuscarProducto {
         @Override
         public void handle(Event event) {
             VistaInfoProducto v = new VistaInfoProducto(false, "81F7D8", "Modificar Producto", ModeloProducto);
-            ControladorInfoProducto controladorInfoUsuario = new ControladorInfoProducto(ModeloProducto, a, v);
+            ControladorInfoProducto controladorInfoUsuario = new ControladorInfoProducto(a, v);
             WindowsController.next(VistaBuscarProducto, v);
         }
 
