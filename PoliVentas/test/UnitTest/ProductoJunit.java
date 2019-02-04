@@ -5,8 +5,8 @@
  */
 package UnitTest;
 
-import ec.edu.espol.Modelo.Producto;
-import ec.edu.espol.Modelo.Vendedor;
+import Modelo.Producto;
+import Modelo.Vendedor;
 import java.util.ArrayList;
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertNotNull;

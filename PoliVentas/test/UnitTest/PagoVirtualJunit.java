@@ -5,8 +5,8 @@
  */
 package UnitTest;
 
-import ec.edu.espol.Modelo.Comprador;
-import ec.edu.espol.Modelo.PagoVirtual;
+import Modelo.Comprador;
+import Modelo.PagoVirtual;
 import java.util.ArrayList;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertFalse;
