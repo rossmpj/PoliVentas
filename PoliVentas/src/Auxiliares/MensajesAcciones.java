@@ -221,4 +221,26 @@ public class MensajesAcciones {
         alert.setContentText("Nombre de usuario o contraseña incorrectos");
         alert.showAndWait();
     }
+    
+      /**
+     * Método que muestra un cuadro de diálogo indicando que no cuenta con suficiente saldo
+     */
+    public static void saldoInsuficiente(){
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Sin dinero virtual :( ");
+        alert.setHeaderText("");
+        alert.setContentText("Lo sentimos, no puede realizar la compra por falta de saldo disponible");
+        alert.showAndWait();
+    }
+    
+          /**
+     * Método que muestra un cuadro de diálogo indicando que no hay productos disponibles
+     */
+    public static void stockInsuficiente(){
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Sin productos disponibles :( ");
+        alert.setHeaderText("");
+        alert.setContentText("Lo sentimos, no hay productos disponibles");
+        alert.showAndWait();
+    }
 }
